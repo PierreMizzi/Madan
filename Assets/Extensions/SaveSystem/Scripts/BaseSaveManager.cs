@@ -85,12 +85,22 @@ namespace PierreMizzi.Useful.SaveSystem
 
 		public static void Log()
 		{
-			string log = "### BASE SAVE MANAGER ###\r\n";
+			string log = "";
 			log += $"path : {path}\r\n";
 			log += $"directoryPath : {directoryPath}\r\n";
 
-			Debug.Log(log);
+			if (File.Exists(path))
+			{
+				using StreamReader streamReader = new StreamReader(path);
+				string dataString = streamReader.ReadToEnd();
+				Debug.Log(dataString);
+			}
+			else
+				Debug.Log($"Path (({path})) doesn't exist");
+
 		}
+
+
 
 		#endregion
 

@@ -3,8 +3,9 @@ using System;
 [Serializable]
 public class WordData
 {
+
 	public string kanji;
-	public string hiragana;
+	public string furigana;
 	public string level;
 	public string traduction;
 
@@ -12,6 +13,6 @@ public class WordData
 
 	public override string ToString()
 	{
-		return $"{kanji} ({hiragana}) : {traduction}";
+		return $"{kanji} ({furigana}) : {traduction} [{date}]";
 	}
 }

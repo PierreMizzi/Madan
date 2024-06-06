@@ -11,6 +11,8 @@ public class DailyWordManager
 
 	public Stack<WordData> dailyWords = new Stack<WordData>();
 
+	public WordData wordOfTheDay { get { return dailyWords.Peek(); } }
+
 	#region Daily timer
 
 	/// <summary> 
@@ -21,7 +23,7 @@ public class DailyWordManager
 		if (NeedNewDailyWord())
 			dailyWords.Push(PickNewDailyWord());
 
-		LogDailyWords();
+		// LogDailyWords();
 	}
 
 	/// <summary> 
@@ -32,7 +34,7 @@ public class DailyWordManager
 		if (NeedNewDailyWord(dateNow))
 			dailyWords.Push(PickNewDailyWord());
 
-		LogDailyWords();
+		// LogDailyWords();
 	}
 
 	/// <summary> 
@@ -107,7 +109,7 @@ public class DailyWordManager
 		foreach (WordData wordData in SaveManager.data.dailyWords)
 			dailyWords.Push(wordData);
 
-		LogDailyWords();
+		// LogDailyWords();
 	}
 
 	#endregion
@@ -130,22 +132,22 @@ public class DailyWordManager
 	/// <summary> 
 	/// Debug method 
 	/// </summary>
-	public void PopulateDailyWords(int amount)
-	{
-		DateTime tempDate = DateTime.Now;
-		WordData tempWord;
+	// public void PopulateDailyWords(int amount)
+	// {
+	// 	DateTime tempDate = DateTime.Now;
+	// 	WordData tempWord;
 
-		for (int i = 0; i < amount; i++)
-		{
-			tempWord = PickNewDailyWord();
-			tempWord.date = tempDate;
+	// 	for (int i = 0; i < amount; i++)
+	// 	{
+	// 		tempWord = PickNewDailyWord();
+	// 		tempWord.date = tempDate;
 
-			tempDate = tempDate.AddDays(-1);
-			dailyWords.Push(tempWord);
-		}
+	// 		tempDate = tempDate.AddDays(-1);
+	// 		dailyWords.Push(tempWord);
+	// 	}
 
-		LogDailyWords();
-	}
+	// 	LogDailyWords();
+	// }
 
 
 	public void LogDailyWords()
@@ -160,7 +162,7 @@ public class DailyWordManager
 			index++;
 		}
 
-		Debug.Log(str);
+		// Debug.Log(str);
 	}
 
 	#endregion

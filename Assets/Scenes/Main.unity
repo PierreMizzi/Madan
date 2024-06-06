@@ -1052,6 +1052,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 657090875}
+  - component: {fileID: 657090876}
   m_Layer: 5
   m_Name: DailyWordContainer
   m_TagString: Untagged
@@ -1080,6 +1081,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0.0064697266, y: -261.7}
   m_SizeDelta: {x: 0, y: 945.4}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &657090876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657090874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e7b8f443177a5246b4b116fa87a53f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_furiganaLabel: {fileID: 1728090397}
+  m_kanjiLabel: {fileID: 1188836956}
+  m_levelLabel: {fileID: 1613818369}
+  m_traductionLabel: {fileID: 475052128}
 --- !u!1 &674211479
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,6 +1220,7 @@ GameObject:
   - component: {fileID: 806635807}
   - component: {fileID: 806635806}
   - component: {fileID: 806635805}
+  - component: {fileID: 806635809}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -1300,6 +1318,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &806635809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806635804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c74875515af1248a21b10d22822547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_applicationChannel: {fileID: 0}
+  m_dailyWordUI: {fileID: 657090876}
 --- !u!1 &844977904
 GameObject:
   m_ObjectHideFlags: 0
@@ -3796,7 +3828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ec7c3185829494b86e8ee7b0aed3df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dateWord: 06/06/2024
+  m_applicationChannel: {fileID: 11400000, guid: 27c584fd3877fff4ab4b38fab9567823, type: 2}
   dateNow: 06/06/2024
   dailyWordsPopulation: 10
 --- !u!4 &1908795371

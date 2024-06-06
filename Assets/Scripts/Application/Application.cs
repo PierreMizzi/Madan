@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using PierreMizzi.Useful.SaveSystem;
 using UnityEngine;
 
 /// <summary> 
@@ -9,15 +11,23 @@ using UnityEngine;
 public class Application : MonoBehaviour
 {
 
-	private DailyWordManager dailyWordManager;
+	[SerializeField] private ApplicationChannel m_applicationChannel;
+	private DailyWordManager m_dailyWordManager;
 
-	private void Start()
+	private IEnumerator Start()
 	{
 		LoadDatabase();
 
-		dailyWordManager = new DailyWordManager();
+
+		m_dailyWordManager = new DailyWordManager();
 
 		LoadSave();
+
+		yield return new WaitForSeconds(0.1f);
+
+		// Uncomment to reset dailyWorld everytime you press play
+		// ClearDailyWords();
+		ManageDailyWord();
 	}
 
 	[ContextMenu("Load")]
@@ -41,39 +51,27 @@ public class Application : MonoBehaviour
 	[SerializeField] private string dateNow = "May 21, 2024";
 	[SerializeField] private int dailyWordsPopulation = 10;
 
-	// [ContextMenu("Test need daily word")]
-	// public void TestNeedDailyWord()
-	// {
-	// 	DateTime dateTimeWord = DateTime.Parse(dateWord);
-	// 	DateTime dateTimeNow = DateTime.Parse(dateNow);
-
-	// 	Debug.Log("Need new daily word ? " + dailyWordManager.NeedNewDailyWord(dateTimeWord, dateTimeNow));
-	// }
-
-	// [ContextMenu("ManageNewDailyWord")]
-	// public void ManageNewDailyWord()
-	// {
-	// 	dailyWordManager.ManageNewDailyWord();
-	// }
-
-	[ContextMenu("PopulateDailyWords")]
-	public void PopulateDailyWords()
-	{
-		dailyWordManager.PopulateDailyWords(dailyWordsPopulation);
-	}
-
-	[ContextMenu("AddDailyWorld")]
-	public void AddDailyWord()
+	public void ManageDailyWord()
 	{
 		DateTime dateTime = DateTime.Parse(dateNow);
-		dailyWordManager.ManageNewDailyWord(dateTime);
+		m_dailyWordManager.ManageNewDailyWord();
+		m_applicationChannel.onRefreshDailyWord.Invoke(m_dailyWordManager.wordOfTheDay);
+		Save();
+	}
+
+	[ContextMenu("TryAddDailyWorld")]
+	public void TryAddDailyWorld()
+	{
+		DateTime dateTime = DateTime.Parse(dateNow);
+		m_dailyWordManager.ManageNewDailyWord(dateTime);
+		m_applicationChannel.onRefreshDailyWord.Invoke(m_dailyWordManager.wordOfTheDay);
 		Save();
 	}
 
 	[ContextMenu("ClearDailyWords")]
 	public void ClearDailyWords()
 	{
-		dailyWordManager.ClearDailyWorlds();
+		m_dailyWordManager.ClearDailyWorlds();
 		SaveManager.Save();
 	}
 
@@ -84,7 +82,7 @@ public class Application : MonoBehaviour
 	[ContextMenu("Save")]
 	public void Save()
 	{
-		dailyWordManager.Save();
+		m_dailyWordManager.Save();
 
 		SaveManager.Save();
 	}
@@ -94,16 +92,34 @@ public class Application : MonoBehaviour
 	{
 		SaveManager.Load();
 
-		dailyWordManager.Load();
-
-		LogSave();
+		m_dailyWordManager.Load();
+		m_applicationChannel.onRefreshDailyWord.Invoke(m_dailyWordManager.wordOfTheDay);
 	}
 
-	[ContextMenu("Log")]
-	public void LogSave()
+	public void LogApplicationData()
 	{
-		SaveManager.Log();
+		Debug.Log("### Application Data");
+		Debug.Log(SaveManager.data.ToString());
 	}
+
+	public void LogWrittenData()
+	{
+		Debug.Log("### Written Data");
+		BaseSaveManager.Log();
+	}
+
+	public void LogWordOfTheDay()
+	{
+		Debug.Log("### Word of the day");
+		Debug.Log(m_dailyWordManager.wordOfTheDay);
+	}
+
+	public void LogDataBase()
+	{
+		Debug.Log("### Database");
+		Debug.Log(Database.wordDatas);
+	}
+
 
 	#endregion
 

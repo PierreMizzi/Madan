@@ -17,13 +17,13 @@ public static class SaveManager
 	public static void Save()
 	{
 		BaseSaveManager.Save(data);
-		Log();
 	}
 
 	public static void Log()
 	{
-		BaseSaveManager.Log();
-
+		Debug.Log("## Current ApplicationData");
+		Debug.Log(data.ToString());
+		Debug.Log("## Current ApplicationData (in JSON)");
 		Debug.Log(JsonUtility.ToJson(data));
 	}
 }
