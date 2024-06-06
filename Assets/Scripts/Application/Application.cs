@@ -68,12 +68,7 @@ public class Application : MonoBehaviour
 		Save();
 	}
 
-	[ContextMenu("ClearDailyWords")]
-	public void ClearDailyWords()
-	{
-		m_dailyWordManager.ClearDailyWorlds();
-		SaveManager.Save();
-	}
+
 
 	#endregion
 
@@ -96,10 +91,17 @@ public class Application : MonoBehaviour
 		m_applicationChannel.onRefreshDailyWord.Invoke(m_dailyWordManager.wordOfTheDay);
 	}
 
+	public void ClearSave()
+	{
+		m_dailyWordManager.ClearDailyWorlds();
+		SaveManager.data.dailyWords.Clear();
+		SaveManager.Save();
+	}
+
 	public void LogApplicationData()
 	{
 		Debug.Log("### Application Data");
-		Debug.Log(SaveManager.data.ToString());
+		SaveManager.Log();
 	}
 
 	public void LogWrittenData()

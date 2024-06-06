@@ -1,4 +1,5 @@
 using System.IO;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace PierreMizzi.Useful.SaveSystem
@@ -57,7 +58,11 @@ namespace PierreMizzi.Useful.SaveSystem
 				using StreamReader streamReader = new StreamReader(path);
 				string dataString = streamReader.ReadToEnd();
 
-				return JsonUtility.FromJson<T>(dataString);
+				// JSONUtility !!!!
+				// return JsonUtility.FromJson<T>(dataString);
+
+				// JSONConvert
+				return JsonConvert.DeserializeObject<T>(dataString);
 			}
 			else
 			{
@@ -77,7 +82,11 @@ namespace PierreMizzi.Useful.SaveSystem
 
 		public static void Save(BaseApplicationData data)
 		{
-			string dataString = JsonUtility.ToJson(data);
+			// JSONUtility !!!!
+			// string dataString = JsonUtility.ToJson(data);
+
+			// JSONConvert
+			string dataString = JsonConvert.SerializeObject(data);
 
 			using StreamWriter streamWriter = new StreamWriter(path);
 			streamWriter.Write(dataString);

@@ -25,9 +25,13 @@ public class ApplicationEditor : Editor
 
 		if (GUILayout.Button("Log Word of the day"))
 			m_application.LogWordOfTheDay();
-			
+
 		if (GUILayout.Button("Log Database"))
 			m_application.LogDataBase();
+
+
+		if (GUILayout.Button("Clear All Data"))
+			m_application.ClearSave();
 
 
 

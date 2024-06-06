@@ -15,6 +15,7 @@ public class ApplicationData : BaseApplicationData
 		for (int i = dailyWords.Count - 1; i >= 0; i--)
 		{
 			data += $"{index}. {dailyWords[i]} \n";
+			index++;
 		}
 
 		return data;

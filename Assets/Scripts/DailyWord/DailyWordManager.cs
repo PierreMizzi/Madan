@@ -84,7 +84,6 @@ public class DailyWordManager
 	public void ClearDailyWorlds()
 	{
 		dailyWords.Clear();
-		SaveManager.data.dailyWords.Clear();
 	}
 
 	#region SaveDailyWords

@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using PierreMizzi.Useful.SaveSystem;
 using UnityEngine;
 
@@ -24,6 +25,6 @@ public static class SaveManager
 		Debug.Log("## Current ApplicationData");
 		Debug.Log(data.ToString());
 		Debug.Log("## Current ApplicationData (in JSON)");
-		Debug.Log(JsonUtility.ToJson(data));
+		Debug.Log(JsonConvert.SerializeObject(data));
 	}
 }
