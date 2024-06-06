@@ -8,11 +8,9 @@ public static class Parser
 		"Data/jlpt_n3_vocabulary"
 	};
 
-	public static List<WordData> wordDatas = new List<WordData>();
-
 	public static void Load()
 	{
-		wordDatas.Clear();
+		Database.wordDatas.Clear();
 		DictionaryData tempDictionary = new DictionaryData();
 
 		foreach (string path in jsonPaths)
@@ -21,8 +19,13 @@ public static class Parser
 			Debug.Log(tempJSON.text);
 			tempDictionary = JsonUtility.FromJson<DictionaryData>(tempJSON.text);
 			Debug.Log(tempDictionary.wordDatas.Length);
-			wordDatas.AddRange(tempDictionary.wordDatas);
+			Database.wordDatas.AddRange(tempDictionary.wordDatas);
 		}
-		Debug.Log(wordDatas[0].kanji);
+		Debug.Log(Database.wordDatas[0].date);
+	}
+
+	public static void SaveDailyWords(Stack<WordData> wordDatas)
+	{
+
 	}
 }
