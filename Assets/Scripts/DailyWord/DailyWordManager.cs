@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary> 
+/// 3 main features :
+/// 
+/// </summary>
 public class DailyWordManager
 {
 
@@ -9,6 +13,9 @@ public class DailyWordManager
 
 	#region Daily timer
 
+	/// <summary> 
+	/// Whenever called, checks if we need to add a new daily word
+	/// </summary>
 	public void ManageNewDailyWord()
 	{
 		if (NeedNewDailyWord())
@@ -17,6 +24,20 @@ public class DailyWordManager
 		LogDailyWords();
 	}
 
+	/// <summary> 
+	/// 
+	/// </summary>
+	public void ManageNewDailyWord(DateTime dateNow)
+	{
+		if (NeedNewDailyWord(dateNow))
+			dailyWords.Push(PickNewDailyWord());
+
+		LogDailyWords();
+	}
+
+	/// <summary> 
+	/// Answer the question : "Is it a new day ?"
+	/// </summary>
 	public bool NeedNewDailyWord()
 	{
 		if (dailyWords.Count == 0)
@@ -24,6 +45,76 @@ public class DailyWordManager
 		else
 			return dailyWords.Peek().date.Day != DateTime.Now.Day;
 	}
+
+	#endregion
+
+	/// <summary> 
+	/// Pick a WordData that is not already inside dailyWords
+	/// Recursive function
+	/// </summary>
+	public WordData PickNewDailyWord()
+	{
+		WordData newWord = Database.PickRandomWord();
+		newWord.date = DateTime.Now;
+
+		if (IsAlreadyADailyWord(newWord))
+			return PickNewDailyWord();
+		else
+			return newWord;
+	}
+
+	/// <summary> 
+	/// Answer the question "Is it already inside dailyWords"
+	/// </summary>
+	public bool IsAlreadyADailyWord(WordData pickedWord)
+	{
+		if (dailyWords.Count == 0)
+			return false;
+
+		foreach (WordData dailyWord in dailyWords)
+		{
+			if (dailyWord.kanji == pickedWord.kanji)
+				return true;
+		}
+		return false;
+	}
+
+	public void ClearDailyWorlds()
+	{
+		dailyWords.Clear();
+		SaveManager.data.dailyWords.Clear();
+	}
+
+	#region SaveDailyWords
+
+	public void Save()
+	{
+		SaveManager.data.dailyWords.Clear();
+		for (int i = 0; i < dailyWords.Count; i++)
+			SaveManager.data.dailyWords.Add(new WordData());
+
+		int index = dailyWords.Count;
+
+		foreach (WordData dailyWord in dailyWords)
+		{
+			SaveManager.data.dailyWords[index - 1] = dailyWord;
+			index--;
+		}
+	}
+
+	public void Load()
+	{
+		foreach (WordData wordData in SaveManager.data.dailyWords)
+			dailyWords.Push(wordData);
+
+		LogDailyWords();
+	}
+
+	#endregion
+
+	#region Debug
+
+
 
 	/// <summary> 
 	/// Debug method
@@ -34,17 +125,6 @@ public class DailyWordManager
 			return true;
 		else
 			return dailyWords.Peek().date.Day != dateNow.Day;
-	}
-
-	/// <summary> 
-	/// Debug method
-	/// </summary>
-	public bool NeedNewDailyWord(DateTime dateWord, DateTime dateNow)
-	{
-		if (dailyWords.Count == 0)
-			return true;
-		else
-			return dateWord.Day != dateNow.Day;
 	}
 
 	/// <summary> 
@@ -60,45 +140,29 @@ public class DailyWordManager
 			tempWord = PickNewDailyWord();
 			tempWord.date = tempDate;
 
-			Debug.Log(tempWord);
-			Debug.Log(tempWord.date);
-
 			tempDate = tempDate.AddDays(-1);
 			dailyWords.Push(tempWord);
 		}
+
+		LogDailyWords();
 	}
 
-	#endregion
-
-	public WordData PickNewDailyWord()
-	{
-		WordData newWord = Database.PickRandomWord();
-
-		if (IsAlreadyADailyWord(newWord))
-			return PickNewDailyWord();
-		else
-			return newWord;
-	}
-
-	public bool IsAlreadyADailyWord(WordData pickedWord)
-	{
-		if (dailyWords.Count == 0)
-			return false;
-
-		foreach (WordData dailyWord in dailyWords)
-		{
-			if (dailyWord.kanji == pickedWord.kanji)
-				return true;
-		}
-		return false;
-	}
 
 	public void LogDailyWords()
 	{
+		string str = "#### Daily Words #### \n";
+
+		int index = 1;
+
 		foreach (WordData dailyWord in dailyWords)
 		{
-			Debug.Log(dailyWord.ToString());
+			str += $"{index}. {dailyWord.ToString()} \n";
+			index++;
 		}
+
+		Debug.Log(str);
 	}
+
+	#endregion
 
 }

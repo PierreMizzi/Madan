@@ -46,12 +46,11 @@ namespace PierreMizzi.Useful.SaveSystem
 			}
 		}
 
-
 		#endregion
 
 		#region Methods 
 
-		public static T LoadSaveData<T>() where T : BaseApplicationData, new()
+		public static T Load<T>() where T : BaseApplicationData, new()
 		{
 			if (File.Exists(path))
 			{
@@ -63,20 +62,20 @@ namespace PierreMizzi.Useful.SaveSystem
 			else
 			{
 				Debug.Log("Path doesn't exist");
-				CreateSaveData<T>();
-				return LoadSaveData<T>();
+				Create<T>();
+				return Load<T>();
 			}
 		}
 
-		public static void CreateSaveData<T>() where T : BaseApplicationData, new()
+		public static void Create<T>() where T : BaseApplicationData, new()
 		{
 			Directory.CreateDirectory(directoryPath);
 
 			T data = new T();
-			WriteSaveData(data);
+			Save(data);
 		}
 
-		public static void WriteSaveData(BaseApplicationData data)
+		public static void Save(BaseApplicationData data)
 		{
 			string dataString = JsonUtility.ToJson(data);
 
@@ -84,13 +83,12 @@ namespace PierreMizzi.Useful.SaveSystem
 			streamWriter.Write(dataString);
 		}
 
-
-
-		public static void LogBaseSaveManager()
+		public static void Log()
 		{
 			string log = "### BASE SAVE MANAGER ###\r\n";
 			log += $"path : {path}\r\n";
 			log += $"directoryPath : {directoryPath}\r\n";
+
 			Debug.Log(log);
 		}
 

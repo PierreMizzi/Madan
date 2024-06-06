@@ -10,8 +10,8 @@ public class WordData
 
 	public DateTime date;
 
-    public override string ToString()
-    {
-        return kanji + " : " + hiragana;
-    }
+	public override string ToString()
+	{
+		return $"{kanji} ({hiragana}) : {traduction}";
+	}
 }
