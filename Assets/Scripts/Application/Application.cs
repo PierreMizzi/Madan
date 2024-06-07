@@ -68,8 +68,6 @@ public class Application : MonoBehaviour
 		Save();
 	}
 
-
-
 	#endregion
 
 	#region Save
