@@ -53,20 +53,20 @@ namespace PierreMizzi.Useful.SaveSystem
 
 		public static T Load<T>() where T : BaseApplicationData, new()
 		{
+			Debug.Log($"path : {path}");
+			Debug.Log($"directoryPath : {directoryPath}");
+
 			if (File.Exists(path))
 			{
 				using StreamReader streamReader = new StreamReader(path);
 				string dataString = streamReader.ReadToEnd();
-
-				// JSONUtility !!!!
-				// return JsonUtility.FromJson<T>(dataString);
 
 				// JSONConvert
 				return JsonConvert.DeserializeObject<T>(dataString);
 			}
 			else
 			{
-				Debug.Log("Path doesn't exist");
+				Debug.Log($"Path (({path})) doesn't exist, creating");
 				Create<T>();
 				return Load<T>();
 			}
@@ -82,9 +82,6 @@ namespace PierreMizzi.Useful.SaveSystem
 
 		public static void Save(BaseApplicationData data)
 		{
-			// JSONUtility !!!!
-			// string dataString = JsonUtility.ToJson(data);
-
 			// JSONConvert
 			string dataString = JsonConvert.SerializeObject(data);
 
@@ -108,8 +105,6 @@ namespace PierreMizzi.Useful.SaveSystem
 				Debug.Log($"Path (({path})) doesn't exist");
 
 		}
-
-
 
 		#endregion
 

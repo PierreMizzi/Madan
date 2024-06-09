@@ -105,8 +105,14 @@ public class DailyWordManager
 
 	public void Load()
 	{
-		foreach (WordData wordData in SaveManager.data.dailyWords)
-			dailyWords.Push(wordData);
+		if (SaveManager.data.dailyWords == null)
+			SaveManager.data.dailyWords = new List<WordData>();
+		else
+		{
+			foreach (WordData wordData in SaveManager.data.dailyWords)
+				dailyWords.Push(wordData);
+		}
+
 
 		// LogDailyWords();
 	}

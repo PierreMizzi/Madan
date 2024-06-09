@@ -31,7 +31,7 @@ public class ApplicationEditor : Editor
 
 
 		if (GUILayout.Button("Clear All Data"))
-			m_application.ClearSave();
+			m_application.ClearAppData();
 
 
 

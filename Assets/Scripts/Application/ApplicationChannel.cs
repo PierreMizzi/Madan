@@ -9,9 +9,15 @@ public class ApplicationChannel : ScriptableObject
 
 	public WordDataDelegate onRefreshDailyWord;
 
+	public Action onAppDataLoaded;
+	public Action onDatabaseLoaded;
+
 	private void OnEnable()
 	{
 		onRefreshDailyWord = (WordData data) => { };
+
+		onAppDataLoaded = () => { };
+		onDatabaseLoaded = () => { };
 	}
 
 }

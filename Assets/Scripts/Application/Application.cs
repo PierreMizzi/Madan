@@ -18,10 +18,9 @@ public class Application : MonoBehaviour
 	{
 		LoadDatabase();
 
-
 		m_dailyWordManager = new DailyWordManager();
 
-		LoadSave();
+		LoadAppData();
 
 		yield return new WaitForSeconds(0.1f);
 
@@ -34,6 +33,7 @@ public class Application : MonoBehaviour
 	private void LoadDatabase()
 	{
 		Parser.LoadDatabase();
+		m_applicationChannel.onDatabaseLoaded.Invoke();
 	}
 
 	[ContextMenu("label")]
@@ -56,7 +56,7 @@ public class Application : MonoBehaviour
 		DateTime dateTime = DateTime.Parse(dateNow);
 		m_dailyWordManager.ManageNewDailyWord();
 		m_applicationChannel.onRefreshDailyWord.Invoke(m_dailyWordManager.wordOfTheDay);
-		Save();
+		SaveAppData();
 	}
 
 	[ContextMenu("TryAddDailyWorld")]
@@ -65,7 +65,7 @@ public class Application : MonoBehaviour
 		DateTime dateTime = DateTime.Parse(dateNow);
 		m_dailyWordManager.ManageNewDailyWord(dateTime);
 		m_applicationChannel.onRefreshDailyWord.Invoke(m_dailyWordManager.wordOfTheDay);
-		Save();
+		SaveAppData();
 	}
 
 	#endregion
@@ -73,7 +73,7 @@ public class Application : MonoBehaviour
 	#region Save
 
 	[ContextMenu("Save")]
-	public void Save()
+	public void SaveAppData()
 	{
 		m_dailyWordManager.Save();
 
@@ -81,15 +81,14 @@ public class Application : MonoBehaviour
 	}
 
 	[ContextMenu("Load")]
-	public void LoadSave()
+	public void LoadAppData()
 	{
 		SaveManager.Load();
-
 		m_dailyWordManager.Load();
-		m_applicationChannel.onRefreshDailyWord.Invoke(m_dailyWordManager.wordOfTheDay);
+		m_applicationChannel.onAppDataLoaded.Invoke();
 	}
 
-	public void ClearSave()
+	public void ClearAppData()
 	{
 		m_dailyWordManager.ClearDailyWorlds();
 		SaveManager.data.dailyWords.Clear();

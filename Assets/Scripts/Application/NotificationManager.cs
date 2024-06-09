@@ -1,21 +1,40 @@
+using System;
 using Unity.Notifications.Android;
 using UnityEngine;
 
 /*
-https://docs.unity3d.com/Packages/com.unity.mobile.notifications@2.3/manual/Android.html
-
+	https://docs.unity3d.com/Packages/com.unity.mobile.notifications@2.3/manual/Android.html
 */
 
 public class NotificationManager : MonoBehaviour
 {
-	#region Daily Notification
-
-	private AndroidNotificationChannelGroup group;
-	private AndroidNotificationChannel channel;
+	#region MonoBehaviour
 
 	private void Start()
 	{
 		Initialize();
+	}
+
+	#endregion
+
+	#region Push Notifications
+
+
+
+	#endregion
+
+	#region Notification [Decrepated ?]
+
+	private AndroidNotificationChannelGroup group;
+	private AndroidNotificationChannel channel;
+
+	private string nowDate
+	{
+		get
+		{
+			DateTime now = DateTime.Now;
+			return $"{now.Month}/{now.Day}/{now.Year}";
+		}
 	}
 
 	public void Initialize()
@@ -38,6 +57,32 @@ public class NotificationManager : MonoBehaviour
 			Group = "Main",  // must be same as Id of previously registered group
 		};
 		AndroidNotificationCenter.RegisterNotificationChannel(channel);
+
+		// // Morning
+
+		// DateTime morningNotificationTime = DateTime.Parse(nowDate + "09:30:00");
+
+		// var morningNotification = new AndroidNotification
+		// {
+		// 	Title = "Morning notification !",
+		// 	Text = "Tu as un nouveau mot du jour !",
+		// 	FireTime = morningNotificationTime
+		// };
+
+		// AndroidNotificationCenter.SendNotification(morningNotification, channel.Id);
+
+		// // Noon
+		// DateTime noonNotificationTime = DateTime.Parse(nowDate + "13:00:00");
+
+		// var noonNotification = new AndroidNotification
+		// {
+		// 	Title = "Noon notification !",
+		// 	Text = "Tu as un nouveau mot du jour !",
+		// 	FireTime = morningNotificationTime
+		// };
+
+		// AndroidNotificationCenter.SendNotification(morningNotification, channel.Id);
+
 	}
 
 	[ContextMenu("SendSimpleNotification")]
