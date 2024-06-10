@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using PierreMizzi.Useful.SaveSystem;
 using UnityEngine;
 
@@ -12,13 +13,17 @@ public class Application : MonoBehaviour
 {
 
 	[SerializeField] private ApplicationChannel m_applicationChannel;
-	private DailyWordManager m_dailyWordManager;
+	[SerializeField] private DailyWordManager m_dailyWordManager;
+
+	private void Awake()
+	{
+		if (m_applicationChannel != null)
+			m_applicationChannel.onDisplayScreen += CallbackDisplayScreen;
+	}
 
 	private IEnumerator Start()
 	{
 		LoadDatabase();
-
-		m_dailyWordManager = new DailyWordManager();
 
 		LoadAppData();
 
@@ -26,8 +31,17 @@ public class Application : MonoBehaviour
 
 		// Uncomment to reset dailyWorld everytime you press play
 		// ClearDailyWords();
+
 		ManageDailyWord();
+		m_applicationChannel.onDisplayScreen.Invoke(ApplicationScreenType.MainMenu);
 	}
+
+	private void OnDestroy()
+	{
+		if (m_applicationChannel != null)
+			m_applicationChannel.onDisplayScreen -= CallbackDisplayScreen;
+	}
+
 
 	[ContextMenu("Load")]
 	private void LoadDatabase()
@@ -119,6 +133,23 @@ public class Application : MonoBehaviour
 		Debug.Log(Database.wordDatas);
 	}
 
+
+	#endregion
+
+	#region Screens
+
+	[SerializeField] private List<ApplicationScreen> m_screens;
+
+	private void CallbackDisplayScreen(ApplicationScreenType type, string[] param = null)
+	{
+		foreach (ApplicationScreen screen in m_screens)
+		{
+			if (screen.type == type)
+				screen.Display(param);
+			else
+				screen.Hide();
+		}
+	}
 
 	#endregion
 

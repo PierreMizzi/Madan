@@ -213,15 +213,17 @@ public class DailyCheck : MonoBehaviour
 
 	#region OnClick
 
+	public const string k_dailyCheckOption = "DailyCheck";
+
 	public void OnClick()
 	{
-		if (m_debugTime < m_startTime)
+		if (isEarly)
 			Debug.Log("Too early !");
 
-		else if (m_startTime < m_debugTime && m_debugTime < m_endTime)
-			Debug.Log("Right on time !");
+		else if (isInTimeFrame)
+			m_applicationChannel.onDisplayScreen.Invoke(ApplicationScreenType.DailyWordHistory, k_dailyCheckOption);
 
-		else if (m_debugTime > m_endTime)
+		else if (isLate)
 			Debug.Log("Too late !");
 	}
 

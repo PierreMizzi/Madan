@@ -1,9 +1,8 @@
 using System;
 using UnityEngine;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : ApplicationScreen
 {
-	[SerializeField] private ApplicationChannel m_applicationChannel;
 
 	[SerializeField] private DailyWordUI m_dailyWordUI;
 
@@ -22,6 +21,11 @@ public class MainMenu : MonoBehaviour
 	private void CallbackRefreshDailyWorld(WordData data)
 	{
 		m_dailyWordUI.Refresh(data);
+	}
+
+	public void OnClickDailyWordHistoryButton()
+	{
+		m_applicationChannel.onDisplayScreen.Invoke(ApplicationScreenType.DailyWordHistory);
 	}
 
 }

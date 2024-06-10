@@ -6,7 +6,7 @@ using UnityEngine;
 /// 3 main features :
 /// 
 /// </summary>
-public class DailyWordManager
+public class DailyWordManager : MonoBehaviour
 {
 
 	public Stack<WordData> dailyWords = new Stack<WordData>();
