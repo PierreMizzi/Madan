@@ -2,14 +2,6 @@ using System;
 using TMPro;
 using UnityEngine;
 
-/*
-3 states :
- - Not Available
- - Available
- - Checked
- - Missed
-*/
-
 public class DailyCheck : MonoBehaviour
 {
 
@@ -39,23 +31,28 @@ public class DailyCheck : MonoBehaviour
 
 	private void Awake()
 	{
+
+		Debug.Log(m_type + "");
 		m_startTime = DateTime.Parse(DateTime.Now.ToShortDateString() + " " + m_startHourSettings);
 		m_endTime = DateTime.Parse(DateTime.Now.ToShortDateString() + " " + m_endHourSettings);
 
 		m_availableHoursLabel.text = $"{m_startTime:t}-{m_endTime:t}";
 
 		if (m_applicationChannel != null)
+		{
 			m_applicationChannel.onAppDataLoaded += CallbackAppDataLoaded;
-
+			m_applicationChannel.onCheckDailyCheck += CallbackCheck;
+		}
 	}
-
 
 	private void OnDestroy()
 	{
 		if (m_applicationChannel != null)
+		{
 			m_applicationChannel.onAppDataLoaded -= CallbackAppDataLoaded;
+			m_applicationChannel.onCheckDailyCheck -= CallbackCheck;
+		}
 	}
-
 
 	#endregion
 
@@ -92,16 +89,26 @@ public class DailyCheck : MonoBehaviour
 		ManageStatus();
 	}
 
+	private void CallbackCheck(DailyCheckType type)
+	{
+		if (type == m_type)
+		{
+			data.checkTime = DateTime.Now;
+			data.hasBeenChecked = true;
+			SetStatus(DailyCheckStatus.Checked);
+		}
+	}
+
 	/// <summary> 
 	///	If it's a new day, we reset DailyCHeckData
 	/// </summary>
 	private void ManageData()
 	{
-		Debug.Log($"{DateTime.Now:d}");
-		Debug.Log($"{data.checkTime:d}");
+		// Debug.Log($"{DateTime.Now:d}");
+		// Debug.Log($"{data.checkTime:d}");
 
-		Debug.Log($"{DateTime.Now.ToShortDateString()}");
-		Debug.Log($"{data.checkTime.ToShortDateString()}");
+		// Debug.Log($"{DateTime.Now.ToShortDateString()}");
+		// Debug.Log($"{data.checkTime.ToShortDateString()}");
 
 		if (DateTime.Now.ToShortDateString() != data.checkTime.ToShortDateString())
 			Clear();
@@ -109,11 +116,11 @@ public class DailyCheck : MonoBehaviour
 
 	private void ManageData(DateTime time)
 	{
-		Debug.Log($"{time:d}");
-		Debug.Log($"{data.checkTime:d}");
+		// Debug.Log($"{time:d}");
+		// Debug.Log($"{data.checkTime:d}");
 
-		Debug.Log($"{time.ToShortDateString()}");
-		Debug.Log($"{data.checkTime.ToShortDateString()}");
+		// Debug.Log($"{time.ToShortDateString()}");
+		// Debug.Log($"{data.checkTime.ToShortDateString()}");
 
 		if (time.ToShortDateString() != data.checkTime.ToShortDateString())
 			Clear();
@@ -194,6 +201,7 @@ public class DailyCheck : MonoBehaviour
 	{
 		m_statusLabel.text = "Checked";
 		m_animator.SetInteger(k_status, (int)DailyCheckStatus.Checked);
+
 	}
 
 	private void SetStatus_Missed()
@@ -220,8 +228,12 @@ public class DailyCheck : MonoBehaviour
 		if (isEarly)
 			Debug.Log("Too early !");
 
-		else if (isInTimeFrame)
-			m_applicationChannel.onDisplayScreen.Invoke(ApplicationScreenType.DailyWordHistory, k_dailyCheckOption);
+		else if (isInTimeFrame && !data.hasBeenChecked)
+			m_applicationChannel.onDisplayScreen.Invoke(
+				ApplicationScreenType.DailyWordHistory,
+				k_dailyCheckOption,
+				(int)m_type + ""
+			);
 
 		else if (isLate)
 			Debug.Log("Too late !");
@@ -264,4 +276,5 @@ public class DailyCheck : MonoBehaviour
 	}
 
 	#endregion
+
 }

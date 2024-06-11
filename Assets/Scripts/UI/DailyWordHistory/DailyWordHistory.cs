@@ -1,11 +1,29 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
+
+/*
+
+    TODO : Locked / Unlocked on WordDataRect
+    TODO : DailyWordHistory updates its WordDataRect
+
+
+
+    Cliquer sur un DailyCheck
+
+    if(1 dailyWord.isLocked == true)
+    DailyWordHistory en mode "Pick a word"
+
+    -> Click on WordData
+    - WordData is unlocked
+    - SaveManager saves
+*/
 
 public class DailyWordHistory : ApplicationScreen
 {
     [SerializeField] private RectTransform m_container;
     [SerializeField] private WordDataRect m_wordDataRectPrefab;
     [SerializeField] private DailyWordManager m_manager;
+    private List<WordDataRect> m_wordDataRects = new List<WordDataRect>();
 
     #region MonoBehaviour
 
@@ -38,7 +56,8 @@ public class DailyWordHistory : ApplicationScreen
         {
             WordDataRect wordDataRect = Instantiate(m_wordDataRectPrefab, m_container);
             wordDataRect.gameObject.SetActive(true);
-            wordDataRect.SetWordData(dailyWord, index);
+            wordDataRect.Initialize(this, dailyWord, index);
+            m_wordDataRects.Add(wordDataRect);
             index++;
         }
     }
@@ -48,8 +67,11 @@ public class DailyWordHistory : ApplicationScreen
         base.Display(options);
         if (options.Length != 0)
         {
-            if (options[0] == "DailyCheck")
-                Debug.Log("");
+            if (options[0] == DailyCheck.k_dailyCheckOption)
+            {
+                SetUnlockable();
+                m_dailyCheckType = (DailyCheckType)int.Parse(options[1]);
+            }
         }
     }
 
@@ -57,5 +79,41 @@ public class DailyWordHistory : ApplicationScreen
     {
         m_applicationChannel.onDisplayScreen.Invoke(ApplicationScreenType.MainMenu);
     }
+
+    #region Lock / Unlocked
+
+    /// <summary> 
+    /// Type of the DailyCheck from which the DailyWordHistory entered its unlockable state
+    /// When unlocking a WordDataRect, it checks the related DailyCheck on MainMenu
+    /// </summary>
+    private DailyCheckType m_dailyCheckType;
+
+    private void SetUnlockable()
+    {
+        foreach (WordDataRect rect in m_wordDataRects)
+        {
+            if (rect.state == WordDataRectState.Locked)
+                rect.SetUnlockable();
+        }
+    }
+
+    public void UnsetUnlockable()
+    {
+        foreach (WordDataRect rect in m_wordDataRects)
+        {
+            if (rect.state == WordDataRectState.Unlockable)
+                rect.SetLocked();
+        }
+        m_applicationChannel.onCheckDailyCheck.Invoke(m_dailyCheckType);
+        m_dailyCheckType = DailyCheckType.None;
+
+        // Saves : 
+        //  - The newly unlocked status of WordData
+        //  - The checked status on appropriate DailyCheck
+        SaveManager.Save();
+    }
+
+
+    #endregion
 
 }

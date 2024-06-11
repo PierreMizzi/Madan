@@ -45,7 +45,7 @@ public class DailyWordManager : MonoBehaviour
 		if (dailyWords.Count == 0)
 			return true;
 		else
-			return dailyWords.Peek().date.Day != DateTime.Now.Day;
+			return dailyWords.Peek().dateChosen.Day != DateTime.Now.Day;
 	}
 
 	#endregion
@@ -57,7 +57,8 @@ public class DailyWordManager : MonoBehaviour
 	public WordData PickNewDailyWord()
 	{
 		WordData newWord = Database.PickRandomWord();
-		newWord.date = DateTime.Now;
+		newWord.dateChosen = DateTime.Now;
+		newWord.dateUnlocked = DateTime.Now;
 
 		if (IsAlreadyADailyWord(newWord))
 			return PickNewDailyWord();
@@ -131,7 +132,7 @@ public class DailyWordManager : MonoBehaviour
 		if (dailyWords.Count == 0)
 			return true;
 		else
-			return dailyWords.Peek().date.Day != dateNow.Day;
+			return dailyWords.Peek().dateChosen.Day != dateNow.Day;
 	}
 
 	/// <summary> 

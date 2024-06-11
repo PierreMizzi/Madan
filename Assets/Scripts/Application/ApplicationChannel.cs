@@ -13,6 +13,8 @@ public class ApplicationChannel : ScriptableObject
 
 	public DisplayScreenDelegate onDisplayScreen;
 
+	public CheckDailyCheckDelegate onCheckDailyCheck;
+
 	private void OnEnable()
 	{
 		onRefreshDailyWord = (WordData data) => { };
@@ -21,9 +23,13 @@ public class ApplicationChannel : ScriptableObject
 		onDatabaseLoaded = () => { };
 
 		onDisplayScreen = (ApplicationScreenType type, string[] options) => { };
+
+		onCheckDailyCheck = (DailyCheckType type) => { };
 	}
 
 }
 
 public delegate void WordDataDelegate(WordData data);
 public delegate void DisplayScreenDelegate(ApplicationScreenType type, params string[] options);
+
+public delegate void CheckDailyCheckDelegate(DailyCheckType type);
