@@ -4,26 +4,25 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ApplicationChannel", menuName = "ApplicationChannel", order = 0)]
 public class ApplicationChannel : ScriptableObject
 {
-	/// MainMenu
-
-	public WordDataDelegate onRefreshDailyWord;
-
+	// Application
 	public Action onAppDataLoaded;
 	public Action onDatabaseLoaded;
-
 	public DisplayScreenDelegate onDisplayScreen;
 
+	/// MainMenu
+	public WordDataDelegate onRefreshDailyWord;
+	public Action onRefreshDailyCheck;
 	public CheckDailyCheckDelegate onCheckDailyCheck;
 
 	private void OnEnable()
 	{
-		onRefreshDailyWord = (WordData data) => { };
-
+		// Application
 		onAppDataLoaded = () => { };
 		onDatabaseLoaded = () => { };
-
 		onDisplayScreen = (ApplicationScreenType type, string[] options) => { };
 
+		onRefreshDailyWord = (WordData data) => { };
+		onRefreshDailyCheck = () => { };
 		onCheckDailyCheck = (DailyCheckType type) => { };
 	}
 

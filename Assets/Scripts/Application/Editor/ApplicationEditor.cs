@@ -10,7 +10,6 @@ public class ApplicationEditor : Editor
 		m_application = (Application)target;
 
 		GUIStyle style = new GUIStyle();
-		style.fontSize = 25;
 		style.fontStyle = FontStyle.Bold;
 		EditorGUILayout.LabelField("Date is MM/DD/YYYY", style);
 		base.OnInspectorGUI();
@@ -30,8 +29,12 @@ public class ApplicationEditor : Editor
 			m_application.LogDataBase();
 
 
-		if (GUILayout.Button("Clear All Data"))
-			m_application.ClearAppData();
+		EditorGUILayout.LabelField("Clear application", style);
+		if (GUILayout.Button("Clear Daily Words"))
+			m_application.ClearDailyWords();
+
+		if (GUILayout.Button("Reset Daily Check"))
+			m_application.ResetDailyCheck();
 
 
 

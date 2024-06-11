@@ -14,6 +14,12 @@ public class DailyCheckData
 	public DateTime checkTime;
 	public bool hasBeenChecked;
 
+	public void Reset()
+	{
+		checkTime = new DateTime();
+		hasBeenChecked = false;
+	}
+
 	public override string ToString()
 	{
 		string data = $"type : {type} \n";

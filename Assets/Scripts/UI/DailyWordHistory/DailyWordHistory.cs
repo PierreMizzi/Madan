@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,8 +6,6 @@ using UnityEngine;
 
     TODO : Locked / Unlocked on WordDataRect
     TODO : DailyWordHistory updates its WordDataRect
-
-
 
     Cliquer sur un DailyCheck
 
@@ -32,13 +31,19 @@ public class DailyWordHistory : ApplicationScreen
         m_wordDataRectPrefab.gameObject.SetActive(false);
 
         if (m_applicationChannel != null)
+        {
             m_applicationChannel.onAppDataLoaded += CallbackAppDataLoaded;
+            m_applicationChannel.onRefreshDailyCheck += CallbackRefreshDailyCheck;
+        }
     }
 
     private void OnDestroy()
     {
         if (m_applicationChannel != null)
+        {
             m_applicationChannel.onAppDataLoaded -= CallbackAppDataLoaded;
+            m_applicationChannel.onRefreshDailyCheck -= CallbackRefreshDailyCheck;
+        }
     }
 
     #endregion
@@ -111,6 +116,15 @@ public class DailyWordHistory : ApplicationScreen
         //  - The newly unlocked status of WordData
         //  - The checked status on appropriate DailyCheck
         SaveManager.Save();
+    }
+
+    /// <summary> 
+    /// Called when DailyCheck are reset, which means all unlocked WordDataRect are now locked
+    /// </summary>
+    private void CallbackRefreshDailyCheck()
+    {
+        foreach (WordDataRect rect in m_wordDataRects)
+            rect.ManageLockedUnlocked();
     }
 
 

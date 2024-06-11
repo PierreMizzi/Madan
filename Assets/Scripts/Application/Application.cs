@@ -102,11 +102,31 @@ public class Application : MonoBehaviour
 		m_applicationChannel.onAppDataLoaded.Invoke();
 	}
 
-	public void ClearAppData()
+	public void ClearDailyWords()
 	{
 		m_dailyWordManager.ClearDailyWorlds();
 		SaveManager.data.dailyWords.Clear();
 		SaveManager.Save();
+	}
+
+	public void ResetDailyCheck()
+	{
+		// Resets all ApplicationData.dailyCheckData
+		SaveManager.data.dailyCheckMorning.Reset();
+		SaveManager.data.dailyCheckNoon.Reset();
+		SaveManager.data.dailyCheckEvening.Reset();
+
+		// Locks all ApplicationData.dailyWords except today's word
+		int count = SaveManager.data.dailyWords.Count;
+		for (int i = 0; i < count; i++)
+		{
+			if (i != count - 1)
+				SaveManager.data.dailyWords[i].dateUnlocked = new DateTime();
+		}
+
+		SaveManager.Save();
+
+		m_applicationChannel.onRefreshDailyCheck.Invoke();
 	}
 
 	public void LogApplicationData()
@@ -132,7 +152,6 @@ public class Application : MonoBehaviour
 		Debug.Log("### Database");
 		Debug.Log(Database.wordDatas);
 	}
-
 
 	#endregion
 
