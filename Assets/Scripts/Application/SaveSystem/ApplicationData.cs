@@ -11,6 +11,8 @@ public class ApplicationData : BaseApplicationData
 	public DailyCheckData dailyCheckNoon;
 	public DailyCheckData dailyCheckEvening;
 
+	public TrialData trial;
+
 	public override string ToString()
 	{
 		string data = "List<WordData> dailyWorlds : \n";

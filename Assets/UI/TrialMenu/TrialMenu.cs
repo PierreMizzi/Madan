@@ -1,7 +1,9 @@
 using UnityEngine;
 
 /*
-	InputField
+
+-	Trial button is activated
+----> Click on Trial Button in MainMenu
 	
 
 */
@@ -9,6 +11,6 @@ using UnityEngine;
 public class TrialMenu : ApplicationScreen
 {
 
-
+	
 
 }
