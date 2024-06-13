@@ -31,7 +31,6 @@ public class DailyCheck : MonoBehaviour
 
 	private void Awake()
 	{
-		Debug.Log(m_type + "");
 		m_startTime = DateTime.Parse(DateTime.Now.ToShortDateString() + " " + m_startHourSettings);
 		m_endTime = DateTime.Parse(DateTime.Now.ToShortDateString() + " " + m_endHourSettings);
 
@@ -45,9 +44,10 @@ public class DailyCheck : MonoBehaviour
 		}
 	}
 
-	private void CallbackRefresh()
+	private void OnApplicationFocus(bool focusStatus)
 	{
-		ManageStatus();
+		if (focusStatus)
+			ManageStatus();
 	}
 
 	private void OnDestroy()
@@ -73,7 +73,6 @@ public class DailyCheck : MonoBehaviour
 
 	private void CallbackAppDataLoaded()
 	{
-		Debug.Log("CallbackAppDataLoaded");
 		switch (m_type)
 		{
 			case DailyCheckType.Morning:
@@ -103,6 +102,11 @@ public class DailyCheck : MonoBehaviour
 			data.hasBeenChecked = true;
 			SetStatus(DailyCheckStatus.Checked);
 		}
+	}
+
+	private void CallbackRefresh()
+	{
+		ManageStatus();
 	}
 
 	/// <summary> 

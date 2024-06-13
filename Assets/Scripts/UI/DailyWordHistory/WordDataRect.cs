@@ -19,7 +19,6 @@ public class WordDataRect : MonoBehaviour
     [SerializeField] private GameObject m_lockedImage;
     [SerializeField] private GameObject m_unlockableImage;
 
-
     public void Initialize(DailyWordHistory manager, WordData wordData, int index)
     {
         m_manager = manager;
@@ -39,7 +38,7 @@ public class WordDataRect : MonoBehaviour
         if (m_state == WordDataRectState.Unlockable)
         {
             SetUnlocked();
-            m_manager.UnsetUnlockable();
+            m_manager.ManageAfterUnlocking();
         }
     }
 

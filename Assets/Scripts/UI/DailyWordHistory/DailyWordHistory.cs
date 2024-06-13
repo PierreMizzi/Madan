@@ -24,6 +24,8 @@ public class DailyWordHistory : ApplicationScreen
     [SerializeField] private DailyWordManager m_manager;
     private List<WordDataRect> m_wordDataRects = new List<WordDataRect>();
 
+
+
     #region MonoBehaviour
 
     private void Awake()
@@ -74,7 +76,7 @@ public class DailyWordHistory : ApplicationScreen
         {
             if (options[0] == DailyCheck.k_dailyCheckOption)
             {
-                SetUnlockable();
+                SetState(DailyWordHistoryState.Unlocking);
                 m_dailyCheckType = (DailyCheckType)int.Parse(options[1]);
             }
         }
@@ -82,8 +84,50 @@ public class DailyWordHistory : ApplicationScreen
 
     public void OnClickBackButton()
     {
+        if (m_state == DailyWordHistoryState.Unlocking)
+            SetState(DailyWordHistoryState.Normal);
+
         m_applicationChannel.onDisplayScreen.Invoke(ApplicationScreenType.MainMenu);
     }
+
+    #region State
+
+    private DailyWordHistoryState m_state;
+
+    private void SetState(DailyWordHistoryState state)
+    {
+        m_state = state;
+
+        switch (state)
+        {
+            case DailyWordHistoryState.Normal:
+                SetStateNormal();
+                break;
+            case DailyWordHistoryState.Unlocking:
+                SetStateUnlocking();
+                break;
+        }
+    }
+
+    private void SetStateUnlocking()
+    {
+        foreach (WordDataRect rect in m_wordDataRects)
+        {
+            if (rect.state == WordDataRectState.Locked)
+                rect.SetUnlockable();
+        }
+    }
+
+    private void SetStateNormal()
+    {
+        foreach (WordDataRect rect in m_wordDataRects)
+        {
+            if (rect.state == WordDataRectState.Unlockable)
+                rect.SetLocked();
+        }
+    }
+
+    #endregion
 
     #region Lock / Unlocked
 
@@ -93,22 +137,10 @@ public class DailyWordHistory : ApplicationScreen
     /// </summary>
     private DailyCheckType m_dailyCheckType;
 
-    private void SetUnlockable()
+    public void ManageAfterUnlocking()
     {
-        foreach (WordDataRect rect in m_wordDataRects)
-        {
-            if (rect.state == WordDataRectState.Locked)
-                rect.SetUnlockable();
-        }
-    }
+        SetState(DailyWordHistoryState.Normal);
 
-    public void UnsetUnlockable()
-    {
-        foreach (WordDataRect rect in m_wordDataRects)
-        {
-            if (rect.state == WordDataRectState.Unlockable)
-                rect.SetLocked();
-        }
         m_applicationChannel.onCheckDailyCheck.Invoke(m_dailyCheckType);
         m_dailyCheckType = DailyCheckType.None;
 
