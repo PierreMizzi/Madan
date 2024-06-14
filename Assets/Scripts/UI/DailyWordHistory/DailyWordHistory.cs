@@ -4,9 +4,6 @@ using UnityEngine;
 
 /*
 
-    TODO : Locked / Unlocked on WordDataRect
-    TODO : DailyWordHistory updates its WordDataRect
-
     Cliquer sur un DailyCheck
 
     if(1 dailyWord.isLocked == true)

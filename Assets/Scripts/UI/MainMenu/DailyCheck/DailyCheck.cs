@@ -46,8 +46,8 @@ public class DailyCheck : MonoBehaviour
 
 	private void OnApplicationFocus(bool focusStatus)
 	{
-		if (focusStatus)
-			ManageStatus();
+		if (SaveManager.data != null && focusStatus)
+			ManageState();
 	}
 
 	private void OnDestroy()
@@ -64,8 +64,8 @@ public class DailyCheck : MonoBehaviour
 
 	#region Status
 
-	private DailyCheckStatus m_status;
-	[SerializeField] private TextMeshProUGUI m_statusLabel;
+	private CommonStatus m_state;
+	[SerializeField] private TextMeshProUGUI m_textLabel;
 
 	private bool isEarly { get { return DateTime.Now < m_startTime; } }
 	private bool isInTimeFrame { get { return m_startTime < DateTime.Now && DateTime.Now < m_endTime; } }
@@ -91,7 +91,7 @@ public class DailyCheck : MonoBehaviour
 		}
 
 		ManageData();
-		ManageStatus();
+		ManageState();
 	}
 
 	private void CallbackCheck(DailyCheckType type)
@@ -100,13 +100,13 @@ public class DailyCheck : MonoBehaviour
 		{
 			data.checkTime = DateTime.Now;
 			data.hasBeenChecked = true;
-			SetStatus(DailyCheckStatus.Checked);
+			SetState(CommonStatus.Checked);
 		}
 	}
 
 	private void CallbackRefresh()
 	{
-		ManageStatus();
+		ManageState();
 	}
 
 	/// <summary> 
@@ -136,88 +136,88 @@ public class DailyCheck : MonoBehaviour
 			Clear();
 	}
 
-	public void ManageStatus()
+	public void ManageState()
 	{
 		if (data.hasBeenChecked)
-			SetStatus(DailyCheckStatus.Checked);
+			SetState(CommonStatus.Checked);
 
 		else
 		{
 			if (isEarly)
-				SetStatus(DailyCheckStatus.Unavailable);
+				SetState(CommonStatus.Unavailable);
 
 			else if (isInTimeFrame)
-				SetStatus(DailyCheckStatus.Available);
+				SetState(CommonStatus.Available);
 
 			else if (isLate)
-				SetStatus(DailyCheckStatus.Missed);
+				SetState(CommonStatus.Missed);
 		}
 	}
 
-	private void ManageStatus(DateTime time)
+	private void ManageState(DateTime time)
 	{
 		if (data.hasBeenChecked)
-			SetStatus(DailyCheckStatus.Checked);
+			SetState(CommonStatus.Checked);
 
 		else
 		{
 			if (time < m_startTime)
-				SetStatus(DailyCheckStatus.Unavailable);
+				SetState(CommonStatus.Unavailable);
 
 			else if (m_startTime < time && time < m_endTime)
-				SetStatus(DailyCheckStatus.Available);
+				SetState(CommonStatus.Available);
 
 			else if (time > m_endTime)
-				SetStatus(DailyCheckStatus.Missed);
+				SetState(CommonStatus.Missed);
 		}
 	}
 
-	private void SetStatus(DailyCheckStatus status)
+	private void SetState(CommonStatus state)
 	{
-		m_status = status;
+		m_state = state;
 
-		switch (m_status)
+		switch (m_state)
 		{
-			case DailyCheckStatus.Unavailable:
-				SetStatus_Unavailable();
+			case CommonStatus.Unavailable:
+				SetState_Unavailable();
 				break;
-			case DailyCheckStatus.Available:
-				SetStatus_Available();
+			case CommonStatus.Available:
+				SetState_Available();
 				break;
-			case DailyCheckStatus.Checked:
-				SetStatus_Checked();
+			case CommonStatus.Checked:
+				SetState_Checked();
 				break;
-			case DailyCheckStatus.Missed:
-				SetStatus_Missed();
+			case CommonStatus.Missed:
+				SetState_Missed();
 				break;
 			default:
 				break;
 		}
 	}
 
-	private void SetStatus_Unavailable()
+	private void SetState_Unavailable()
 	{
-		m_statusLabel.text = "Wait";
-		m_animator.SetInteger(k_status, (int)DailyCheckStatus.Unavailable);
+		m_textLabel.text = "Wait";
+		m_animator.SetInteger(k_state, (int)CommonStatus.Unavailable);
 	}
 
-	private void SetStatus_Available()
+	private void SetState_Available()
 	{
-		m_statusLabel.text = "Available";
-		m_animator.SetInteger(k_status, (int)DailyCheckStatus.Available);
+		m_textLabel.text = "Available";
+		m_animator.SetInteger(k_state, (int)CommonStatus.Available);
 	}
 
-	private void SetStatus_Checked()
+	private void SetState_Checked()
 	{
-		m_statusLabel.text = "Checked";
-		m_animator.SetInteger(k_status, (int)DailyCheckStatus.Checked);
+		m_textLabel.text = "Checked";
+		m_animator.SetInteger(k_state, (int)CommonStatus.Checked);
 
 	}
 
-	private void SetStatus_Missed()
+	private void SetState_Missed()
 	{
-		m_statusLabel.text = "Missed";
-		m_animator.SetInteger(k_status, (int)DailyCheckStatus.Missed);
+		m_textLabel.text = "Missed";
+		m_animator.SetInteger(k_state, (int)CommonStatus.Missed);
 	}
 
 	#endregion
@@ -225,7 +225,7 @@ public class DailyCheck : MonoBehaviour
 	#region Animation
 
 	[SerializeField] private Animator m_animator;
-	private const string k_status = "Status";
+	public const string k_state = "Status";
 
 	#endregion
 
@@ -264,7 +264,7 @@ public class DailyCheck : MonoBehaviour
 		m_debugTime = DateTime.Parse(m_debugTimeString);
 
 		ManageData(m_debugTime);
-		ManageStatus(m_debugTime);
+		ManageState(m_debugTime);
 	}
 
 	[ContextMenu("Set Checked")]

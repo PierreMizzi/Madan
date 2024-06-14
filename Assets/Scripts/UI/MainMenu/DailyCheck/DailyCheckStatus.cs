@@ -1,4 +1,4 @@
-enum DailyCheckStatus
+enum CommonStatus
 {
 	Unavailable,
 	Available,

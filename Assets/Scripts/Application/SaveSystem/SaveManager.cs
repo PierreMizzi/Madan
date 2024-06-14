@@ -14,13 +14,21 @@ public static class SaveManager
 	{
 		data = BaseSaveManager.Load<ApplicationData>();
 
+		bool needSave = false;
+
 		if (data.dailyCheckMorning == null)
 		{
 			data.dailyCheckMorning = new DailyCheckData(DailyCheckType.Morning);
 			data.dailyCheckNoon = new DailyCheckData(DailyCheckType.Noon);
 			data.dailyCheckEvening = new DailyCheckData(DailyCheckType.Evening);
-			Save();
+			needSave = true;
 		}
+
+		if (data.trial == null)
+			data.trial = new TrialData();
+
+		if (needSave)
+			Save();
 	}
 
 	public static void Save()

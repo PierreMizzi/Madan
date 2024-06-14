@@ -419,11 +419,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_applicationChannel: {fileID: 11400000, guid: 27c584fd3877fff4ab4b38fab9567823, type: 2}
-  m_type: 0
+  m_type: 1
   m_availableHoursLabel: {fileID: 6798719751589129449}
   m_startHourSettings: 09:00:00
   m_endHourSettings: 12:00:00
-  m_statusLabel: {fileID: 3515996587754243452}
+  m_textLabel: {fileID: 3515996587754243452}
   m_animator: {fileID: 1028737853741994208}
   m_debugTimeString: 09/06/2024 09:00:00
 --- !u!95 &1028737853741994208
