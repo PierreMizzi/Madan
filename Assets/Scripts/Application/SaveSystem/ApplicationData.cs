@@ -5,6 +5,8 @@ using PierreMizzi.Useful.SaveSystem;
 [Serializable]
 public class ApplicationData : BaseApplicationData
 {
+	public int userLevel;
+
 	public List<WordData> dailyWords;
 
 	public DailyCheckData dailyCheckMorning;

@@ -14,6 +14,9 @@ public class ApplicationChannel : ScriptableObject
 	public Action onRefreshDailyCheck;
 	public CheckDailyCheckDelegate onCheckDailyCheck;
 
+	// TrialMenu
+	
+
 	private void OnEnable()
 	{
 		// Application
@@ -30,5 +33,4 @@ public class ApplicationChannel : ScriptableObject
 
 public delegate void WordDataDelegate(WordData data);
 public delegate void DisplayScreenDelegate(ApplicationScreenType type, params string[] options);
-
 public delegate void CheckDailyCheckDelegate(DailyCheckType type);
