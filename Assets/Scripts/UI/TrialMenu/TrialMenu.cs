@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
-using PierreMizzi.Useful;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Diagnostics;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 /*
@@ -19,13 +15,13 @@ using UnityEngine.UI;
 
 	-> Fail PopUp
 
-
 */
 
 public class TrialMenu : ApplicationScreen
 {
 
 	#region Behaviour
+
 
 	private enum TrialState
 	{
@@ -38,7 +34,9 @@ public class TrialMenu : ApplicationScreen
 
 	private TrialState m_state;
 
-	private List<WordData> dailyWords { get { return SaveManager.data.dailyWords; } }
+	private ApplicationData data { get { return data; } }
+
+	private List<WordData> dailyWords { get { return data.dailyWords; } }
 
 	private int m_currentIndex;
 
@@ -46,8 +44,8 @@ public class TrialMenu : ApplicationScreen
 	{
 		get
 		{
-			int index = dailyWords.Count - 1 - m_currentIndex;
-			return SaveManager.data.dailyWords[index];
+			int index = data.dailyWords.Count - 1 - m_currentIndex;
+			return data.dailyWords[index];
 		}
 	}
 
@@ -61,6 +59,9 @@ public class TrialMenu : ApplicationScreen
 
 	private void StartTrial()
 	{
+		m_backButton.gameObject.SetActive(true);
+		m_progressContainer.gameObject.SetActive(true);
+
 		m_state = TrialState.Ongoing;
 		m_currentIndex = 0;
 		SetUpWord();
@@ -72,10 +73,10 @@ public class TrialMenu : ApplicationScreen
 		m_currentIndex = 0;
 
 		// Saving
-		SaveManager.data.trial.hasBeenPassed = true;
-		SaveManager.data.trial.passDate = DateTime.Now;
+		data.trial.hasBeenPassed = true;
+		data.trial.passDate = DateTime.Now;
 
-		SaveManager.data.userLevel++;
+		data.userLevel++;
 
 		SaveManager.Save();
 
@@ -100,7 +101,7 @@ public class TrialMenu : ApplicationScreen
 	private void SetUpWord()
 	{
 		m_dateLabel.text = m_currentWord.dateChosen.ToLongDateString();
-		m_progressLabel.text = $"{m_currentIndex + 1}/{dailyWords.Count}";
+		m_progressLabel.text = $"{m_currentIndex + 1}/{data.dailyWords.Count}";
 	}
 
 	/// <summary> 
@@ -116,7 +117,7 @@ public class TrialMenu : ApplicationScreen
 			m_inputField.text = "";
 
 			// Check is last index
-			if (m_currentIndex == dailyWords.Count - 1)
+			if (m_currentIndex == data.dailyWords.Count - 1)
 				TrialSuccess();
 			else
 				NextWord();
@@ -178,7 +179,9 @@ public class TrialMenu : ApplicationScreen
 	[Header("UI")]
 	[SerializeField] private TMP_InputField m_inputField;
 	[SerializeField] private TextMeshProUGUI m_dateLabel;
+	[SerializeField] private RectTransform m_progressContainer;
 	[SerializeField] private TextMeshProUGUI m_progressLabel;
+	[SerializeField] private Button m_backButton;
 
 	public void OnClickValidate()
 	{
@@ -202,13 +205,17 @@ public class TrialMenu : ApplicationScreen
 
 	private void DisplaySuccessPopUp()
 	{
+		// UI
+		m_backButton.gameObject.SetActive(false);
+		m_progressContainer.gameObject.SetActive(false);
+
 		// Date ordinal
-		int count = dailyWords.Count;
+		int count = data.dailyWords.Count;
 		string daysCount = count + GetOrdinalSuffix(count);
 
 		// TODO : NTA : Random success message everytime
 		// Full SuccessMessage
-		m_successMessage.text = $"It's your {daysCount} day in a row ! You've reached level {SaveManager.data.userLevel}!";
+		m_successMessage.text = $"It's your {daysCount} day in a row ! You've reached level {data.userLevel}!";
 
 		m_successPopUp.Display();
 	}
@@ -243,6 +250,35 @@ public class TrialMenu : ApplicationScreen
 
 	#endregion
 
+	#region Failed PopUp
+
+	[Header("Failed PopUp")]
+	[SerializeField] private TextMeshProUGUI m_failedMessage;
+
+	[SerializeField] private BasePopUp m_failedPopUp;
+
+	private const string k_failedMessage = "Last word is wrong unfortunately, ";
+
+	private void DisplayFailedPopUp()
+	{
+
+		m_failedPopUp.Display();
+
+		data.trial.hasBeenPassed = true;
+		data.trial.passDate = DateTime.Now;
+
+		data.userLevel--;
+
+		data.dailyWords.RemoveAt(data.dailyWords.Count - 1);
+
+		SaveManager.Save();
+
+
+		// m_failedMessage =
+	}
+
+	#endregion
+
 	#region Correct Feedback
 
 	[SerializeField] private Animator m_correctFeedbackAnimator;
@@ -253,4 +289,5 @@ public class TrialMenu : ApplicationScreen
 	}
 
 	#endregion
+
 }

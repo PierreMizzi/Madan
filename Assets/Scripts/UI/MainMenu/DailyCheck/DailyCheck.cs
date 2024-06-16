@@ -114,11 +114,13 @@ public class DailyCheck : MonoBehaviour
 	/// </summary>
 	private void ManageData()
 	{
-		// Debug.Log($"{DateTime.Now:d}");
-		// Debug.Log($"{data.checkTime:d}");
+		{
+			// Debug.Log($"{DateTime.Now:d}");
+			// Debug.Log($"{data.checkTime:d}");
 
-		// Debug.Log($"{DateTime.Now.ToShortDateString()}");
-		// Debug.Log($"{data.checkTime.ToShortDateString()}");
+			// Debug.Log($"{DateTime.Now.ToShortDateString()}");
+			// Debug.Log($"{data.checkTime.ToShortDateString()}");
+		}
 
 		if (DateTime.Now.ToShortDateString() != data.checkTime.ToShortDateString())
 			Clear();
@@ -126,11 +128,13 @@ public class DailyCheck : MonoBehaviour
 
 	private void ManageData(DateTime time)
 	{
-		// Debug.Log($"{time:d}");
-		// Debug.Log($"{data.checkTime:d}");
+		{
+			// Debug.Log($"{time:d}");
+			// Debug.Log($"{data.checkTime:d}");
 
-		// Debug.Log($"{time.ToShortDateString()}");
-		// Debug.Log($"{data.checkTime.ToShortDateString()}");
+			// Debug.Log($"{time.ToShortDateString()}");
+			// Debug.Log($"{data.checkTime.ToShortDateString()}");
+		}
 
 		if (time.ToShortDateString() != data.checkTime.ToShortDateString())
 			Clear();

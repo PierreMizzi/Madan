@@ -10,6 +10,7 @@ public class TrialButton : MonoBehaviour
 
 	private void CallbackAppDataLoaded()
 	{
+		ManageData();
 		ManageState();
 	}
 
@@ -23,6 +24,8 @@ public class TrialButton : MonoBehaviour
 
 	public void OnClick()
 	{
+
+		// TODO : DEBUG : 
 		m_applicationChannel.onDisplayScreen.Invoke(ApplicationScreenType.TrialMenu);
 
 		return;
@@ -34,6 +37,21 @@ public class TrialButton : MonoBehaviour
 
 		else if (m_timeFrame.IsLate())
 			Debug.Log("Too late !");
+	}
+
+	private void ManageData()
+	{
+		if (DateTime.Now.ToShortDateString() != SaveManager.data.trial.passDate.ToShortDateString())
+			Clear();
+	}
+
+	[ContextMenu("Clear")]
+	public void Clear()
+	{
+		Debug.Log("Cleared !");
+		SaveManager.data.trial.hasBeenPassed = false;
+		SaveManager.data.trial.passDate = new DateTime();
+		SaveManager.Save();
 	}
 
 	#endregion
@@ -123,7 +141,6 @@ public class TrialButton : MonoBehaviour
 	{
 		m_textLabel.text = "Checked";
 		m_animator.SetInteger(DailyCheck.k_state, (int)CommonStatus.Checked);
-
 	}
 
 	#endregion
@@ -168,14 +185,7 @@ public class TrialButton : MonoBehaviour
 		Test();
 	}
 
-	[ContextMenu("Clear")]
-	public void Clear()
-	{
-		Debug.Log("Cleared !");
-		SaveManager.data.trial.hasBeenPassed = false;
-		SaveManager.data.trial.passDate = DateTime.Now;
-		SaveManager.Save();
-	}
+
 
 	#endregion
 
