@@ -71,7 +71,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c0f2c05d1270a814ea188749ffb77517, type: 2}
+  m_Motion: {fileID: 7400000, guid: bbf9165401b23fa4cb7789af9a9318f2, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -108,7 +108,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SuccessPopUp
+  m_Name: FailedPopUp
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Displayed
@@ -151,7 +151,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: df7c457649f3ad4449aa28281d5ca8f8, type: 2}
+  m_Motion: {fileID: 7400000, guid: 799a4f5ee1db86f43b4c81b748ae741e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

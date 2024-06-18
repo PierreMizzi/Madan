@@ -20,8 +20,26 @@ using UnityEngine.UI;
 public class TrialMenu : ApplicationScreen
 {
 
-	#region Behaviour
+	#region MonoBehaviour
 
+	protected override void Awake()
+	{
+		base.Awake();
+
+		// m_inputField.onEndEdit.AddListener(CallbackEndEdit);
+		m_inputField.onValidateInput += CallbackValidateInput;
+	}
+
+	protected override void OnDestroy()
+	{
+		base.OnDestroy();
+
+		m_inputField.onValidateInput -= CallbackValidateInput;
+	}
+
+	#endregion
+
+	#region Behaviour
 
 	private enum TrialState
 	{
@@ -34,9 +52,7 @@ public class TrialMenu : ApplicationScreen
 
 	private TrialState m_state;
 
-	private ApplicationData data { get { return data; } }
-
-	private List<WordData> dailyWords { get { return data.dailyWords; } }
+	private ApplicationData data { get { return SaveManager.data; } }
 
 	private int m_currentIndex;
 
@@ -49,7 +65,7 @@ public class TrialMenu : ApplicationScreen
 		}
 	}
 
-	private void CallbackDisplayScreen(ApplicationScreenType type, string[] options)
+	protected override void CallbackDisplayScreen(ApplicationScreenType type, string[] options)
 	{
 		if (type == m_type)
 		{
@@ -89,6 +105,19 @@ public class TrialMenu : ApplicationScreen
 	{
 		m_state = TrialState.Failed;
 		m_currentIndex = 0;
+
+		// SaveManager
+
+		data.trial.hasBeenPassed = true;
+		data.trial.passDate = DateTime.Now;
+
+		data.userLevel--;
+
+		data.dailyWords.RemoveAt(0);
+
+		SaveManager.Save();
+
+		DisplayFailedPopUp();
 		Debug.Log("Trial is failed");
 	}
 
@@ -128,7 +157,19 @@ public class TrialMenu : ApplicationScreen
 
 	#endregion
 
-	#region Callbacks
+	#region UI
+
+	[Header("UI")]
+	[SerializeField] private TMP_InputField m_inputField;
+	[SerializeField] private TextMeshProUGUI m_dateLabel;
+	[SerializeField] private RectTransform m_progressContainer;
+	[SerializeField] private TextMeshProUGUI m_progressLabel;
+	[SerializeField] private Button m_backButton;
+
+	public void OnClickValidate()
+	{
+		CheckInputText();
+	}
 
 	// TODO : Refacto with same method, set-up for testing reasons
 	// Change also in Editor
@@ -153,40 +194,6 @@ public class TrialMenu : ApplicationScreen
 		return addedChar;
 	}
 
-	#endregion
-
-	#region MonoBehaviour
-
-	private void Awake()
-	{
-		if (m_applicationChannel != null)
-			m_applicationChannel.onDisplayScreen += CallbackDisplayScreen;
-
-		// m_inputField.onEndEdit.AddListener(CallbackEndEdit);
-		m_inputField.onValidateInput += CallbackValidateInput;
-	}
-
-	private void OnDestroy()
-	{
-		if (m_applicationChannel != null)
-			m_applicationChannel.onDisplayScreen -= CallbackDisplayScreen;
-	}
-
-	#endregion
-
-	#region UI
-
-	[Header("UI")]
-	[SerializeField] private TMP_InputField m_inputField;
-	[SerializeField] private TextMeshProUGUI m_dateLabel;
-	[SerializeField] private RectTransform m_progressContainer;
-	[SerializeField] private TextMeshProUGUI m_progressLabel;
-	[SerializeField] private Button m_backButton;
-
-	public void OnClickValidate()
-	{
-		CheckInputText();
-	}
 
 	public void OnClickBack()
 	{
@@ -261,20 +268,23 @@ public class TrialMenu : ApplicationScreen
 
 	private void DisplayFailedPopUp()
 	{
+		// UI
+		m_backButton.gameObject.SetActive(false);
+		m_progressContainer.gameObject.SetActive(false);
+
+		m_failedMessage.text =
+		$"Last word is wrong, you failed today's trial. \n We deleted the oldest word in the list of Daily Words.\n This means you're level {data.userLevel} now.";
 
 		m_failedPopUp.Display();
+	}
 
-		data.trial.hasBeenPassed = true;
-		data.trial.passDate = DateTime.Now;
-
-		data.userLevel--;
-
-		data.dailyWords.RemoveAt(data.dailyWords.Count - 1);
-
-		SaveManager.Save();
-
-
-		// m_failedMessage =
+	/// <summary> 
+	///	Called by TrialMenu -> FailedPopUp -> CloseButton
+	/// </summary>
+	public void CloseFailedPopUp()
+	{
+		m_failedPopUp.Close();
+		m_applicationChannel.onDisplayScreen.Invoke(ApplicationScreenType.MainMenu);
 	}
 
 	#endregion

@@ -25,29 +25,26 @@ public class DailyWordHistory : ApplicationScreen
 
     #region MonoBehaviour
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         m_wordDataRectPrefab.gameObject.SetActive(false);
 
         if (m_applicationChannel != null)
-        {
-            m_applicationChannel.onAppDataLoaded += CallbackAppDataLoaded;
             m_applicationChannel.onRefreshDailyCheck += CallbackRefreshDailyCheck;
-        }
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         if (m_applicationChannel != null)
-        {
-            m_applicationChannel.onAppDataLoaded -= CallbackAppDataLoaded;
             m_applicationChannel.onRefreshDailyCheck -= CallbackRefreshDailyCheck;
-        }
     }
 
     #endregion
 
-    private void CallbackAppDataLoaded()
+    protected override void CallbackAppDataLoaded()
     {
         PopulateHistory();
     }

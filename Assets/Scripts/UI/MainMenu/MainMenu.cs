@@ -9,25 +9,28 @@ public class MainMenu : ApplicationScreen
 
 	[SerializeField] private TextMeshProUGUI m_userLevelLabel;
 
-	private void Start()
+	protected override void Awake()
 	{
+		base.Awake();
+
 		if (m_applicationChannel != null)
-		{
 			m_applicationChannel.onRefreshDailyWord += CallbackRefreshDailyWorld;
-			m_applicationChannel.onAppDataLoaded += CallbackAppDataLoaded;
-		}
 	}
 
-	private void OnDestroy()
+	protected override void OnDestroy()
 	{
+		base.OnDestroy();
+
 		if (m_applicationChannel != null)
-		{
 			m_applicationChannel.onRefreshDailyWord -= CallbackRefreshDailyWorld;
-			m_applicationChannel.onAppDataLoaded += CallbackAppDataLoaded;
-		}
 	}
 
-	private void CallbackAppDataLoaded()
+	protected override void CallbackAppDataLoaded()
+	{
+		m_userLevelLabel.text = SaveManager.data.userLevel.ToString();
+	}
+
+	protected override void CallbackDisplayScreen(ApplicationScreenType type, string[] options)
 	{
 		m_userLevelLabel.text = SaveManager.data.userLevel.ToString();
 	}
