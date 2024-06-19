@@ -13,6 +13,8 @@ public class DailyWordManager : MonoBehaviour
 
 	public WordData wordOfTheDay { get { return dailyWords.Peek(); } }
 
+	[SerializeField] private DailyWordUI m_dailyWordUI;
+
 	#region Daily timer
 
 	/// <summary> 
@@ -23,7 +25,7 @@ public class DailyWordManager : MonoBehaviour
 		if (NeedNewDailyWord())
 			dailyWords.Push(PickNewDailyWord());
 
-		// LogDailyWords();
+		m_dailyWordUI.Refresh(wordOfTheDay);
 	}
 
 	/// <summary> 

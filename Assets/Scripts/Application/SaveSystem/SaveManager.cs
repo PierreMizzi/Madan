@@ -25,7 +25,16 @@ public static class SaveManager
 		}
 
 		if (data.trial == null)
+		{
 			data.trial = new TrialData();
+			needSave = true;
+		}
+
+		if (data.userLevel == 0)
+		{
+			data.userLevel = data.dailyWords.Count - 1;
+			needSave = true;
+		}
 
 		if (needSave)
 			Save();

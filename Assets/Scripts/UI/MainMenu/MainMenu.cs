@@ -9,21 +9,7 @@ public class MainMenu : ApplicationScreen
 
 	[SerializeField] private TextMeshProUGUI m_userLevelLabel;
 
-	protected override void Awake()
-	{
-		base.Awake();
 
-		if (m_applicationChannel != null)
-			m_applicationChannel.onRefreshDailyWord += CallbackRefreshDailyWorld;
-	}
-
-	protected override void OnDestroy()
-	{
-		base.OnDestroy();
-
-		if (m_applicationChannel != null)
-			m_applicationChannel.onRefreshDailyWord -= CallbackRefreshDailyWorld;
-	}
 
 	protected override void CallbackAppDataLoaded()
 	{
@@ -33,11 +19,6 @@ public class MainMenu : ApplicationScreen
 	protected override void CallbackDisplayScreen(ApplicationScreenType type, string[] options)
 	{
 		m_userLevelLabel.text = SaveManager.data.userLevel.ToString();
-	}
-
-	private void CallbackRefreshDailyWorld(WordData data)
-	{
-		m_dailyWordUI.Refresh(data);
 	}
 
 	public void OnClickDailyWordHistoryButton()

@@ -87,6 +87,7 @@ public class TrialMenu : ApplicationScreen
 	{
 		m_state = TrialState.Success;
 		m_currentIndex = 0;
+		m_inputField.text = "";
 
 		// Saving
 		data.trial.hasBeenPassed = true;
@@ -105,15 +106,18 @@ public class TrialMenu : ApplicationScreen
 	{
 		m_state = TrialState.Failed;
 		m_currentIndex = 0;
+		m_inputField.text = "";
 
 		// SaveManager
-
 		data.trial.hasBeenPassed = true;
 		data.trial.passDate = DateTime.Now;
 
-		data.userLevel--;
-
-		data.dailyWords.RemoveAt(0);
+		if (data.userLevel > 1)
+		{
+			data.userLevel--;
+			data.dailyWords.RemoveAt(0);
+			m_applicationChannel.onChangeDailyWords.Invoke();
+		}
 
 		SaveManager.Save();
 
@@ -139,6 +143,10 @@ public class TrialMenu : ApplicationScreen
 	private void CheckInputText()
 	{
 		Debug.Log($"m_inputField.text = {m_inputField.text}");
+
+		if (String.IsNullOrEmpty(m_inputField.text))
+			return;
+
 		if (m_inputField.text == m_currentWord.kanji)
 		{
 			Debug.Log("Correct !");

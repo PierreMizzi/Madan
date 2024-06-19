@@ -31,8 +31,9 @@ public class Application : MonoBehaviour
 
 		// Uncomment to reset dailyWorld everytime you press play
 		// ClearDailyWords();
-
 		ManageDailyWord();
+
+
 		m_applicationChannel.onDisplayScreen.Invoke(ApplicationScreenType.MainMenu);
 	}
 
@@ -50,15 +51,6 @@ public class Application : MonoBehaviour
 		m_applicationChannel.onDatabaseLoaded.Invoke();
 	}
 
-	[ContextMenu("label")]
-	private void SerializeDateTime()
-	{
-		string test = JsonUtility.ToJson(DateTime.Today);
-		Debug.Log(test);
-		Debug.Log(DateTime.Now);
-		Debug.Log(DateTime.Today);
-	}
-
 	#region Daily Word
 
 	// [SerializeField] private string dateWord = "May 21, 1996";
@@ -67,9 +59,8 @@ public class Application : MonoBehaviour
 
 	public void ManageDailyWord()
 	{
-		DateTime dateTime = DateTime.Parse(dateNow);
 		m_dailyWordManager.ManageNewDailyWord();
-		m_applicationChannel.onRefreshDailyWord.Invoke(m_dailyWordManager.wordOfTheDay);
+		m_applicationChannel.onChangeDailyWords.Invoke();
 		SaveAppData();
 	}
 
@@ -78,7 +69,7 @@ public class Application : MonoBehaviour
 	{
 		DateTime dateTime = DateTime.Parse(dateNow);
 		m_dailyWordManager.ManageNewDailyWord(dateTime);
-		m_applicationChannel.onRefreshDailyWord.Invoke(m_dailyWordManager.wordOfTheDay);
+		m_applicationChannel.onChangeDailyWords.Invoke();
 		SaveAppData();
 	}
 

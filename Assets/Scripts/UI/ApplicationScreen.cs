@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ApplicationScreen : MonoBehaviour
 {
@@ -7,7 +8,8 @@ public class ApplicationScreen : MonoBehaviour
 
 	[SerializeField] protected ApplicationScreenType m_type;
 
-	[SerializeField] protected Canvas m_canvas;
+	protected Canvas m_canvas;
+	protected GraphicRaycaster m_graphicRaycaster;
 
 	public ApplicationScreenType type => m_type;
 
@@ -15,6 +17,9 @@ public class ApplicationScreen : MonoBehaviour
 
 	protected virtual void Awake()
 	{
+		m_canvas = GetComponent<Canvas>();
+		m_graphicRaycaster = GetComponent<GraphicRaycaster>();
+
 		if (m_applicationChannel != null)
 		{
 			m_applicationChannel.onDisplayScreen += CallbackDisplayScreen;
@@ -36,11 +41,13 @@ public class ApplicationScreen : MonoBehaviour
 	public virtual void Display(params string[] options)
 	{
 		m_canvas.enabled = true;
+		m_graphicRaycaster.enabled = true;
 	}
 
 	public virtual void Hide()
 	{
 		m_canvas.enabled = false;
+		m_graphicRaycaster.enabled = false;
 	}
 
 

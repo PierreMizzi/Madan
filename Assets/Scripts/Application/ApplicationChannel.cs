@@ -10,12 +10,12 @@ public class ApplicationChannel : ScriptableObject
 	public DisplayScreenDelegate onDisplayScreen;
 
 	/// MainMenu
-	public WordDataDelegate onRefreshDailyWord;
+	public Action onChangeDailyWords;
 	public Action onRefreshDailyCheck;
 	public CheckDailyCheckDelegate onCheckDailyCheck;
 
 	// TrialMenu
-	
+
 
 	private void OnEnable()
 	{
@@ -24,7 +24,7 @@ public class ApplicationChannel : ScriptableObject
 		onDatabaseLoaded = () => { };
 		onDisplayScreen = (ApplicationScreenType type, string[] options) => { };
 
-		onRefreshDailyWord = (WordData data) => { };
+		onChangeDailyWords = () => { };
 		onRefreshDailyCheck = () => { };
 		onCheckDailyCheck = (DailyCheckType type) => { };
 	}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PierreMizzi.Useful;
 using UnityEngine;
 
 /*
@@ -31,7 +32,16 @@ public class DailyWordHistory : ApplicationScreen
         m_wordDataRectPrefab.gameObject.SetActive(false);
 
         if (m_applicationChannel != null)
+        {
             m_applicationChannel.onRefreshDailyCheck += CallbackRefreshDailyCheck;
+            m_applicationChannel.onChangeDailyWords += CallbackRefreshDailyWord;
+        }
+    }
+
+    private void CallbackRefreshDailyWord()
+    {
+        ClearHistory();
+        PopulateHistory();
     }
 
     protected override void OnDestroy()
@@ -39,15 +49,13 @@ public class DailyWordHistory : ApplicationScreen
         base.OnDestroy();
 
         if (m_applicationChannel != null)
+        {
             m_applicationChannel.onRefreshDailyCheck -= CallbackRefreshDailyCheck;
+            m_applicationChannel.onChangeDailyWords -= CallbackRefreshDailyWord;
+        }
     }
 
     #endregion
-
-    protected override void CallbackAppDataLoaded()
-    {
-        PopulateHistory();
-    }
 
     private void PopulateHistory()
     {
@@ -61,6 +69,15 @@ public class DailyWordHistory : ApplicationScreen
             m_wordDataRects.Add(wordDataRect);
             index++;
         }
+
+
+    }
+
+    public void ClearHistory()
+    {
+        foreach (WordDataRect rect in m_wordDataRects)
+            Destroy(rect.gameObject);
+        m_wordDataRects.Clear();
     }
 
     public override void Display(params string[] options)

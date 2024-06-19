@@ -8,6 +8,5 @@ public class TrialData
 	public bool hasBeenPassed;
 
 	public int trialLevel = 1;
-
-
 }
+
