@@ -17,16 +17,12 @@ public class NotificationManager : MonoBehaviour
 
 	#endregion
 
-	#region Push Notifications
-
-
-
-	#endregion
-
-	#region Notification [Decrepated ?]
+	#region Notification
 
 	private AndroidNotificationChannelGroup group;
 	private AndroidNotificationChannel channel;
+
+	private const string k_mainChannelID = "420";
 
 	private string nowDate
 	{
@@ -39,6 +35,9 @@ public class NotificationManager : MonoBehaviour
 
 	public void Initialize()
 	{
+
+		AndroidNotificationCenter.Initialize();
+
 		// Creates a group & register it
 		group = new AndroidNotificationChannelGroup()
 		{
@@ -99,5 +98,14 @@ public class NotificationManager : MonoBehaviour
 		AndroidNotificationCenter.SendNotification(notification, channel.Id);
 	}
 
+	#endregion
+
+	#region Daily Check
+
+	private void InitializeDailyCheck()
+	{
+		
+	}
+		
 	#endregion
 }

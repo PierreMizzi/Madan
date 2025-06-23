@@ -27,12 +27,13 @@ public class Application : MonoBehaviour
 
 		LoadAppData();
 
+		UnityEngine.Application.targetFrameRate = 60;
+
 		yield return new WaitForSeconds(0.1f);
 
 		// Uncomment to reset dailyWorld everytime you press play
 		// ClearDailyWords();
 		ManageDailyWord();
-
 
 		m_applicationChannel.onDisplayScreen.Invoke(ApplicationScreenType.MainMenu);
 	}
