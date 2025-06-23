@@ -5,9 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
+  - enabled: 1
+    path: Assets/Sandbox/ExactAlarm/ExactAlarm.unity
+    guid: e13609041e87de34bb5f48d162eab278
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 0ae0f4933fd890048846f0ae964ed8ab, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 7ee81b1b010bf5048b8defbfb6d55870, type: 2}
+  m_UseUCBPForAssetBundles: 0
