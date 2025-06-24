@@ -14,21 +14,8 @@ public class NotificationSettings : ScriptableObject
 	public string largeIcon;
 	public NotificationStyle style;
 
-	public enum FireTimeType
-	{
-		Now,
-		DelayedFromNow,
-
-		[Obsolete]
-		Scheduled,
-	}
-
-	public FireTimeType fireTimeType;
-
 	[Tooltip("TimeSpan : X = Days | Y = Hours | Z = Minutes | W = Seconds")]
 	public Vector4 delayedTimespan;
-
-	public bool IsRepeated;
 
 	[Tooltip("TimeSpan : X = Days | Y = Hours | Z = Minutes | W = Seconds")]
 	public Vector4 repeatIntervals;
@@ -37,15 +24,9 @@ public class NotificationSettings : ScriptableObject
 	{
 		DateTime fireTime = DateTime.Now;
 
-		switch (fireTimeType)
+		if (delayedTimespan != Vector4.zero)
 		{
-			case FireTimeType.Now:
-				fireTime = DateTime.Now;
-				break;
-
-			case FireTimeType.DelayedFromNow:
-				fireTime += Convert(delayedTimespan);
-				break;
+			fireTime += Convert(delayedTimespan);
 		}
 
 		AndroidNotification notification = new AndroidNotification()
@@ -58,7 +39,7 @@ public class NotificationSettings : ScriptableObject
 			FireTime = fireTime,
 		};
 
-		if (IsRepeated)
+		if (repeatIntervals != Vector4.zero)
 		{
 			notification.RepeatInterval = Convert(repeatIntervals);
 		}

@@ -11,7 +11,6 @@ public class Sandbox : MonoBehaviour
 
 	private const string k_mainChannelID = "420";
 
-
 	public IEnumerator Start()
 	{
 		AndroidNotificationCenter.Initialize();
@@ -44,29 +43,6 @@ public class Sandbox : MonoBehaviour
 		yield return null;
 	}
 
-	public void LogStatus()
-	{
-		string log = $"//////////////// \n";
-		log += $"Log Status : \n";
-
-		log += $"-------------\n";
-		log += $"Notifications Channel : \n";
-		AndroidNotificationChannel[] channels = AndroidNotificationCenter.GetNotificationChannels();
-
-		foreach (AndroidNotificationChannel channel in channels)
-		{
-			log += $"Channel {channel.Name} : Group {channel.Group}\n";
-		}
-		log += $"-------------\n";
-
-		var status = AndroidNotificationCenter.CheckScheduledNotificationStatus(m_oneMinuteNotifID);
-		log += $"OneMinuteNotif : {status}\n";
-		status = AndroidNotificationCenter.CheckScheduledNotificationStatus(m_repeatedNotifID);
-		log += $"RepeatedNotif : {status}\n";
-
-		log += $"////////////////";
-		Debug.Log(log);
-	}
 
 	#region Permissions
 
@@ -93,50 +69,56 @@ public class Sandbox : MonoBehaviour
 
 	#region Debug
 
+	public void LogStatus()
+	{
+		string log = $"//////////////// \n";
+		log += $"Log Status : \n";
+
+		log += $"-------------\n";
+		log += $"Notifications Channel : \n";
+		AndroidNotificationChannel[] channels = AndroidNotificationCenter.GetNotificationChannels();
+
+		foreach (AndroidNotificationChannel channel in channels)
+		{
+			log += $"Channel {channel.Name} : Group {channel.Group}\n";
+		}
+		log += $"-------------\n";
+
+		var status = AndroidNotificationCenter.CheckScheduledNotificationStatus(m_oneMinuteNotifID);
+		log += $"OneMinuteNotif : {status}\n";
+		status = AndroidNotificationCenter.CheckScheduledNotificationStatus(m_repeatedNotifID);
+		log += $"RepeatedNotif : {status}\n";
+
+		log += $"////////////////";
+		Debug.Log(log);
+	}
+
 	#endregion
 
 	#region Functions
 
 	[SerializeField] private NotificationSettings m_oneMinuteSettings;
-
 	private int m_oneMinuteNotifID;
+
+	[SerializeField] private NotificationSettings m_repeatSettings;
+	private int m_repeatedNotifID;
 
 	public void SendNotificationInOneMinute()
 	{
-		// Old
-		{
-		// Debug.Log($"OneMinuteNotif : { DateTime.Now }");
-
-		// AndroidNotification notification = new AndroidNotification()
-		// {
-		// 	Title = "One Minute Notification !",
-		// 	Text = "This is my notification, pretty dope !",
-		// 	FireTime = DateTime.Now.AddSeconds(10),
-		// };
-		}
-
+		Debug.Log($"OneMinuteNotif : {DateTime.Now}");
 		AndroidNotification notification = m_oneMinuteSettings.Create();
 
 		m_oneMinuteNotifID = AndroidNotificationCenter.SendNotification(notification, k_mainChannelID);
 	}
 
-	private int m_repeatedNotifID;
-
 	public void SendNotificationRepeated()
 	{
 		Debug.Log($"RepeatedNotif : {DateTime.Now}");
-
-		AndroidNotification notification = new AndroidNotification()
-		{
-			Title = "Repeated Notification 	!",
-			Text = "This is my notification, pretty dope !",
-			FireTime = DateTime.Now,
-			RepeatInterval = new TimeSpan(0, 1, 0),
-		};
+		AndroidNotification notification = m_repeatSettings.Create();
 
 		m_repeatedNotifID = AndroidNotificationCenter.SendNotification(notification, k_mainChannelID);
 	}
-		
+
 	#endregion
 
 

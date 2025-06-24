@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 285047c3061e82c4284621aee989bed6, type: 3}
-  m_Name: NotificationSettings_OneMinute
+  m_Name: NotificationSettings_Repeated
   m_EditorClassIdentifier: 
-  title: One Minute Notification !
-  text: This is my notification, pretty dope ! From ScriptableObject !!!
+  title: Repeat Notification !
+  text: This is my repeat notification, pretty dope ! From ScriptableObject !!!
   smallIcon: 
   largeIcon: 
   style: 0
-  fireTimeType: 1
   delayedTimespan: {x: 0, y: 0, z: 0, w: 10}
-  IsRepeated: 0
-  repeatIntervals: {x: 0, y: 0, z: 0, w: 0}
+  repeatIntervals: {x: 0, y: 0, z: 0, w: 30}

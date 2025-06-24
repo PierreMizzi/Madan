@@ -24,6 +24,12 @@ public static class SaveManager
 			needSave = true;
 		}
 
+		if (data.notificationManagerData == null)
+		{
+			data.notificationManagerData = new NotificationManagerSaveData();
+			needSave = true;
+		}
+
 		if (data.trial == null)
 		{
 			data.trial = new TrialData();

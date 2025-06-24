@@ -13,6 +13,8 @@ public class ApplicationData : BaseApplicationData
 	public DailyCheckData dailyCheckNoon;
 	public DailyCheckData dailyCheckEvening;
 
+	public NotificationManagerSaveData notificationManagerData;
+
 	public TrialData trial;
 
 	public override string ToString()

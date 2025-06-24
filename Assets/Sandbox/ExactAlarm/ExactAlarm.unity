@@ -1139,7 +1139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9661d9ee44ae2464b90a0700edabbbbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_oneMinuteSettings: {fileID: 0}
+  m_oneMinuteSettings: {fileID: 11400000, guid: 4d5a02182c7ea5142aa3d789e62c9cd7, type: 2}
+  m_repeatSettings: {fileID: 11400000, guid: 1b19858445e80ec43ac0a935f5f00dda, type: 2}
 --- !u!4 &1882468165
 Transform:
   m_ObjectHideFlags: 0

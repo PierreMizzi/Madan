@@ -12,30 +12,41 @@ public class NotificationManager : MonoBehaviour
 
 	private void Start()
 	{
-		Initialize();
+		if (m_applicationChannel != null)
+		{
+			m_applicationChannel.onAppDataLoaded += Initialize;
+		}
+	}
+
+	private void OnDestroy()
+	{
+		if (m_applicationChannel != null)
+		{
+			m_applicationChannel.onAppDataLoaded -= Initialize;
+		}
 	}
 
 	#endregion
 
-	#region Notification
+	#region Behaviour
+
+	[SerializeField] private ApplicationChannel m_applicationChannel;
 
 	private AndroidNotificationChannelGroup group;
 	private AndroidNotificationChannel channel;
 
 	private const string k_mainChannelID = "420";
 
-	private string nowDate
+	public NotificationManagerSaveData SavedData
 	{
 		get
 		{
-			DateTime now = DateTime.Now;
-			return $"{now.Month}/{now.Day}/{now.Year}";
+			return SaveManager.data.notificationManagerData;
 		}
 	}
 
 	public void Initialize()
 	{
-
 		AndroidNotificationCenter.Initialize();
 
 		// Creates a group & register it
@@ -49,7 +60,7 @@ public class NotificationManager : MonoBehaviour
 		// Creates a channel & register it
 		channel = new AndroidNotificationChannel()
 		{
-			Id = "420",
+			Id = k_mainChannelID,
 			Name = "Default Channel",
 			Importance = Importance.Default,
 			Description = "Generic notifications",
@@ -57,55 +68,50 @@ public class NotificationManager : MonoBehaviour
 		};
 		AndroidNotificationCenter.RegisterNotificationChannel(channel);
 
-		// // Morning
+		ManageDailyCheckNotifications();
 
-		// DateTime morningNotificationTime = DateTime.Parse(nowDate + "09:30:00");
-
-		// var morningNotification = new AndroidNotification
-		// {
-		// 	Title = "Morning notification !",
-		// 	Text = "Tu as un nouveau mot du jour !",
-		// 	FireTime = morningNotificationTime
-		// };
-
-		// AndroidNotificationCenter.SendNotification(morningNotification, channel.Id);
-
-		// // Noon
-		// DateTime noonNotificationTime = DateTime.Parse(nowDate + "13:00:00");
-
-		// var noonNotification = new AndroidNotification
-		// {
-		// 	Title = "Noon notification !",
-		// 	Text = "Tu as un nouveau mot du jour !",
-		// 	FireTime = morningNotificationTime
-		// };
-
-		// AndroidNotificationCenter.SendNotification(morningNotification, channel.Id);
-
-	}
-
-	[ContextMenu("SendSimpleNotification")]
-	public void SendSimpleNotification()
-	{
-		Debug.Log("SendSimpleNotification");
-		var notification = new AndroidNotification
-		{
-			Title = "Notification sympa !",
-			Text = "Aller il faut réviser",
-			FireTime = System.DateTime.Now.AddMinutes(1)
-		};
-
-		AndroidNotificationCenter.SendNotification(notification, channel.Id);
 	}
 
 	#endregion
 
 	#region Daily Check
 
-	private void InitializeDailyCheck()
+	[Header("Daily Check Notifications")]
+
+	[SerializeField] private NotificationSettings m_morningDailyCheckSettings;
+	[SerializeField] private NotificationSettings m_afternoonDailyCheckSettings;
+	[SerializeField] private NotificationSettings m_eveningDailyCheckSettings;
+	[SerializeField] private NotificationSettings m_trialSettings;
+
+	private void ManageDailyCheckNotifications()
 	{
-		
+		bool needsSave = false;
+
+		// Morning
+		if (SavedData.morningNotificationID == 0)
+		{
+			AndroidNotification morningNotification = m_morningDailyCheckSettings.Create();
+			SavedData.morningNotificationID = AndroidNotificationCenter.SendNotification(morningNotification, channel.Id);
+			needsSave = true;
+		}
+
+		// Afternoon
+		AndroidNotification afternoonNotification = m_afternoonDailyCheckSettings.Create();
+		int afternoonNotificationID = AndroidNotificationCenter.SendNotification(afternoonNotification, channel.Id);
+
+		// Evening
+		AndroidNotification eveningNotification = m_eveningDailyCheckSettings.Create();
+		int eveningNotificationID = AndroidNotificationCenter.SendNotification(eveningNotification, channel.Id);
+
+		// Evening
+		AndroidNotification trialNotification = m_trialSettings.Create();
+		int trialNotificationID = AndroidNotificationCenter.SendNotification(eveningNotification, channel.Id);
+
+
 	}
-		
+
+	public 
+
+
 	#endregion
 }
