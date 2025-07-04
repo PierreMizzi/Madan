@@ -14,11 +14,14 @@ public class NotificationSettings : ScriptableObject
 	public string largeIcon;
 	public NotificationStyle style;
 
+	[Tooltip("HH:MM:SS AM/PM")]
+	public string fixedFireTime = "12:15:12 PM";
+
 	[Tooltip("TimeSpan : X = Days | Y = Hours | Z = Minutes | W = Seconds")]
 	public Vector4 delayedTimespan;
 
 	[Tooltip("TimeSpan : X = Days | Y = Hours | Z = Minutes | W = Seconds")]
-	public Vector4 repeatIntervals;
+	public Vector4 repeatTimespan;
 
 	public AndroidNotification Create()
 	{
@@ -27,6 +30,11 @@ public class NotificationSettings : ScriptableObject
 		if (delayedTimespan != Vector4.zero)
 		{
 			fireTime += Convert(delayedTimespan);
+		}
+		else if (String.IsNullOrEmpty(fixedFireTime) == false)
+		{
+			fireTime = DateTime.Parse(DateTime.Now.Date.ToString("d") + " " + fixedFireTime);
+			Debug.Log($"fireTime : {fireTime}");
 		}
 
 		AndroidNotification notification = new AndroidNotification()
@@ -39,9 +47,9 @@ public class NotificationSettings : ScriptableObject
 			FireTime = fireTime,
 		};
 
-		if (repeatIntervals != Vector4.zero)
+		if (repeatTimespan != Vector4.zero)
 		{
-			notification.RepeatInterval = Convert(repeatIntervals);
+			notification.RepeatInterval = Convert(repeatTimespan);
 		}
 
 		return notification;

@@ -18,7 +18,11 @@
 
 - Add real daily alarm
 
-### Improvements
+### Improvements 
+
+WHATS THE LOOP ???
+
+GAMIFICATION ???
 
 ### Slashcards
 
@@ -43,3 +47,7 @@
 - 🟥 
 
 ### Daily Word
+
+## Tips and Tricks
+
+- Don't Forget to use the ScreenSwitcher inside MainScene to switch between important canvases

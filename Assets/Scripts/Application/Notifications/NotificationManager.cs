@@ -85,33 +85,103 @@ public class NotificationManager : MonoBehaviour
 
 	private void ManageDailyCheckNotifications()
 	{
-		bool needsSave = false;
+		int needsSave = 0;
 
 		// Morning
-		if (SavedData.morningNotificationID == 0)
-		{
-			AndroidNotification morningNotification = m_morningDailyCheckSettings.Create();
-			SavedData.morningNotificationID = AndroidNotificationCenter.SendNotification(morningNotification, channel.Id);
-			needsSave = true;
-		}
+		needsSave += ManageNotification(m_morningDailyCheckSettings, ref SavedData.morningNotificationID);
 
 		// Afternoon
-		AndroidNotification afternoonNotification = m_afternoonDailyCheckSettings.Create();
-		int afternoonNotificationID = AndroidNotificationCenter.SendNotification(afternoonNotification, channel.Id);
+		needsSave += ManageNotification(m_afternoonDailyCheckSettings, ref SavedData.afternoonNotificationID);
 
 		// Evening
-		AndroidNotification eveningNotification = m_eveningDailyCheckSettings.Create();
-		int eveningNotificationID = AndroidNotificationCenter.SendNotification(eveningNotification, channel.Id);
+		needsSave += ManageNotification(m_eveningDailyCheckSettings, ref SavedData.eveningNotificationID);
 
-		// Evening
-		AndroidNotification trialNotification = m_trialSettings.Create();
-		int trialNotificationID = AndroidNotificationCenter.SendNotification(eveningNotification, channel.Id);
+		// Trial
+		needsSave += ManageNotification(m_trialSettings, ref SavedData.trialNotificationID);
 
+		if (needsSave > 0)
+		{
+			SaveManager.Save();
+		}
 
+		LogStatus();
 	}
 
-	public 
+	private int ManageNotification(NotificationSettings settings, ref int notificationIDSaveData)
+	{
+		if (CheckNeedsScheduling(ref notificationIDSaveData))
+		{
+			Debug.Log($"NOTIF | Creating a notification titled \"{settings.title} \"");
+			AndroidNotification notification = settings.Create();
+			notificationIDSaveData = AndroidNotificationCenter.SendNotification(notification, channel.Id);
+			return 1;
+		}
+		else
+		{
+			Debug.Log($"NOTIF | Notification \"{settings.title}\" already exists with ID {notificationIDSaveData}.");
+			return 0;
+		}
+	}
 
+	private bool CheckNeedsScheduling(ref int notificationIDSaveData)
+	{
+		// notificationIDSaveData is invalid, we need to schedule it
+		if (notificationIDSaveData == 0 || notificationIDSaveData == -1)
+		{
+			return true;
+		}
+
+		var status = AndroidNotificationCenter.CheckScheduledNotificationStatus(notificationIDSaveData);
+
+		switch (status)
+		{
+			default:
+			case NotificationStatus.Unavailable:
+			case NotificationStatus.Unknown:
+				return true;
+
+			case NotificationStatus.Scheduled:
+			case NotificationStatus.Delivered:
+				return false; 
+		}
+	}
 
 	#endregion
+
+	#region Debug
+
+	public void LogStatus()
+	{
+		string log = $"//////////////// \n";
+		log += $"Log Status : \n";
+
+		log += $"-------------\n";
+		log += $"Notifications Channel : \n";
+		AndroidNotificationChannel[] channels = AndroidNotificationCenter.GetNotificationChannels();
+
+		foreach (AndroidNotificationChannel channel in channels)
+		{
+			log += $"Channel {channel.Name} : Group {channel.Group}\n";
+		}
+		log += $"-------------\n";
+		log += $"Daily Check Statuses : \n";
+
+		var status = AndroidNotificationCenter.CheckScheduledNotificationStatus(SavedData.morningNotificationID);
+		log += $"Morning notif : {status}\n";
+
+		status = AndroidNotificationCenter.CheckScheduledNotificationStatus(SavedData.eveningNotificationID);
+		log += $"Evening notif : {status}\n";
+
+		status = AndroidNotificationCenter.CheckScheduledNotificationStatus(SavedData.afternoonNotificationID);
+		log += $"Afternoon notif : {status}\n";
+
+		status = AndroidNotificationCenter.CheckScheduledNotificationStatus(SavedData.trialNotificationID);
+		log += $"Trial notif : {status}\n";
+
+		log += $"////////////////";
+		Debug.Log(log);
+	}
+
+	#endregion
+
 }

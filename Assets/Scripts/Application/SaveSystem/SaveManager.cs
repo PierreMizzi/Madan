@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using PierreMizzi.Useful.SaveSystem;
 using UnityEngine;
@@ -15,6 +16,19 @@ public static class SaveManager
 		data = BaseSaveManager.Load<ApplicationData>();
 
 		bool needSave = false;
+
+		if (data.dailyWords == null)
+		{
+			data.dailyWords = new List<WordData>();
+			needSave = true;
+		}
+
+		if (data.userLevel == 0)
+		{
+			data.userLevel = data.dailyWords.Count - 1;
+			data.userLevel = Mathf.Max(data.userLevel, 1);
+			needSave = true;
+		}
 
 		if (data.dailyCheckMorning == null)
 		{
@@ -36,11 +50,7 @@ public static class SaveManager
 			needSave = true;
 		}
 
-		if (data.userLevel == 0)
-		{
-			data.userLevel = data.dailyWords.Count - 1;
-			needSave = true;
-		}
+
 
 		if (needSave)
 			Save();

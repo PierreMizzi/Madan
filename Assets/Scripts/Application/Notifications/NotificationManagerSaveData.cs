@@ -7,8 +7,8 @@ public class NotificationManagerSaveData
 		Daily Checks notifications
 	*/
 	public int morningNotificationID;
-	public int m_afternoonNotificationID;
-	public int m_eveningNotificationID;
+	public int afternoonNotificationID;
+	public int eveningNotificationID;
 
-	public int m_trialNotificationID;
+	public int trialNotificationID;
 }
