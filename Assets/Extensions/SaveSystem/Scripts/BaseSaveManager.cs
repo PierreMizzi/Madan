@@ -47,6 +47,8 @@ namespace PierreMizzi.Useful.SaveSystem
 			}
 		}
 
+		public static bool isLoaded = false; 
+
 		#endregion
 
 		#region Methods 
@@ -60,7 +62,7 @@ namespace PierreMizzi.Useful.SaveSystem
 			{
 				using StreamReader streamReader = new StreamReader(path);
 				string dataString = streamReader.ReadToEnd();
-
+				isLoaded = true;
 				// JSONConvert
 				return JsonConvert.DeserializeObject<T>(dataString);
 			}

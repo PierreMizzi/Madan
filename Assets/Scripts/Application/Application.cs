@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PierreMizzi.Useful.SaveSystem;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary> 
 /// Root class of the application
@@ -31,6 +32,8 @@ public class Application : MonoBehaviour
 
 		yield return new WaitForSeconds(0.1f);
 
+		CheckDayData();
+
 		// Uncomment to reset dailyWorld everytime you press play
 		// ClearDailyWords();
 		ManageDailyWord();
@@ -51,6 +54,92 @@ public class Application : MonoBehaviour
 		Parser.LoadDatabase();
 		m_applicationChannel.onDatabaseLoaded.Invoke();
 	}
+
+	#region DayData
+
+	public void CheckDayData()
+	{
+		DateTime today = DateTime.Now;
+		DayData dayData = SaveManager.data.dayDatas.Find(data => data.date.ToString("d") == today.Date.ToString("d"));
+
+		if (dayData == null)
+		{
+			dayData = new DayData(today, PickRandomDailyWords());
+			SaveManager.data.dayDatas.Add(dayData);
+			Debug.Log($"New DayData created for {today}");
+		}
+		else
+		{
+			Debug.Log($"DayData already exists for {today}");
+		}
+	}
+
+	public void ClearDayData()
+	{
+		DateTime today = DateTime.Now;
+		DayData dayData = SaveManager.data.dayDatas.Find(data => data.date.ToString("d") == today.Date.ToString("d"));
+
+		if (dayData != null)
+		{
+			SaveManager.data.dayDatas.Remove(dayData);
+			SaveManager.Save();
+			Debug.Log($"DayData reset for {today}");
+		}
+		else
+		{
+			Debug.LogWarning($"No DayData found for {today} to reset");
+		}
+	}
+
+	private List<int> PickRandomDailyWords(int wordCount = 5)
+	{
+		List<int> newIDs = new List<int>();
+
+		List<int> neverSeenIDs = GetNeverSeenWordDataIDs();
+
+		for (int i = 0; i < wordCount; i++)
+		{
+			newIDs.Add(neverSeenIDs[Random.Range(0, neverSeenIDs.Count)]);
+			neverSeenIDs.Remove(newIDs[i]);
+		}
+
+		return newIDs;
+	}
+
+	/// <summary>
+	/// 
+	///  </summary>
+	private List<int> GetNeverSeenWordDataIDs()
+	{
+		//Creates a list of all the daily words previously seen by the user.
+		List<int> seenIDs = new List<int>();
+		foreach (DayData dayData in SaveManager.data.dayDatas)
+		{
+			seenIDs.AddRange(dayData.newDailyWordsIDs);
+		}
+
+		List<int> neverSeenIDs = new List<int>();
+		foreach (WordData wordData in Database.wordDatas)
+		{
+			if (seenIDs.Contains(wordData.ID) == false)
+			{
+				// Word not seen yet, add it to potential new daily words
+				neverSeenIDs.Add(wordData.ID);
+			}
+		}
+
+		return neverSeenIDs;
+	}
+
+	public void LogDayDatas()
+	{
+		string log = $"Title";
+		log += $"content : {0}\n";
+		log += $"////////////////";
+		Debug.Log(log);
+	}
+
+	#endregion
 
 	#region Daily Word
 
@@ -145,6 +234,12 @@ public class Application : MonoBehaviour
 		Debug.Log(Database.wordDatas);
 	}
 
+	[ContextMenu("GiveID")]
+	public void GiveID()
+	{
+		Database.GiveID();
+	}
+
 	#endregion
 
 	#region Screens
@@ -161,6 +256,8 @@ public class Application : MonoBehaviour
 				screen.Hide();
 		}
 	}
+
+
 
 	#endregion
 

@@ -41,12 +41,18 @@ GAMIFICATION ???
 
 ### Daily Checks
 
-- 🟩 Test NotificationSettings
+- 🟥 Test NotificationSettings
 - 🟥 Save the ID of the 4 daily check notifications
 - 🟥 Rework the UI
 - 🟥 
 
 ### Daily Word
+
+### Calendar
+
+- 🟥 Design DayData
+- 🟥 Display DayData on CalendarDay
+- 🟥 Save DayData
 
 ## Tips and Tricks
 

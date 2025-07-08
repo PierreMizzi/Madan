@@ -50,8 +50,6 @@ public static class SaveManager
 			needSave = true;
 		}
 
-
-
 		if (needSave)
 			Save();
 	}

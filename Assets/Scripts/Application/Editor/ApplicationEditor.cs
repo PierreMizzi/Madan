@@ -29,6 +29,9 @@ public class ApplicationEditor : Editor
 		if (GUILayout.Button("Log Database"))
 			m_application.LogDataBase();
 
+		if (GUILayout.Button("Log DayDatas"))
+			m_application.LogDayDatas();
+
 
 		EditorGUILayout.LabelField("Clear application", style);
 		if (GUILayout.Button("Clear Daily Words"))
@@ -37,6 +40,8 @@ public class ApplicationEditor : Editor
 		if (GUILayout.Button("Reset Daily Check"))
 			m_application.ResetDailyCheck();
 
+		if (GUILayout.Button("Clear Today DayData"))
+			m_application.ClearDayData();
 
 
 	}

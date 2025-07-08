@@ -9,6 +9,7 @@ public class ApplicationData : BaseApplicationData
 
 	public List<WordData> dailyWords;
 
+	// 🟥 : Needs to use DayData morningDailyCheckDone instead
 	public DailyCheckData dailyCheckMorning;
 	public DailyCheckData dailyCheckNoon;
 	public DailyCheckData dailyCheckEvening;
@@ -16,6 +17,8 @@ public class ApplicationData : BaseApplicationData
 	public NotificationManagerSaveData notificationManagerData;
 
 	public TrialData trial;
+
+	public List<DayData> dayDatas = new List<DayData>();
 
 	public override string ToString()
 	{
