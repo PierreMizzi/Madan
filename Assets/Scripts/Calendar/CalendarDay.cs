@@ -17,9 +17,15 @@ public class CalendarDay : MonoBehaviour
 
 	[SerializeField] private TextMeshPro m_dayText;
 
+
+
 	#endregion
 
 	#region MonoBehaviour
+
+	protected void Awake()
+	{
+	}
 
 	private void Start()
 	{
@@ -83,7 +89,7 @@ public class CalendarDay : MonoBehaviour
 
 		MathDailyCheckCorners(data);
 	}
-	
+
 	private void MathDailyCheckCorners(DayData data)
 	{
 		if (data == null)
@@ -120,4 +126,5 @@ public class CalendarDay : MonoBehaviour
 	}
 
 	#endregion
+
 }

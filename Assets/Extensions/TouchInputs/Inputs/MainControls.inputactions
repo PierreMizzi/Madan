@@ -1,0 +1,116 @@
+{
+    "name": "MainControls",
+    "maps": [
+        {
+            "name": "MainMap",
+            "id": "f654583f-2ecc-4087-9e22-b582b355cfa6",
+            "actions": [
+                {
+                    "name": "PointerPress",
+                    "type": "Button",
+                    "id": "a31846da-2d0c-42b9-ae96-61a68196f948",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrimaryTap",
+                    "type": "Button",
+                    "id": "634fb96c-64ca-4570-9774-74ee277e78d0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TestSpaceBar",
+                    "type": "Button",
+                    "id": "314a31dd-fb18-448c-9a65-cbbc73446136",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrimaryPress",
+                    "type": "Button",
+                    "id": "62ada1b9-b3f4-4418-8e46-e1053ed8a90b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "97ae249c-9c47-46a8-aa42-3f645444b3b3",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "33115038-c091-4089-9ca0-9f7898f4edba",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrimaryTap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d66141e3-2b11-4fae-b5ed-45dbc2d20715",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrimaryTap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f349b670-76b5-42d8-ab9c-7a1afaeec40c",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TestSpaceBar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bee68cd0-6cd4-43e2-bb1f-478a205aa6f8",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrimaryPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7dcfb4b0-49cc-4f51-9e6f-d6902c9bdddd",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrimaryPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
