@@ -14,6 +14,14 @@ public class SRSDebuggerEditor : Editor {
 			m_target.TestSRSAlgorythm();
 		}
 
+		if (GUILayout.Button("Initialize Test Deck"))
+		{
+			m_target.InitializeDebugDeck();
+		}
+
+		GUILayout.Space(EditorGUIUtility.singleLineHeight);
+		GUILayout.Label("Answer Rating");
+
 		GUILayout.BeginHorizontal();
 
 		if (GUILayout.Button("Forgot"))

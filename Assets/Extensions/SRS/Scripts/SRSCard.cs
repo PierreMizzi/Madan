@@ -1,11 +1,10 @@
 using System;
-using System.Numerics;
-
 
 [Serializable]
 public class SRSCard
 {
 	public int ID;
+
 	public SRSCardStatus status = SRSCardStatus.New;
 
 	/// <summary>

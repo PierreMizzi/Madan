@@ -155,6 +155,12 @@ MonoBehaviour:
     status: 1
     ease: 3.4
     forgottonCount: 2
+  debugDeck:
+    name: DebugDeck
+    SRSSettingsName: SRSSettings
+    allCards: []
+    newCards: []
+    reviewCards: []
 --- !u!4 &280801375
 Transform:
   m_ObjectHideFlags: 0

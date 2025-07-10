@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: SRSSettings
   m_EditorClassIdentifier: 
   description: 
+  dailyNewCardsCount: 5
+  dailyReviewCardsCount: 10
+  resetHour: {x: 0, y: 0, z: 0}
   answerRatingSettings:
   - name: Forgotten
     rating: 1

@@ -13,6 +13,11 @@ public class SRSSettings : ScriptableObject
 	public int dailyNewCardsCount;
 
 	public int dailyReviewCardsCount;
+
+	/// <summary>
+	/// X = Hour | Y = Minutes | Z = Seconds
+	/// </summary>
+	public Vector3 resetHour = new Vector3();
 		
 	#endregion
 
