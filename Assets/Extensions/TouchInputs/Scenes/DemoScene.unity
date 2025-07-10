@@ -259,9 +259,7 @@ MonoBehaviour:
   m_primaryPressAction: {fileID: -1829563210533515542, guid: bb23683828fccf24281e049731528280, type: 3}
   m_swipeDuration: 0
   m_swipeDurationTreshold: 0.5
-  m_swipeDistance: 200
-  m_swipeStartPosition: {x: 0, y: 0}
-  m_swipeDistanceThreshold: 200
+  m_swipeMagnitudeThreshold: 150
   m_primaryHoldAction: {fileID: 0}
 --- !u!1 &2078701567
 GameObject:
