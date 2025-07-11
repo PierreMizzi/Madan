@@ -2,53 +2,56 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SRSSettings", menuName = "SRS/SRSSettings", order = 0)]
-public class SRSSettings : ScriptableObject
+namespace PierreMizzi.Extensions.SRS
 {
-	[TextArea(3, 10)]
-	public string description;
 
-	#region Workload
-
-	public int dailyNewCardsCount;
-
-	public int dailyReviewCardsCount;
-
-	/// <summary>
-	/// X = Hour | Y = Minutes | Z = Seconds
-	/// </summary>
-	public Vector3 resetHour = new Vector3();
-		
-	#endregion
-
-	#region Answer Rating
-
-	[Header("Answer Rating")]
-	public List<SRSAnswerRatingSettings> answerRatingSettings = new List<SRSAnswerRatingSettings>();
-
-	#endregion
-
-	#region Behaviour
-
-	public SRSAnswerRatingSettings GetRatingSettings(SRSAnswerRating rating)
+	[CreateAssetMenu(fileName = "SRSSettings", menuName = "SRS/SRSSettings", order = 0)]
+	public class SRSSettings : ScriptableObject
 	{
-		foreach (SRSAnswerRatingSettings setting in answerRatingSettings)
+		[TextArea(3, 10)]
+		public string description;
+
+		#region Workload
+
+		public int dailyNewCardsCount;
+
+		public int dailyReviewCardsCount;
+
+		/// <summary>
+		/// X = Hour | Y = Minutes | Z = Seconds
+		/// </summary>
+		public Vector3 resetHour = new Vector3();
+
+		#endregion
+
+		#region Answer Rating
+
+		[Header("Answer Rating")]
+		public List<SRSAnswerRatingSettings> answerRatingSettings = new List<SRSAnswerRatingSettings>();
+
+		#endregion
+
+		#region Behaviour
+
+		public SRSAnswerRatingSettings GetRatingSettings(SRSAnswerRating rating)
 		{
-			if (setting.rating == rating)
+			foreach (SRSAnswerRatingSettings setting in answerRatingSettings)
 			{
-				return setting;
+				if (setting.rating == rating)
+				{
+					return setting;
+				}
 			}
+
+			return default;
 		}
 
-		return default;
-	}
+		#endregion
 
-	#endregion
+		#region Debug
 
-	#region Debug
-
-	public bool useCumulativeLastReviewDate = false;
+		public bool useCumulativeLastReviewDate = false;
 		
-	#endregion
-
+		#endregion
+	}
 }

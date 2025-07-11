@@ -3,7 +3,6 @@ using System;
 [Serializable]
 public class WordData
 {
-
 	public int ID;
 	public string kanji;
 	public string furigana;

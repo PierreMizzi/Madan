@@ -1,13 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SRSDebuggingSettings", menuName = "SRS/SRSDebuggingSettings", order = 0)]
-public class SRSDebuggingSettings : ScriptableObject
+namespace PierreMizzi.Extensions.SRS
 {
 
-	[TextArea(3, 10)]
-	public string description;
+	[CreateAssetMenu(fileName = "SRSDebuggingSettings", menuName = "SRS/SRSDebuggingSettings", order = 0)]
+	public class SRSDebuggingSettings : ScriptableObject
+	{
 
-	public List<SRSAnswerRating> successiveRatings = new List<SRSAnswerRating> { };
+		[TextArea(3, 10)]
+		public string description;
 
+		public List<SRSAnswerRating> successiveRatings = new List<SRSAnswerRating> { };
+
+	}
 }
