@@ -32,7 +32,7 @@ Material:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _RainbowRotate: -0.59
-    - _RainbowSensitivity: 0.2
+    - _RainbowSensitivity: 0.4
     m_Colors:
     - _RainbowTillingOffset: {r: 16, g: 16, b: 0, a: 0}
   m_BuildTextureStacks: []
