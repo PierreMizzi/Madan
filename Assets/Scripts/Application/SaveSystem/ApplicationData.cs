@@ -7,6 +7,7 @@ public class ApplicationData : BaseApplicationData
 {
 	public int userLevel;
 
+	// 🟥 : Might be decrepated
 	public List<WordData> dailyWords;
 
 	// 🟥 : Needs to use DayData morningDailyCheckDone instead
@@ -14,11 +15,15 @@ public class ApplicationData : BaseApplicationData
 	public DailyCheckData dailyCheckNoon;
 	public DailyCheckData dailyCheckEvening;
 
-	public NotificationManagerSaveData notificationManagerData;
-
 	public TrialData trial;
 
+	// Notification
+	public NotificationManagerSaveData notificationManagerData;
+
+	// Calendar
 	public List<DayData> dayDatas = new List<DayData>();
+
+	// SRS
 
 	public override string ToString()
 	{
