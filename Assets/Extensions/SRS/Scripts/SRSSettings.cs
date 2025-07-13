@@ -29,6 +29,16 @@ namespace PierreMizzi.Extensions.SRS
 		[Header("Answer Rating")]
 		public List<SRSAnswerRatingSettings> answerRatingSettings = new List<SRSAnswerRatingSettings>();
 
+		/// <summary>
+		/// During a study session, maximum interval time possible for a SRSCard 
+		/// to be still reviewable during this study session.
+		/// Otherwise, the card is considered reviewed for today
+		/// X = Days | Y = Hours | Z = Minutes
+		/// </summary>
+		public Vector3 reviewTimeTreshold;
+
+		public TimeSpan reviewTimespanTreshold => SRSUtility.ToTimeSpan(reviewTimeTreshold);
+
 		#endregion
 
 		#region Behaviour

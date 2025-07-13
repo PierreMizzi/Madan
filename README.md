@@ -42,7 +42,7 @@ GAMIFICATION ???
 ### Daily Checks
 
 - 🟥 Test NotificationSettings
-- 🟥 Save the ID of the 4 daily check notifications
+- 🟩 Save the ID of the 4 daily check notifications
 - 🟥 Rework the UI
 - 🟥 
 
@@ -54,6 +54,11 @@ GAMIFICATION ???
 - 🟥 Display DayData on CalendarDay
 - 🟥 Save DayData
 
-## Tips and Tricks
+### SRS
+
+- 🟥 Save Decks
+- 🟥 
+
+## Tools
 
 - Don't Forget to use the ScreenSwitcher inside MainScene to switch between important canvases

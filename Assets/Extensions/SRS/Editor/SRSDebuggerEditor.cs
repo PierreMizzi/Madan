@@ -9,45 +9,98 @@ namespace PierreMizzi.Extensions.SRS.EditorScripts
 	[CustomEditor(typeof(SRSDebugger))]
 	public class SRSDebuggerEditor : Editor
 	{
+		SRSDebugger m_target = null;
+
 		public override void OnInspectorGUI()
 		{
 			base.OnInspectorGUI();
 
-			SRSDebugger m_target = target as SRSDebugger;
+			m_target = target as SRSDebugger;
 
 			if (GUILayout.Button("Test SRS Algorythm"))
 			{
 				m_target.TestSRSAlgorythm();
 			}
 
-			if (GUILayout.Button("Initialize Test Deck"))
+			if (m_target.currentStudySession != null)
 			{
-				m_target.InitializeDebugDeck();
+
 			}
 
 			GUILayout.Space(EditorGUIUtility.singleLineHeight);
-			GUILayout.Label("Answer Rating");
-
-			GUILayout.BeginHorizontal();
-
-			if (GUILayout.Button("Forgot"))
+			if (m_target.debugDeck == null || m_target.debugDeck.allCards.Count == 0)
 			{
+				if (GUILayout.Button("Initialize Test Deck"))
+				{
+					m_target.InitializeDebugDeck();
+				}
+			}
+			else
+			{
+				InspectorGUIForStudySession();
 			}
 
-			if (GUILayout.Button("Hard"))
+		}
+
+		private void InspectorGUIForStudySession()
+		{
+			if (m_target.currentStudySession == null)
 			{
+				if (GUILayout.Button("Start Study Session"))
+				{
+					m_target.StartStudySession();
+				}
 			}
-
-			if (GUILayout.Button("Correct"))
+			else
 			{
+				GUILayout.Label("Study Session");
+
+				if (m_target.isFrontOrBack == SRSCardFace.Front)
+				{
+					EditorGUILayout.PropertyField(serializedObject.FindProperty("currentCardFront"));
+
+					if (GUILayout.Button("Flip"))
+					{
+						m_target.SetCardBack();
+					}
+				}
+				else if (m_target.isFrontOrBack == SRSCardFace.Back)
+				{
+					EditorGUILayout.PropertyField(serializedObject.FindProperty("currentCardFront"));
+					EditorGUILayout.PropertyField(serializedObject.FindProperty("currentCardBack"));
+
+					GUILayout.BeginHorizontal();
+
+					if (GUILayout.Button("Forgot"))
+					{
+						m_target.ManageCardAfterFeedback(SRSAnswerRating.Forgotten);
+					}
+
+					if (GUILayout.Button("Hard"))
+					{
+						m_target.ManageCardAfterFeedback(SRSAnswerRating.Hard);
+					}
+
+					if (GUILayout.Button("Correct"))
+					{
+						m_target.ManageCardAfterFeedback(SRSAnswerRating.Correct);
+					}
+
+					if (GUILayout.Button("Easy"))
+					{
+						m_target.ManageCardAfterFeedback(SRSAnswerRating.Easy);
+					}
+
+					GUILayout.EndHorizontal();
+				}
+
+
+
+				if (GUILayout.Button("Stop Study Session"))
+				{
+					m_target.StopStudySession();
+				}
 			}
-
-			if (GUILayout.Button("Easy"))
-			{
-			}
-
-			GUILayout.EndHorizontal();
-
 		}
 	}
 }

@@ -83,13 +83,9 @@ namespace PierreMizzi.Extensions.SRS
 
 		public static void RefillCards(ref List<SRSCard> currentCards, ref List<SRSCard> candidateCards, int count)
 		{
-			if (currentCards != null || currentCards.Count == 0 ||
-				candidateCards != null || candidateCards.Count == 0)
-			{
-				return;
-			}
-
-			if (count == 0)
+			if (currentCards == null ||
+				candidateCards == null || candidateCards.Count == 0 ||
+				count == 0)
 			{
 				return;
 			}
@@ -185,5 +181,6 @@ namespace PierreMizzi.Extensions.SRS
 		}
 
 		#endregion
+
 	}
 }

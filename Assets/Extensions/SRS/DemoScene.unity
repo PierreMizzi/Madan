@@ -156,11 +156,114 @@ MonoBehaviour:
     ease: 3.4
     forgottonCount: 2
   debugDeck:
-    name: DebugDeck
+    name: Debug Deck
     SRSSettingsName: SRSSettings
-    allCards: []
-    newCards: []
-    reviewCards: []
+    allCards:
+    - ID: 0
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 1
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 2
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 3
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 4
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 5
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 6
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 7
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 8
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 9
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 10
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 11
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 12
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 13
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 14
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 15
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 16
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 17
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 18
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 19
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    dailyNewCards:
+    - ID: 15
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 2
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 11
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 0
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    - ID: 4
+      status: 1
+      ease: 1
+      forgottonCount: 0
+    dailyReviewCards: []
+  isFrontOrBack: 0
+  currentCardFront: 
+  currentCardBack: 
 --- !u!4 &280801375
 Transform:
   m_ObjectHideFlags: 0

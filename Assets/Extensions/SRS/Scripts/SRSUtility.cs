@@ -21,6 +21,13 @@ namespace PierreMizzi.Extensions.SRS
 		Leeched,
 	}
 
+	public enum SRSCardFace
+	{
+		None,
+		Front,
+		Back,
+	}
+
 	[Serializable]
 	public class SRSAnswerRatingSettings
 	{

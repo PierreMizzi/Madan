@@ -11,7 +11,12 @@ namespace PierreMizzi.Extensions.SRS
 		[Header("Test")]
 
 		[SerializeField] private SRSSettings m_SRSsettings;
+
+		#region Test Card
+
+		[Header("Test Card")]
 		[SerializeField] private SRSDebuggingSettings m_debuggingSettings;
+
 		[SerializeField] private SRSCard m_testCard;
 
 		public void ResetTestCard()
@@ -55,17 +60,27 @@ namespace PierreMizzi.Extensions.SRS
 
 		}
 
-		#region Test Multiple Days
+		#endregion
+
+		#region Test Deck
+
+		[Header("Test Deck")]
 
 		public SRSDeck debugDeck;
+		public SRSStudySession currentStudySession;
+		[HideInInspector] public SRSCardFace isFrontOrBack = SRSCardFace.None;
+
+		public string currentCardFront;
+		public string currentCardBack;
 
 		public void InitializeDebugDeck()
 		{
 			List<SRSCard> cards = new List<SRSCard>();
+
 			int length = 20;
 			for (int i = 0; i < length; i++)
 			{
-				SRSCard newCard = new SRSCard() { ID = UnityEngine.Random.Range(0, 1000000) };
+				SRSCard newCard = new SRSCard() { ID = i };
 				cards.Add(newCard);
 			}
 
@@ -73,14 +88,46 @@ namespace PierreMizzi.Extensions.SRS
 
 			SRSManager.settings = new List<SRSSettings>() { m_SRSsettings };
 			SRSManager.DeckDailyReset(debugDeck);
-
 		}
 
 		public void StartStudySession()
 		{
-			SRSStudySession studySession = new SRSStudySession(debugDeck);
-			
+			currentStudySession = new SRSStudySession(debugDeck);
+			SetCardFront();
 		}
+
+		public void SetCardFront()
+		{
+			isFrontOrBack = SRSCardFace.Front;
+			currentCardFront = currentStudySession.currentCard.ID.ToString();
+			currentCardBack = "";
+		}
+
+		public void SetCardBack()
+		{
+			isFrontOrBack = SRSCardFace.Back;
+			currentCardBack = currentStudySession.currentCard.ID.ToString();
+			currentCardBack = ((DayOfWeek)(currentStudySession.currentCard.ID / 7.0f)).ToString();
+		}
+
+		public void ManageCardAfterFeedback(SRSAnswerRating rating)
+		{
+			currentStudySession.ManageCardAfterFeedback(rating);
+
+			currentStudySession.currentCard = currentStudySession.PickNextCard();
+
+			SetCardFront();
+		}
+
+		public void StopStudySession()
+		{
+			currentStudySession = null;
+			isFrontOrBack = SRSCardFace.Front;
+			currentCardFront = "";
+			currentCardBack = "";
+		}
+
+
 
 		#endregion
 
