@@ -50,7 +50,7 @@ namespace PierreMizzi.Extensions.SRS
 			DateTime firstReviewTime = DateTime.Now;
 			foreach (SRSAnswerRating rating in m_debuggingSettings.successiveRatings)
 			{
-				SRSUtility.ManageCardAfterFeedback(m_SRSsettings, m_testCard, rating);
+				SRSUtility.ManageCard(m_SRSsettings, m_testCard, rating);
 				log += $"Review n*{index} with rating : {rating} \n";
 				log += $"Card {m_testCard} \n";
 				index++;
@@ -95,6 +95,8 @@ namespace PierreMizzi.Extensions.SRS
 			debugDeck = new SRSDeck("Debug Deck", "SRSSettings", cards);
 
 			SRSUtility.settings = new List<SRSSettings>() { m_SRSsettings };
+
+			SRSUtility.DeckDailyReset(debugDeck);
 		}
 
 		public void StartStudySession()

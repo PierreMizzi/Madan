@@ -195,7 +195,13 @@ namespace PierreMizzi.Extensions.SRS
 
 		#region Study Session
 
-		public static void ManageCardAfterFeedback(SRSSettings SRSSettings, SRSCard card, SRSAnswerRating rating)
+		/// <summary>
+		/// Sets cards's data based on the rating it received
+		/// </summary>
+		/// <param name="SRSSettings"></param>
+		/// <param name="card"></param>
+		/// <param name="rating"></param>
+		public static void ManageCard(SRSSettings SRSSettings, SRSCard card, SRSAnswerRating rating)
 		{
 			SRSAnswerRatingSettings settings = SRSSettings.GetRatingSettings(rating);
 
@@ -237,11 +243,40 @@ namespace PierreMizzi.Extensions.SRS
 			cards.OrderBy(card => card.nextReviewDate);
 		}
 
+		public static void ManageCardInDeck(SRSDeck deck, SRSCard card, bool isCardDone)
+		{
+			// Null checks
+			if (deck == null || card == null)
+			{
+				return;
+			}
 
-		// private static void Reflect()
-		// {
-		// content
-		// }
+			// Make sure this card belongs to the deck
+			if (deck.allCards.Contains(card) == false)
+			{
+				return;
+			}
+
+			// NewCard reviewed for the first time
+			if (deck.dailyNewCards.Contains(card))
+			{
+				deck.dailyNewCards.Remove(card);
+
+				// Card has to be reviewd later, we add it to reviewCards
+				if (isCardDone == false && deck.dailyReviewCards.Contains(card) == false)
+				{
+					deck.dailyReviewCards.Add(card);
+				}
+			}
+			else
+			{
+				// Card needed to be reviewd and is done, we remove it
+				if (isCardDone && deck.dailyReviewCards.Contains(card))
+				{
+					deck.dailyReviewCards.Remove(card);
+				}
+			}
+		}
 
 		#endregion
 

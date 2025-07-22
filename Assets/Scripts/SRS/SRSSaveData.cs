@@ -6,7 +6,5 @@ using PierreMizzi.Extensions.SRS;
 public class SRSSaveData
 {
 	public List<SRSDeck> allDecks;
-
-	public SRSStudySession currentStudySession;
 	
 }

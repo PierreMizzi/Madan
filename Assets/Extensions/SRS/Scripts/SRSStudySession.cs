@@ -18,7 +18,7 @@ namespace PierreMizzi.Extensions.SRS
 		public List<SRSCard> studyCards = new List<SRSCard>();
 
 		/// <summary>
-		/// Cards we've seen during the session and are about to re-appear
+		/// Cards to review, will reappear
 		/// </summary>
 		public List<SRSCard> reviewCards = new List<SRSCard>();
 
@@ -37,6 +37,7 @@ namespace PierreMizzi.Extensions.SRS
 				return;
 			}
 
+
 			studyCards = new List<SRSCard>();
 			studyCards.AddRange(deck.dailyNewCards);
 			studyCards.AddRange(deck.dailyReviewCards);
@@ -47,9 +48,18 @@ namespace PierreMizzi.Extensions.SRS
 
 		public void ManageCardAfterFeedback(SRSAnswerRating rating)
 		{
-			SRSUtility.ManageCardAfterFeedback(currentSettings, currentCard, rating);
+			SRSUtility.ManageCard(currentSettings, currentCard, rating);
 
-			if (currentCard.interval > currentSettings.reviewTimespanTreshold)
+			// 🟥 : content
+			bool isCardDone = currentCard.interval > currentSettings.reviewTimespanTreshold;
+			ManageCardInStudySession(isCardDone);
+			SRSUtility.ManageCardInDeck(currentDeck, currentCard, isCardDone);
+		}
+
+		public void ManageCardInStudySession(bool isCardDone)
+		{
+			// Card has been reviewed, and shouldn't reappear. We remove it from everywhere
+			if (isCardDone)
 			{
 				if (reviewCards.Contains(currentCard))
 				{
@@ -60,6 +70,7 @@ namespace PierreMizzi.Extensions.SRS
 					studyCards.Remove(currentCard);
 				}
 			}
+			// If after reviewing it's supposed to reappear, we add it to reviewCards
 			else
 			{
 				if (studyCards.Contains(currentCard))
@@ -72,6 +83,8 @@ namespace PierreMizzi.Extensions.SRS
 				}
 			}
 		}
+
+
 
 		public SRSCard PickNextCard()
 		{
