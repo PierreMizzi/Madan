@@ -24,5 +24,17 @@ namespace PierreMizzi.Extensions.SRS
 			this.SRSSettingsName = settingsName;
 			this.allCards = new List<SRSCard>(allCards);
 		}
+
+		public override string ToString()
+		{
+			string text = $"DECK : {name} \n";
+
+			text += $" - allCard count : {allCards.Count} \n";
+			text += $" - dailyNewCards count : {dailyNewCards.Count} \n";
+			text += $" - dailyReviewCards count : {dailyReviewCards.Count} \n";
+
+			text += "\n";
+			return text;
+		}
 	}
 }

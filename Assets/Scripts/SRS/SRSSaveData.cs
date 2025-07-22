@@ -6,5 +6,19 @@ using PierreMizzi.Extensions.SRS;
 public class SRSSaveData
 {
 	public List<SRSDeck> allDecks;
+
+	public override string ToString()
+	{
+		string text = "";
+		foreach (SRSDeck deck in allDecks)
+		{
+			text += deck.ToString();
+			text += "------------------------";
+		}
+
+		text += "\n";
+
+		return text;
+	}
 	
 }

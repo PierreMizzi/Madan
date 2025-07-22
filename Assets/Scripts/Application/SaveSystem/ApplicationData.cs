@@ -24,6 +24,7 @@ public class ApplicationData : BaseApplicationData
 	public List<DayData> dayDatas = new List<DayData>();
 
 	// SRS
+	public SRSSaveData srsSaveData;
 
 	public override string ToString()
 	{
@@ -44,6 +45,9 @@ public class ApplicationData : BaseApplicationData
 
 		data += $"dailyCheckEvening : \n";
 		data += dailyCheckEvening.ToString();
+
+		data += $"SRS : \n";
+		data += srsSaveData.ToString();
 
 		return data;
 	}

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace PierreMizzi.Extensions.SRS
@@ -17,7 +16,7 @@ namespace PierreMizzi.Extensions.SRS
 			Debug.Log("OnEnable");
 			SRSUtility.settings = new List<SRSSettings>() { m_SRSsettings };
 		}
-
+		
 		#endregion
 
 		#region Test Card
