@@ -22,16 +22,7 @@ namespace PierreMizzi.Extensions.SRS.EditorScripts
 				m_target.TestSRSAlgorythm();
 			}
 
-			// if (SRSManager.settings.Count == 0)
-			// {
-			// 	if (GUILayout.Button("Fix SRSManager settings"))
-			// 	{
-			// 		SRSDebugger.
-			// 	}
-			// }
-
 			EditorGUILayout.PropertyField(serializedObject.FindProperty("debugDeck"));
-
 
 			GUILayout.Space(EditorGUIUtility.singleLineHeight);
 			if (m_target.debugDeck == null || m_target.debugDeck.allCards.Count == 0)
@@ -43,6 +34,12 @@ namespace PierreMizzi.Extensions.SRS.EditorScripts
 			}
 			else
 			{
+				if (GUILayout.Button("Reset Test Deck"))
+				{
+					m_target.InitializeDebugDeck();
+				}
+
+				GUILayout.Space(EditorGUIUtility.singleLineHeight);
 				InspectorGUIForStudySession();
 			}
 

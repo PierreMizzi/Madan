@@ -15,7 +15,7 @@ namespace PierreMizzi.Extensions.SRS
 		private void OnEnable()
 		{
 			Debug.Log("OnEnable");
-			SRSManager.settings = new List<SRSSettings>() { m_SRSsettings };
+			SRSUtility.settings = new List<SRSSettings>() { m_SRSsettings };
 		}
 
 		#endregion
@@ -50,7 +50,7 @@ namespace PierreMizzi.Extensions.SRS
 			DateTime firstReviewTime = DateTime.Now;
 			foreach (SRSAnswerRating rating in m_debuggingSettings.successiveRatings)
 			{
-				SRSManager.ManageCardAfterFeedback(m_SRSsettings, m_testCard, rating);
+				SRSUtility.ManageCardAfterFeedback(m_SRSsettings, m_testCard, rating);
 				log += $"Review n*{index} with rating : {rating} \n";
 				log += $"Card {m_testCard} \n";
 				index++;
@@ -94,8 +94,7 @@ namespace PierreMizzi.Extensions.SRS
 
 			debugDeck = new SRSDeck("Debug Deck", "SRSSettings", cards);
 
-			SRSManager.settings = new List<SRSSettings>() { m_SRSsettings };
-			SRSManager.DeckDailyReset(debugDeck);
+			SRSUtility.settings = new List<SRSSettings>() { m_SRSsettings };
 		}
 
 		public void StartStudySession()
@@ -133,7 +132,6 @@ namespace PierreMizzi.Extensions.SRS
 			{
 				SetCardFront();
 			}
-
 		}
 
 		public void StopStudySession()
@@ -143,8 +141,6 @@ namespace PierreMizzi.Extensions.SRS
 			currentCardFront = "";
 			currentCardBack = "";
 		}
-
-
 
 		#endregion
 

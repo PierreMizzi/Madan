@@ -30,12 +30,16 @@ namespace PierreMizzi.Extensions.SRS
 			}
 
 			currentDeck = deck;
-			currentSettings = SRSManager.GetSettingsFromName(deck.SRSSettingsName);
+			currentSettings = SRSUtility.GetSettingsFromName(deck.SRSSettingsName);
+
+			if (currentSettings == null)
+			{
+				return;
+			}
 
 			studyCards = new List<SRSCard>();
 			studyCards.AddRange(deck.dailyNewCards);
 			studyCards.AddRange(deck.dailyReviewCards);
-
 			studyCards.Shuffle();
 
 			currentCard = PickNextCard();
@@ -43,7 +47,7 @@ namespace PierreMizzi.Extensions.SRS
 
 		public void ManageCardAfterFeedback(SRSAnswerRating rating)
 		{
-			SRSManager.ManageCardAfterFeedback(currentSettings, currentCard, rating);
+			SRSUtility.ManageCardAfterFeedback(currentSettings, currentCard, rating);
 
 			if (currentCard.interval > currentSettings.reviewTimespanTreshold)
 			{
@@ -71,12 +75,12 @@ namespace PierreMizzi.Extensions.SRS
 
 		public SRSCard PickNextCard()
 		{
-			List<SRSCard> dueReviewCards = SRSManager.GetDueCards(reviewCards);
+			List<SRSCard> dueReviewCards = SRSUtility.GetDueCards(reviewCards);
 
 			// Find the first card inside review cards that is due
 			if (dueReviewCards.Count > 0)
 			{
-				SRSManager.OrderCardByReviewTime(ref dueReviewCards);
+				SRSUtility.OrderCardByReviewTime(ref dueReviewCards);
 				return dueReviewCards[0];
 			}
 			// If no due card inside reviewCards, we pick a card to study
