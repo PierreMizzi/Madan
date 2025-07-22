@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using PierreMizzi.Useful;
 using UnityEngine;
 
 namespace PierreMizzi.Extensions.SRS
 {
+	[Serializable]
 	public class SRSStudySession
 	{
 		public SRSDeck currentDeck;
@@ -71,19 +73,33 @@ namespace PierreMizzi.Extensions.SRS
 		{
 			List<SRSCard> dueReviewCards = SRSManager.GetDueCards(reviewCards);
 
+			// Find the first card inside review cards that is due
 			if (dueReviewCards.Count > 0)
 			{
 				SRSManager.OrderCardByReviewTime(ref dueReviewCards);
 				return dueReviewCards[0];
-
 			}
+			// If no due card inside reviewCards, we pick a card to study
 			else if (studyCards.Count > 0)
 			{
 				return studyCards[0];
 			}
+			// If no more cards to study, we pick inside reviewCards
+			else if (reviewCards.Count > 0)
+			{
+				// First, we find a different card than the (last) currentOne
+				if (reviewCards.Count > 1)
+				{
+					return reviewCards.Find(card => card != currentCard);
+				}
+				// There is only one left, we pick it anyway !
+				else
+				{
+					return reviewCards[0];
+				}
+			}
 			else
 			{
-				Debug.Log("Study session is over !!!");
 				return null;
 			}
 		}

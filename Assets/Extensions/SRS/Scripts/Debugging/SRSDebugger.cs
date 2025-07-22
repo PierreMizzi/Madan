@@ -5,12 +5,20 @@ using UnityEngine;
 
 namespace PierreMizzi.Extensions.SRS
 {
-
+	[ExecuteInEditMode]
 	public class SRSDebugger : MonoBehaviour
 	{
-		[Header("Test")]
+		#region Behaviour
 
 		[SerializeField] private SRSSettings m_SRSsettings;
+
+		private void OnEnable()
+		{
+			Debug.Log("OnEnable");
+			SRSManager.settings = new List<SRSSettings>() { m_SRSsettings };
+		}
+
+		#endregion
 
 		#region Test Card
 
@@ -116,7 +124,16 @@ namespace PierreMizzi.Extensions.SRS
 
 			currentStudySession.currentCard = currentStudySession.PickNextCard();
 
-			SetCardFront();
+			if (currentStudySession.currentCard == null)
+			{
+				Debug.Log("Study session is over !!!");
+				return;
+			}
+			else
+			{
+				SetCardFront();
+			}
+
 		}
 
 		public void StopStudySession()

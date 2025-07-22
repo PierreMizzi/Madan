@@ -33,4 +33,5 @@ MonoBehaviour:
     rating: 4
     interval: {x: 2, y: 0, z: 0}
     easeModifier: 1
+  reviewTimeTreshold: {x: 1, y: 0, z: 0}
   useCumulativeLastReviewDate: 0

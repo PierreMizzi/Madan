@@ -4,8 +4,6 @@ using UnityEditor;
 namespace PierreMizzi.Extensions.SRS.EditorScripts
 {
 
-
-
 	[CustomEditor(typeof(SRSDebugger))]
 	public class SRSDebuggerEditor : Editor
 	{
@@ -13,7 +11,9 @@ namespace PierreMizzi.Extensions.SRS.EditorScripts
 
 		public override void OnInspectorGUI()
 		{
-			base.OnInspectorGUI();
+			// base.OnInspectorGUI();
+
+			EditorGUILayout.PropertyField(serializedObject.FindProperty("m_SRSsettings"));
 
 			m_target = target as SRSDebugger;
 
@@ -22,10 +22,16 @@ namespace PierreMizzi.Extensions.SRS.EditorScripts
 				m_target.TestSRSAlgorythm();
 			}
 
-			if (m_target.currentStudySession != null)
-			{
+			// if (SRSManager.settings.Count == 0)
+			// {
+			// 	if (GUILayout.Button("Fix SRSManager settings"))
+			// 	{
+			// 		SRSDebugger.
+			// 	}
+			// }
 
-			}
+			EditorGUILayout.PropertyField(serializedObject.FindProperty("debugDeck"));
+
 
 			GUILayout.Space(EditorGUIUtility.singleLineHeight);
 			if (m_target.debugDeck == null || m_target.debugDeck.allCards.Count == 0)
@@ -44,7 +50,7 @@ namespace PierreMizzi.Extensions.SRS.EditorScripts
 
 		private void InspectorGUIForStudySession()
 		{
-			if (m_target.currentStudySession == null)
+			if (m_target.currentStudySession == null || m_target.currentStudySession.reviewCards == null)
 			{
 				if (GUILayout.Button("Start Study Session"))
 				{
@@ -54,6 +60,9 @@ namespace PierreMizzi.Extensions.SRS.EditorScripts
 			else
 			{
 				GUILayout.Label("Study Session");
+
+				EditorGUILayout.PropertyField(serializedObject.FindProperty("currentStudySession"));
+
 
 				if (m_target.isFrontOrBack == SRSCardFace.Front)
 				{
@@ -94,8 +103,6 @@ namespace PierreMizzi.Extensions.SRS.EditorScripts
 					GUILayout.EndHorizontal();
 				}
 
-
-
 				if (GUILayout.Button("Stop Study Session"))
 				{
 					m_target.StopStudySession();
@@ -103,4 +110,5 @@ namespace PierreMizzi.Extensions.SRS.EditorScripts
 			}
 		}
 	}
+
 }
