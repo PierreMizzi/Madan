@@ -16,6 +16,10 @@ public class SRSManagerEditor : Editor
 		EditorGUILayout.PropertyField(settings);
 		settings.serializedObject.ApplyModifiedProperties();
 
+		settings = serializedObject.FindProperty("m_applicationChannel");
+		EditorGUILayout.PropertyField(settings);
+		settings.serializedObject.ApplyModifiedProperties();
+
 
 		m_target = target as SRSManager;
 

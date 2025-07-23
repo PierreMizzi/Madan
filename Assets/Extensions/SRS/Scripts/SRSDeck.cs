@@ -25,6 +25,17 @@ namespace PierreMizzi.Extensions.SRS
 			this.allCards = new List<SRSCard>(allCards);
 		}
 
+		public SRSDeck(SRSDeck deck)
+		{
+			this.name = deck.name;
+			this.SRSSettingsName = deck.SRSSettingsName;
+			this.lastResetDate = deck.lastResetDate;
+
+			deck.allCards.CopyTo(this.allCards.ToArray());
+			deck.dailyNewCards.CopyTo(this.dailyNewCards.ToArray());
+			deck.dailyReviewCards.CopyTo(this.dailyReviewCards.ToArray());
+		}
+
 		public override string ToString()
 		{
 			string text = $"DECK : {name} \n";
@@ -36,5 +47,7 @@ namespace PierreMizzi.Extensions.SRS
 			text += "\n";
 			return text;
 		}
+
+		
 	}
 }

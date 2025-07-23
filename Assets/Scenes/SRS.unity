@@ -119,241 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &280801373
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 280801375}
-  - component: {fileID: 280801374}
-  m_Layer: 0
-  m_Name: SRSDebugger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &280801374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 280801373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db4701fe137204d4a92e6485b613d583, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SRSsettings: {fileID: 11400000, guid: fd5e9d5b4887dc24696df75c5f520cfa, type: 2}
-  m_debuggingSettings: {fileID: 11400000, guid: 62136f267964d87468eaab33113d95cd, type: 2}
-  m_testCard:
-    ID: 1
-    status: 1
-    ease: 3.4
-    forgottonCount: 2
-  debugDeck:
-    name: Debug Deck
-    SRSSettingsName: SRSSettings
-    allCards:
-    - ID: 0
-      status: 1
-      ease: 1.5
-      forgottonCount: 0
-    - ID: 1
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 2
-      status: 1
-      ease: 2
-      forgottonCount: 0
-    - ID: 3
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 4
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 5
-      status: 1
-      ease: 1.5
-      forgottonCount: 4
-    - ID: 6
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 7
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 8
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 9
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 10
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 11
-      status: 1
-      ease: 2
-      forgottonCount: 0
-    - ID: 12
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 13
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 14
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 15
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 16
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 17
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 18
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    - ID: 19
-      status: 1
-      ease: 1.4
-      forgottonCount: 0
-    dailyNewCards: []
-    dailyReviewCards: []
-  currentStudySession:
-    currentDeck:
-      name: Debug Deck
-      SRSSettingsName: SRSSettings
-      allCards:
-      - ID: 0
-        status: 1
-        ease: 1.5
-        forgottonCount: 0
-      - ID: 1
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 2
-        status: 1
-        ease: 2
-        forgottonCount: 0
-      - ID: 3
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 4
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 5
-        status: 1
-        ease: 1.5
-        forgottonCount: 4
-      - ID: 6
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 7
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 8
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 9
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 10
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 11
-        status: 1
-        ease: 2
-        forgottonCount: 0
-      - ID: 12
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 13
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 14
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 15
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 16
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 17
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 18
-        status: 1
-        ease: 1
-        forgottonCount: 0
-      - ID: 19
-        status: 1
-        ease: 1.4
-        forgottonCount: 0
-      dailyNewCards: []
-      dailyReviewCards: []
-    currentSettings: {fileID: 11400000, guid: fd5e9d5b4887dc24696df75c5f520cfa, type: 2}
-    currentCard:
-      ID: 0
-      status: 1
-      ease: 1
-      forgottonCount: 0
-    studyCards: []
-    reviewCards: []
-  isFrontOrBack: 2
-  currentCardFront: 5
-  currentCardBack: Sunday
---- !u!4 &280801375
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 280801373}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1186318734
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   decks: []
-  m_applicationChannel: {fileID: 0}
+  m_applicationChannel: {fileID: 11400000, guid: 27c584fd3877fff4ab4b38fab9567823, type: 2}
   m_SRSsettings: {fileID: 11400000, guid: fd5e9d5b4887dc24696df75c5f520cfa, type: 2}
   debugDeck:
     name: Debug Deck
@@ -654,6 +419,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2034080072}
+  - component: {fileID: 2034080073}
   m_Layer: 0
   m_Name: ApplicationManager
   m_TagString: Untagged
@@ -676,10 +442,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2034080073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034080071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ec7c3185829494b86e8ee7b0aed3df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_applicationChannel: {fileID: 11400000, guid: 27c584fd3877fff4ab4b38fab9567823, type: 2}
+  m_dailyWordManager: {fileID: 0}
+  dateNow: May 21, 2024
+  dailyWordsPopulation: 10
+  m_screens: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 280801375}
   - {fileID: 1186318736}
   - {fileID: 2034080072}

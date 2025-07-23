@@ -5,12 +5,12 @@ using PierreMizzi.Extensions.SRS;
 [Serializable]
 public class SRSSaveData
 {
-	public List<SRSDeck> allDecks;
+	public List<SRSDeck> decks;
 
 	public override string ToString()
 	{
 		string text = "";
-		foreach (SRSDeck deck in allDecks)
+		foreach (SRSDeck deck in decks)
 		{
 			text += deck.ToString();
 			text += "------------------------";

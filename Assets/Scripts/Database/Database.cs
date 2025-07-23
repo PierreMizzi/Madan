@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
 using PierreMizzi.Useful;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,6 +11,7 @@ using Random = UnityEngine.Random;
 public static class Database
 {
 	public static List<WordData> wordDatas = new List<WordData>();
+	public static List<SRSDeckData> srsDeckDatas = new List<SRSDeckData>();
 
 	public static WordData PickRandomWord()
 	{

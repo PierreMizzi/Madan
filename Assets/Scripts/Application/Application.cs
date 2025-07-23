@@ -149,7 +149,7 @@ public class Application : MonoBehaviour
 
 	public void ManageDailyWord()
 	{
-		m_dailyWordManager.ManageNewDailyWord();
+		m_dailyWordManager?.ManageNewDailyWord();
 		m_applicationChannel.onChangeDailyWords.Invoke();
 		SaveAppData();
 	}
@@ -158,7 +158,7 @@ public class Application : MonoBehaviour
 	public void TryAddDailyWorld()
 	{
 		DateTime dateTime = DateTime.Parse(dateNow);
-		m_dailyWordManager.ManageNewDailyWord(dateTime);
+		m_dailyWordManager?.ManageNewDailyWord(dateTime);
 		m_applicationChannel.onChangeDailyWords.Invoke();
 		SaveAppData();
 	}
@@ -170,7 +170,7 @@ public class Application : MonoBehaviour
 	[ContextMenu("Save")]
 	public void SaveAppData()
 	{
-		m_dailyWordManager.Save();
+		m_dailyWordManager?.Save();
 
 		SaveManager.Save();
 	}
@@ -179,13 +179,14 @@ public class Application : MonoBehaviour
 	public void LoadAppData()
 	{
 		SaveManager.Load();
-		m_dailyWordManager.Load();
+
+		m_dailyWordManager?.Load();
 		m_applicationChannel.onAppDataLoaded.Invoke();
 	}
 
 	public void ClearDailyWords()
 	{
-		m_dailyWordManager.ClearDailyWorlds();
+		m_dailyWordManager?.ClearDailyWorlds();
 		SaveManager.data.dailyWords.Clear();
 		SaveManager.Save();
 	}

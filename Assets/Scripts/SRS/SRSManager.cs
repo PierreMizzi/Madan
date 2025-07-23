@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using PierreMizzi.Extensions.SRS;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 [ExecuteInEditMode]
 public class SRSManager : MonoBehaviour
@@ -13,6 +14,35 @@ public class SRSManager : MonoBehaviour
 	{
 		Debug.Log("OnEnable");
 		SRSUtility.settings = new List<SRSSettings>() { m_SRSsettings };
+	}
+	
+	private void Awake()
+	{
+		if (m_applicationChannel != null)
+		{
+			m_applicationChannel.onAppDataLoaded += Initialize;
+		}
+	}
+
+	private void OnDestroy()
+	{
+		if (m_applicationChannel != null)
+		{
+			m_applicationChannel.onAppDataLoaded -= Initialize;
+		}
+	}
+
+	#endregion
+
+	#region Behaviour
+
+	public List<SRSDeck> decks = new List<SRSDeck>();
+
+	[SerializeField] public ApplicationChannel m_applicationChannel;
+
+	private void Initialize()
+	{
+		Load();
 	}
 
 	#endregion
@@ -116,7 +146,37 @@ public class SRSManager : MonoBehaviour
 	// 🔜 : Load DebugDeck from savedData
 	public void Load()
 	{
+		if (savedData == null)
+		{
+			// Database
+			SaveManager.data.srsSaveData = new SRSSaveData();
+		}
+		else
+		{
+			foreach (SRSDeck deck in savedData.decks)
+			{
+				LoadDecks(deck);
+			}
+		}
+	}
 
+	public void LoadDecks(SRSDeck savedDeck)
+	{
+		if (savedDeck == null)
+		{
+			return;
+		}
+
+		SRSDeck deck = decks.Find(item => item.name == savedDeck.name);
+
+		if (deck != null)
+		{
+			deck = savedDeck;
+		}
+		else
+		{
+			decks.Add(new SRSDeck(savedDeck));
+		}
 	}
 
 	public void Save()
@@ -130,11 +190,11 @@ public class SRSManager : MonoBehaviour
 
 	private void SaveDeck(SRSDeck deck)
 	{
-		SRSDeck savedDeck = savedData.allDecks.Find(item => item.name == deck.name);
+		SRSDeck savedDeck = savedData.decks.Find(item => item.name == deck.name);
 
 		if (savedDeck == null)
 		{
-			savedData.allDecks.Add(deck);
+			savedData.decks.Add(deck);
 		}
 		else
 		{
