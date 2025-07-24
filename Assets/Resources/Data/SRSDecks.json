@@ -1,18 +1,13 @@
 {
-	"srsDecks" :
+	"deckDatas" :
 	[
 		{
 			"name" : "DebugDeck",
 			"SRSSettingsName" : "SRSSettings",
-			"lastResetDate": null,
-			"allCards" :
+			"cardIDs" :
 			[
-				{
-					"ID" : 0
-				},
-				{
-					"ID" : 1
-				}
+				0,
+				1
 			]
 		}
 	]

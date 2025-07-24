@@ -38,6 +38,11 @@ public static class Parser
 			TextAsset tempJSON = Resources.Load<TextAsset>(path);
 			tempDictionary = JsonUtility.FromJson<WordDataObject>(tempJSON.text);
 			Database.wordDatas.AddRange(tempDictionary.wordDatas);
+
+			foreach (WordData wordData in tempDictionary.wordDatas)
+			{
+				Database.wordDatass.Add(wordData.ID, wordData);
+			}
 		}
 	}
 
@@ -61,7 +66,7 @@ public static class Parser
 		Database.srsDeckDatas.Clear();
 		SRSDecksObject tempObject = new SRSDecksObject();
 
-		foreach (string path in jsonPaths)
+		foreach (string path in srsDeckPaths)
 		{
 			TextAsset tempJSON = Resources.Load<TextAsset>(path);
 			tempObject = JsonUtility.FromJson<SRSDecksObject>(tempJSON.text);

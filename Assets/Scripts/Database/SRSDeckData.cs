@@ -1,9 +1,9 @@
+using System;
 
-using System.Collections.Generic;
-
+[Serializable]
 public class SRSDeckData
 {
 	public string name;
 	public string SRSSettingsName;
-	public List<int> srsCardIDs;
+	public int[] cardIDs;
 }

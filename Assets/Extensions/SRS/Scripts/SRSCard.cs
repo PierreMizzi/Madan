@@ -39,5 +39,12 @@ namespace PierreMizzi.Extensions.SRS
 			log += $"ease : {ease} \n";
 			return log;
 		}
+
+		public SRSCard(){}
+
+		public SRSCard(int ID)
+		{
+			this.ID = ID;
+		}
 	}
 }

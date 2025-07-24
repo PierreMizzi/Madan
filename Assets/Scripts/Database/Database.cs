@@ -11,11 +11,24 @@ using Random = UnityEngine.Random;
 public static class Database
 {
 	public static List<WordData> wordDatas = new List<WordData>();
+	public static Dictionary<int, WordData> wordDatass = new Dictionary<int, WordData>();
 	public static List<SRSDeckData> srsDeckDatas = new List<SRSDeckData>();
 
 	public static WordData PickRandomWord()
 	{
 		return UtilsClass.PickRandom(wordDatas);
+	}
+
+	public static WordData GetWordData(int ID)
+	{
+		if (wordDatass.ContainsKey(ID))
+		{
+			return wordDatass[ID];
+		}
+		else
+		{
+			return wordDatas.Find(item => item.ID == ID);
+		}
 	}
 
 	#region Debug

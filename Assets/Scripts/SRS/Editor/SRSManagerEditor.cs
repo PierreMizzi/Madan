@@ -26,7 +26,7 @@ public class SRSManagerEditor : Editor
 		EditorGUILayout.PropertyField(serializedObject.FindProperty("debugDeck"));
 
 		GUILayout.Space(EditorGUIUtility.singleLineHeight);
-		if (m_target.debugDeck == null || m_target.debugDeck.allCards.Count == 0)
+		if (m_target.debugDeck == null || m_target.debugDeck.cards.Count == 0)
 		{
 			if (GUILayout.Button("Initialize Test Deck"))
 			{

@@ -5,7 +5,7 @@ using PierreMizzi.Extensions.SRS;
 [Serializable]
 public class SRSSaveData
 {
-	public List<SRSDeck> decks;
+	public List<SRSDeck> decks = new List<SRSDeck>();
 
 	public override string ToString()
 	{
@@ -19,6 +19,11 @@ public class SRSSaveData
 		text += "\n";
 
 		return text;
+	}
+
+	public SRSSaveData()
+	{
+		decks = new List<SRSDeck>();
 	}
 	
 }

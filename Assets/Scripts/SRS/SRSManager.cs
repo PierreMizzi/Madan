@@ -36,8 +36,6 @@ public class SRSManager : MonoBehaviour
 
 	#region Behaviour
 
-	public List<SRSDeck> decks = new List<SRSDeck>();
-
 	[SerializeField] public ApplicationChannel m_applicationChannel;
 
 	private void Initialize()
@@ -67,7 +65,7 @@ public class SRSManager : MonoBehaviour
 		int length = 20;
 		for (int i = 0; i < length; i++)
 		{
-			SRSCard newCard = new SRSCard() { ID = i };
+			SRSCard newCard = new SRSCard(i);
 			cards.Add(newCard);
 		}
 
@@ -87,15 +85,53 @@ public class SRSManager : MonoBehaviour
 	public void SetCardFront()
 	{
 		isFrontOrBack = SRSCardFace.Front;
-		currentCardFront = currentStudySession.currentCard.ID.ToString();
+		currentCardFront = GetCurrentCardFront();
 		currentCardBack = "";
 	}
 
 	public void SetCardBack()
 	{
 		isFrontOrBack = SRSCardFace.Back;
-		currentCardBack = currentStudySession.currentCard.ID.ToString();
-		currentCardBack = ((DayOfWeek)(currentStudySession.currentCard.ID / 7.0f)).ToString();
+		currentCardBack = GetCurrentCardFront();
+		currentCardBack = GetCurrentCardBack();
+	}
+
+	private string GetCurrentCardFront()
+	{
+		if (currentStudySession.currentCard == null)
+		{
+			return "";
+		}
+		else
+		{
+			if (Database.wordDatass.ContainsKey(currentStudySession.currentCard.ID))
+			{
+				return Database.wordDatass[currentStudySession.currentCard.ID].kanji;
+			}
+			else
+			{
+				return "";
+			}
+		}
+	}
+
+	private string GetCurrentCardBack()
+	{
+		if (currentStudySession.currentCard == null)
+		{
+			return "";
+		}
+		else
+		{
+			if (Database.wordDatass.ContainsKey(currentStudySession.currentCard.ID))
+			{
+				return Database.wordDatass[currentStudySession.currentCard.ID].traduction;
+			}
+			else
+			{
+				return "";
+			}
+		}
 	}
 
 	public void ManageCardAfterFeedback(SRSAnswerRating rating)
@@ -133,7 +169,7 @@ public class SRSManager : MonoBehaviour
 	{
 		get
 		{
-			if (SaveManager.data == null || SaveManager.data.srsSaveData == null)
+			if (SaveManager.data != null && SaveManager.data.srsSaveData != null)
 			{
 				return SaveManager.data.srsSaveData;
 			}
@@ -149,33 +185,22 @@ public class SRSManager : MonoBehaviour
 		if (savedData == null)
 		{
 			// Database
-			SaveManager.data.srsSaveData = new SRSSaveData();
-		}
-		else
-		{
-			foreach (SRSDeck deck in savedData.decks)
-			{
-				LoadDecks(deck);
-			}
+			CreateSRSSaveData();
+			SaveManager.Save();
 		}
 	}
 
-	public void LoadDecks(SRSDeck savedDeck)
+	/// <summary>
+	/// Translate the SRSDeck from the Database to an actual usable SRSDeck
+	/// </summary>
+	private void CreateSRSSaveData()
 	{
-		if (savedDeck == null)
-		{
-			return;
-		}
+		SaveManager.data.srsSaveData = new SRSSaveData();
 
-		SRSDeck deck = decks.Find(item => item.name == savedDeck.name);
-
-		if (deck != null)
+		foreach (SRSDeckData deckData in Database.srsDeckDatas)
 		{
-			deck = savedDeck;
-		}
-		else
-		{
-			decks.Add(new SRSDeck(savedDeck));
+			SRSDeck deck = new SRSDeck(deckData);
+			savedData.decks.Add(deck);
 		}
 	}
 

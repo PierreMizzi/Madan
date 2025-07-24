@@ -93,7 +93,7 @@ namespace PierreMizzi.Extensions.SRS
 
 		public static void RefillDailyNewCards(SRSDeck deck, int count)
 		{
-			if (deck == null || deck.allCards.Count == 0)
+			if (deck == null || deck.cards.Count == 0)
 			{
 				return;
 			}
@@ -114,24 +114,24 @@ namespace PierreMizzi.Extensions.SRS
 
 		public static List<SRSCard> GetNewCards(SRSDeck deck)
 		{
-			if (deck == null || deck.allCards.Count == 0)
+			if (deck == null || deck.cards.Count == 0)
 			{
 				return new List<SRSCard>();
 			}
 			else
 			{
-				return deck.allCards.FindAll(card => card.hasBeenReviewed == false);
+				return deck.cards.FindAll(card => card.hasBeenReviewed == false);
 			}
 		}
 
 		public static void RefillDailyReviewCards(SRSDeck deck, int count)
 		{
-			if (deck == null || deck.allCards.Count == 0)
+			if (deck == null || deck.cards.Count == 0)
 			{
 				return;
 			}
 			// We get all due cards
-			List<SRSCard> candidateCards = GetDueCards(deck.allCards);
+			List<SRSCard> candidateCards = GetDueCards(deck.cards);
 
 			// We remove reviewCards from dueCards
 			foreach (SRSCard reviewCard in deck.dailyReviewCards)
@@ -252,7 +252,7 @@ namespace PierreMizzi.Extensions.SRS
 			}
 
 			// Make sure this card belongs to the deck
-			if (deck.allCards.Contains(card) == false)
+			if (deck.cards.Contains(card) == false)
 			{
 				return;
 			}
