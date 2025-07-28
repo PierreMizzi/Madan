@@ -42,6 +42,7 @@ namespace PierreMizzi.Extensions.SRS
 		{
 			this.name = deckData.name;
 			this.SRSSettingsName = deckData.SRSSettingsName;
+			this.lastResetDate = DateTime.Now;
 			
 			foreach (int cardID in deckData.cardIDs)
 			{

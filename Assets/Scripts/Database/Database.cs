@@ -10,9 +10,12 @@ using Random = UnityEngine.Random;
 /// </summary>
 public static class Database
 {
+	[Obsolete]
 	public static List<WordData> wordDatas = new List<WordData>();
 	public static Dictionary<int, WordData> wordDatass = new Dictionary<int, WordData>();
+
 	public static List<SRSDeckData> srsDeckDatas = new List<SRSDeckData>();
+
 
 	public static WordData PickRandomWord()
 	{

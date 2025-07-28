@@ -95,7 +95,7 @@ namespace PierreMizzi.Extensions.SRS
 
 			SRSUtility.settings = new List<SRSSettings>() { m_SRSsettings };
 
-			SRSUtility.DeckDailyReset(debugDeck);
+			SRSUtility.ApplyDailyReset(debugDeck);
 		}
 
 		public void StartStudySession()

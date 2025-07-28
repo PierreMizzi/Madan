@@ -55,9 +55,14 @@ GAMIFICATION ???
 - 🟥 Save DayData
 
 ### SRS
-
-- 🟥 Save Decks
+- 🟩 Create Deck from Database
+- 🟩 Save Decks
+- 🟥 Start Session using deck
+- 🟥 Use deck in a study session
+- 🟩 Save Decks
+- 🟥 Reset deck
 - 🟥 
+- 
 
 ## Tools
 

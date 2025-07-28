@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using PierreMizzi.Extensions.SRS;
+using UnityEditor.Overlays;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 [ExecuteInEditMode]
 public class SRSManager : MonoBehaviour
@@ -15,7 +15,7 @@ public class SRSManager : MonoBehaviour
 		Debug.Log("OnEnable");
 		SRSUtility.settings = new List<SRSSettings>() { m_SRSsettings };
 	}
-	
+
 	private void Awake()
 	{
 		if (m_applicationChannel != null)
@@ -38,6 +38,8 @@ public class SRSManager : MonoBehaviour
 
 	[SerializeField] public ApplicationChannel m_applicationChannel;
 
+	[SerializeField] private SRSSettings m_SRSsettings;
+
 	private void Initialize()
 	{
 		Load();
@@ -45,39 +47,53 @@ public class SRSManager : MonoBehaviour
 
 	#endregion
 
-	#region Test Deck
+	#region Decks
 
-	[SerializeField] private SRSSettings m_SRSsettings;
+
+
+	#endregion
+
+	#region Study Session
+
 
 	[Header("Test Deck")]
 
-	public SRSDeck debugDeck;
+	public SRSDeck debugDeck
+	{
+		get
+		{
+			if (savedData == null || savedData.decks.Count == 0)
+			{
+				return null;
+			}
+			else
+			{
+				return savedData.decks[0];
+			}
+		}
+	}
+
 	public SRSStudySession currentStudySession;
 	[HideInInspector] public SRSCardFace isFrontOrBack = SRSCardFace.None;
 
 	public string currentCardFront;
 	public string currentCardBack;
 
+	// [Obsolete]
 	public void InitializeDebugDeck()
 	{
-		List<SRSCard> cards = new List<SRSCard>();
-
-		int length = 20;
-		for (int i = 0; i < length; i++)
-		{
-			SRSCard newCard = new SRSCard(i);
-			cards.Add(newCard);
-		}
-
-		debugDeck = new SRSDeck("Debug Deck", "SRSSettings", cards);
-
 		SRSUtility.settings = new List<SRSSettings>() { m_SRSsettings };
 
-		SRSUtility.DeckDailyReset(debugDeck);
+		SRSUtility.ApplyDailyReset(debugDeck);
 	}
 
 	public void StartStudySession()
 	{
+		if (debugDeck == null)
+		{
+			return;
+		}
+
 		currentStudySession = new SRSStudySession(debugDeck);
 		SetCardFront();
 	}
@@ -186,9 +202,34 @@ public class SRSManager : MonoBehaviour
 		{
 			// Database
 			CreateSRSSaveData();
-			SaveManager.Save();
+		}
+
+		foreach (SRSDeck deck in savedData.decks)
+		{
+			if (ChecksNeedsToDailyReset(deck))
+			{
+				Debug.Log($"[SRS MANAGER] We daily reset deck \"{deck.name}\"");
+				SRSUtility.ApplyDailyReset(deck);
+			}
+		}
+
+		SaveManager.Save();
+	}
+
+	private bool ChecksNeedsToDailyReset(SRSDeck deck)
+	{
+		SRSSettings settings = SRSUtility.GetSettingsFromName(deck.SRSSettingsName);
+
+		if (settings == null)
+		{
+			return false;
+		}
+		else
+		{
+			return DateTime.Now > settings.TodayResetTime && deck.lastResetDate < settings.TodayResetTime;
 		}
 	}
+
 
 	/// <summary>
 	/// Translate the SRSDeck from the Database to an actual usable SRSDeck

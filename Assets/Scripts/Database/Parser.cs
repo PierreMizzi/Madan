@@ -48,7 +48,7 @@ public static class Parser
 
 	#endregion
 
-	#region Decks
+	#region SRS Decks
 
 	public static List<string> srsDeckPaths = new List<string>()
 	{
@@ -72,7 +72,6 @@ public static class Parser
 			tempObject = JsonUtility.FromJson<SRSDecksObject>(tempJSON.text);
 			Database.srsDeckDatas.AddRange(tempObject.deckDatas);
 		}
-		Debug.Log(Database.srsDeckDatas);
 	}
 
 	#endregion

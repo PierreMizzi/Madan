@@ -78,7 +78,7 @@ namespace PierreMizzi.Extensions.SRS
 
 		#region Deck
 
-		public static void DeckDailyReset(SRSDeck deck)
+		public static void ApplyDailyReset(SRSDeck deck)
 		{
 			SRSSettings settings = GetSettingsFromName(deck.SRSSettingsName);
 
@@ -89,6 +89,7 @@ namespace PierreMizzi.Extensions.SRS
 
 			RefillDailyNewCards(deck, settings.dailyNewCardsCount);
 			RefillDailyReviewCards(deck, settings.dailyReviewCardsCount);
+			deck.lastResetDate = DateTime.Now;
 		}
 
 		public static void RefillDailyNewCards(SRSDeck deck, int count)

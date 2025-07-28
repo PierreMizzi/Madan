@@ -20,7 +20,22 @@ namespace PierreMizzi.Extensions.SRS
 		/// <summary>
 		/// X = Hour | Y = Minutes | Z = Seconds
 		/// </summary>
-		public Vector3 resetHour = new Vector3();
+		public Vector3Int resetHour = new Vector3Int();
+
+		public DateTime TodayResetTime
+		{
+			get
+			{
+				return new DateTime(
+					DateTime.Now.Year,
+					DateTime.Now.Month,
+					DateTime.Now.Day,
+					resetHour.x,
+					resetHour.y,
+					resetHour.z
+				);
+			}
+		}
 
 		#endregion
 

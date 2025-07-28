@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -227,11 +228,23 @@ namespace PierreMizzi.Useful
                 return list[Random.Range(0, list.Count)];
         }
 
+        public static KeyValuePair<T, U> PickRandom<T, U>(this Dictionary<T, U> dictionary)
+        {
+            if (dictionary.Count == 0)
+            {
+                return new KeyValuePair<T, U>();
+            }
+            else
+            {
+                return dictionary.ElementAt(Random.Range(0, dictionary.Count));
+            }
+        }
+
 
         public static void Shuffle<T>(this IList<T> list)
         {
             System.Random rng = new System.Random();
-            
+
             int n = list.Count;
             while (n > 1)
             {

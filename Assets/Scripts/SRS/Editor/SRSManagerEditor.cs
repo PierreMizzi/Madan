@@ -23,22 +23,22 @@ public class SRSManagerEditor : Editor
 
 		m_target = target as SRSManager;
 
-		EditorGUILayout.PropertyField(serializedObject.FindProperty("debugDeck"));
+		// EditorGUILayout.PropertyField(serializedObject.FindProperty("debugDeck"));
 
-		GUILayout.Space(EditorGUIUtility.singleLineHeight);
-		if (m_target.debugDeck == null || m_target.debugDeck.cards.Count == 0)
+		// GUILayout.Space(EditorGUIUtility.singleLineHeight);
+		// if (m_target.debugDeck == null || m_target.debugDeck.cards.Count == 0)
+		// {
+		// 	if (GUILayout.Button("Initialize Test Deck"))
+		// 	{
+		// 		m_target.InitializeDebugDeck();
+		// 	}
+		// }
+		// else
 		{
-			if (GUILayout.Button("Initialize Test Deck"))
-			{
-				m_target.InitializeDebugDeck();
-			}
-		}
-		else
-		{
-			if (GUILayout.Button("Reset Test Deck"))
-			{
-				m_target.InitializeDebugDeck();
-			}
+			// if (GUILayout.Button("Reset Test Deck"))
+			// {
+			// 	m_target.InitializeDebugDeck();
+			// }
 
 			GUILayout.Space(EditorGUIUtility.singleLineHeight);
 			InspectorGUIForStudySession();
