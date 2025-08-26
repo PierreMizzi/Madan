@@ -18,7 +18,20 @@ namespace PierreMizzi.Extensions.SRS
 
 		public List<SRSCard> dailyReviewCards = new List<SRSCard>();
 
-		public SRSDeck() {}
+		public void Reset()
+		{
+			lastResetDate = DateTime.Now;
+
+			foreach (SRSCard card in cards)
+			{
+				card.Reset();
+			}
+
+			dailyNewCards.Clear();
+			dailyReviewCards.Clear();
+		}
+
+		public SRSDeck() { }
 
 		public SRSDeck(string name, string settingsName, List<SRSCard> allCards)
 		{

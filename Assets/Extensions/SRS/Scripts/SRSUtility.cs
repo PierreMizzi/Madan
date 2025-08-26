@@ -78,6 +78,20 @@ namespace PierreMizzi.Extensions.SRS
 
 		#region Deck
 
+		public static bool ChecksNeedsToDailyReset(SRSDeck deck)
+		{
+			SRSSettings settings = GetSettingsFromName(deck.SRSSettingsName);
+
+			if (settings == null)
+			{
+				return false;
+			}
+			else
+			{
+				return DateTime.Now > settings.TodayResetTime && deck.lastResetDate < settings.TodayResetTime;
+			}
+		}
+
 		public static void ApplyDailyReset(SRSDeck deck)
 		{
 			SRSSettings settings = GetSettingsFromName(deck.SRSSettingsName);
@@ -192,6 +206,53 @@ namespace PierreMizzi.Extensions.SRS
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="deck"></param>
+		/// <param name="card"></param>
+		/// <param name="isCardDone"> True == the card no-longer needs to be reviewed</param>
+		public static void ManageCardInDeck(SRSDeck deck, SRSCard card, bool isCardDone)
+		{
+			// Null checks
+			if (deck == null || card == null)
+			{
+				return;
+			}
+
+			// Make sure this card belongs to the deck
+			if (IsCardInList(card.ID, ref deck.cards) == false)
+			{
+				return;
+			}
+
+			
+
+			// The card was new and has been reviewed for the first time, we remove it
+			if (IsCardInList(card.ID, ref deck.dailyNewCards))
+			{
+				RemoveCardFromList(card.ID, ref deck.dailyNewCards);
+			}
+
+			// The card is donefor today so its removed from dailyReview cards
+			if (isCardDone)
+			{
+				if (IsCardInList(card.ID, ref deck.dailyReviewCards))
+				{
+					RemoveCardFromList(card.ID, ref deck.dailyReviewCards);
+				}
+			}
+
+			// The card is not done, and we add it to the dailyReview (if it's noit already inside)
+			else
+			{
+				if (IsCardInList(card.ID, ref deck.dailyReviewCards) == false)
+				{
+					AddCardToList(card, ref deck.dailyReviewCards);
+				}
+			}
+		}
+
 		#endregion
 
 		#region Study Session
@@ -244,38 +305,43 @@ namespace PierreMizzi.Extensions.SRS
 			cards.OrderBy(card => card.nextReviewDate);
 		}
 
-		public static void ManageCardInDeck(SRSDeck deck, SRSCard card, bool isCardDone)
+		#endregion
+
+		#region Cards
+
+		public static SRSCard GetCardInList(int cardID, ref List<SRSCard> list)
 		{
-			// Null checks
-			if (deck == null || card == null)
+			return list.Find(item => item.ID == cardID);
+		}
+
+		public static bool IsCardInList(int cardID, ref List<SRSCard> list)
+		{
+			return GetCardInList(cardID, ref list) != null;
+		}
+
+		public static void RemoveCardFromList(int cardID, ref List<SRSCard> list)
+		{
+			SRSCard card = GetCardInList(cardID, ref list);
+
+			if (card == null)
 			{
 				return;
-			}
-
-			// Make sure this card belongs to the deck
-			if (deck.cards.Contains(card) == false)
-			{
-				return;
-			}
-
-			// NewCard reviewed for the first time
-			if (deck.dailyNewCards.Contains(card))
-			{
-				deck.dailyNewCards.Remove(card);
-
-				// Card has to be reviewd later, we add it to reviewCards
-				if (isCardDone == false && deck.dailyReviewCards.Contains(card) == false)
-				{
-					deck.dailyReviewCards.Add(card);
-				}
 			}
 			else
 			{
-				// Card needed to be reviewd and is done, we remove it
-				if (isCardDone && deck.dailyReviewCards.Contains(card))
-				{
-					deck.dailyReviewCards.Remove(card);
-				}
+				list.Remove(card);
+			}
+		}
+
+		public static void AddCardToList(SRSCard card, ref List<SRSCard> list)
+		{
+			if (GetCardInList(card.ID, ref list) != null)
+			{
+				return;
+			}
+			else
+			{
+				list.Add(card);
 			}
 		}
 

@@ -13,12 +13,12 @@ namespace PierreMizzi.Extensions.SRS
 		public SRSCard currentCard;
 
 		/// <summary>
-		/// All the cards about to be studied during the session
+		/// All the cards about to be studied during the session (both new and review)
 		/// </summary>
 		public List<SRSCard> studyCards = new List<SRSCard>();
 
 		/// <summary>
-		/// Cards to review, will reappear
+		/// Cards to review, will reappear later
 		/// </summary>
 		public List<SRSCard> reviewCards = new List<SRSCard>();
 
@@ -55,7 +55,12 @@ namespace PierreMizzi.Extensions.SRS
 			ManageCardInStudySession(isCardDone);
 			SRSUtility.ManageCardInDeck(currentDeck, currentCard, isCardDone);
 		}
-
+		
+		/// <summary>
+		/// After reviewing, manages the cards status withing the study session
+		/// 
+		/// </summary>
+		/// <param name="isCardDone"></param>
 		public void ManageCardInStudySession(bool isCardDone)
 		{
 			// Card has been reviewed, and shouldn't reappear. We remove it from everywhere

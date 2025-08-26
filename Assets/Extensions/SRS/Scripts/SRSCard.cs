@@ -40,6 +40,16 @@ namespace PierreMizzi.Extensions.SRS
 			return log;
 		}
 
+		public void Reset()
+		{
+			status = SRSCardStatus.New;
+			lastReviewedDate = DateTime.Now;
+			nextReviewDate = DateTime.Now;
+
+			ease = 1.0f;
+			forgottonCount = 0;
+		}
+
 		public SRSCard(){}
 
 		public SRSCard(int ID)

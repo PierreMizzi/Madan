@@ -49,7 +49,11 @@ public class SRSManager : MonoBehaviour
 
 	#region Decks
 
-
+	public void ResetDebugDeck()
+	{
+		debugDeck.Reset();
+		Save();
+	}
 
 	#endregion
 
@@ -79,13 +83,6 @@ public class SRSManager : MonoBehaviour
 	public string currentCardFront;
 	public string currentCardBack;
 
-	// [Obsolete]
-	public void InitializeDebugDeck()
-	{
-		SRSUtility.settings = new List<SRSSettings>() { m_SRSsettings };
-
-		SRSUtility.ApplyDailyReset(debugDeck);
-	}
 
 	public void StartStudySession()
 	{
@@ -116,7 +113,7 @@ public class SRSManager : MonoBehaviour
 	{
 		if (currentStudySession.currentCard == null)
 		{
-			return "";
+			return "INVALID CARD FRONT";
 		}
 		else
 		{
@@ -126,7 +123,7 @@ public class SRSManager : MonoBehaviour
 			}
 			else
 			{
-				return "";
+				return "INVALID CARD FRONT";
 			}
 		}
 	}
@@ -159,7 +156,6 @@ public class SRSManager : MonoBehaviour
 		if (currentStudySession.currentCard == null)
 		{
 			Debug.Log("Study session is over !!!");
-			return;
 		}
 		else
 		{
@@ -194,8 +190,6 @@ public class SRSManager : MonoBehaviour
 		}
 	}
 
-	// 🟥 : Test link between SaveManager and SRSManager
-	// 🔜 : Load DebugDeck from savedData
 	public void Load()
 	{
 		if (savedData == null)
@@ -206,7 +200,7 @@ public class SRSManager : MonoBehaviour
 
 		foreach (SRSDeck deck in savedData.decks)
 		{
-			if (ChecksNeedsToDailyReset(deck))
+			if (SRSUtility.ChecksNeedsToDailyReset(deck))
 			{
 				Debug.Log($"[SRS MANAGER] We daily reset deck \"{deck.name}\"");
 				SRSUtility.ApplyDailyReset(deck);
@@ -215,21 +209,6 @@ public class SRSManager : MonoBehaviour
 
 		SaveManager.Save();
 	}
-
-	private bool ChecksNeedsToDailyReset(SRSDeck deck)
-	{
-		SRSSettings settings = SRSUtility.GetSettingsFromName(deck.SRSSettingsName);
-
-		if (settings == null)
-		{
-			return false;
-		}
-		else
-		{
-			return DateTime.Now > settings.TodayResetTime && deck.lastResetDate < settings.TodayResetTime;
-		}
-	}
-
 
 	/// <summary>
 	/// Translate the SRSDeck from the Database to an actual usable SRSDeck
@@ -269,6 +248,8 @@ public class SRSManager : MonoBehaviour
 		SaveManager.Save();
 		SaveManager.Log();
 	}
+
+
 
 	#endregion
 }

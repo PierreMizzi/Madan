@@ -23,26 +23,8 @@ public class SRSManagerEditor : Editor
 
 		m_target = target as SRSManager;
 
-		// EditorGUILayout.PropertyField(serializedObject.FindProperty("debugDeck"));
-
-		// GUILayout.Space(EditorGUIUtility.singleLineHeight);
-		// if (m_target.debugDeck == null || m_target.debugDeck.cards.Count == 0)
-		// {
-		// 	if (GUILayout.Button("Initialize Test Deck"))
-		// 	{
-		// 		m_target.InitializeDebugDeck();
-		// 	}
-		// }
-		// else
-		{
-			// if (GUILayout.Button("Reset Test Deck"))
-			// {
-			// 	m_target.InitializeDebugDeck();
-			// }
-
-			GUILayout.Space(EditorGUIUtility.singleLineHeight);
-			InspectorGUIForStudySession();
-		}
+		GUILayout.Space(EditorGUIUtility.singleLineHeight);
+		InspectorGUIForStudySession();
 	}
 
 	private void InspectorGUIForStudySession()
@@ -53,6 +35,11 @@ public class SRSManagerEditor : Editor
 			{
 				m_target.StartStudySession();
 			}
+			else if (GUILayout.Button("Reset Debug Deck"))
+			{
+				m_target.ResetDebugDeck();
+			}
+
 		}
 		else
 		{
@@ -105,5 +92,6 @@ public class SRSManagerEditor : Editor
 				m_target.StopStudySession();
 			}
 		}
+
 	}
 }
