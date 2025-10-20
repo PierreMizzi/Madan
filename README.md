@@ -67,3 +67,18 @@ GAMIFICATION ???
 ## Tools
 
 - Don't Forget to use the ScreenSwitcher inside MainScene to switch between important canvases
+
+
+## Chronometer
+
+- Start 30m
+- Start
+- Pause / Play
+- Completion screen + restart
+- Did you reach complete focus ? 
+
+## Pomodoro Tree
+
+- Each 30m = 1 leaf/tomato
+- Not training for a day make one leaf fall
+

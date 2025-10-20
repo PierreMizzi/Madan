@@ -1,8 +1,16 @@
 using System;
 using System.Collections.Generic;
 
+
+/*
+
+
+*/
 namespace PierreMizzi.Extensions.SRS
 {
+	/// <summary>
+	/// Deck of SRSCards. There are different list that either contains the whole deck or what the player is supposed to review at a given time.
+	/// </summary>
 	[Serializable]
 	public class SRSDeck
 	{
@@ -10,12 +18,24 @@ namespace PierreMizzi.Extensions.SRS
 
 		public string SRSSettingsName;
 
+		/// <summary>
+		/// Last time the deck has been reviewed
+		/// </summary>
 		public DateTime lastResetDate;
 
+		/// <summary>
+		/// All the cards contained in the deck
+		/// </summary>
 		public List<SRSCard> cards = new List<SRSCard>();
 
+		/// <summary>
+		/// Today's new cards that will appear for the first time. Based on setting's "dailyNewCardsCount".
+		/// </summary>
 		public List<SRSCard> dailyNewCards = new List<SRSCard>();
 
+		/// <summary>
+		/// Today's cards that are due for review. Based on setting's "dailyReviewCardsCount"
+		/// </summary>
 		public List<SRSCard> dailyReviewCards = new List<SRSCard>();
 
 		public void Reset()
@@ -56,7 +76,7 @@ namespace PierreMizzi.Extensions.SRS
 			this.name = deckData.name;
 			this.SRSSettingsName = deckData.SRSSettingsName;
 			this.lastResetDate = DateTime.Now;
-			
+
 			foreach (int cardID in deckData.cardIDs)
 			{
 				this.cards.Add(new SRSCard(cardID));
@@ -75,6 +95,6 @@ namespace PierreMizzi.Extensions.SRS
 			return text;
 		}
 
-		
+
 	}
 }
