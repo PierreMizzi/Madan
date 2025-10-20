@@ -19,8 +19,9 @@ public class Chronometer : MonoBehaviour
 	public TimespanDelegate onRefreshDuration;
 	private TimeSpan oneSecond = new TimeSpan(0, 0, 1);
 
+	private DateTime endTime;
 
-	public double NormalizedProgress => 1.0f - (duration.TotalSeconds / totalDuration.TotalSeconds);
+	public double NormalizedProgress => 1.0f - (duration.TotalMilliseconds / totalDuration.TotalMilliseconds);
 	public Action<double> onRefreshProgress;
 
 	#region MonoBehaviour
@@ -31,6 +32,14 @@ public class Chronometer : MonoBehaviour
 		SetDuration(m_customDuration.x, m_customDuration.y, m_customDuration.z);
 
 		AssignView(m_chronometerUI);
+	}
+
+	protected void Update()
+	{
+		if (hasStarted)
+		{
+			onRefreshProgress.Invoke(NormalizedProgress);
+		}
 	}
 
 	#endregion
@@ -57,11 +66,11 @@ public class Chronometer : MonoBehaviour
 
 	public IEnumerator Behaviour()
 	{
-		while(true)
+		while (true)
 		{
 			if (duration.TotalSeconds <= 0)
 			{
-				StopBehaviour();
+				Complete();
 				yield break;
 			}
 
@@ -69,8 +78,15 @@ public class Chronometer : MonoBehaviour
 
 			duration = duration.Subtract(oneSecond);
 			onRefreshDuration.Invoke(duration);
-			onRefreshProgress.Invoke(NormalizedProgress);
 		}
+	}
+
+	private void Complete()
+	{
+		StopBehaviour();
+		onComplete.Invoke();
+		onRefreshProgress.Invoke(1.0f);
+		hasStarted = false;
 	}
 
 	#endregion
@@ -80,6 +96,7 @@ public class Chronometer : MonoBehaviour
 	public Action onPlay;
 	public Action onPause;
 	public Action onRestart;
+	public Action onComplete;
 
 	public void Play()
 	{
@@ -133,6 +150,7 @@ public class Chronometer : MonoBehaviour
 		onPlay += UI.CallbackPlay;
 		onPause += UI.CallbackPause;
 		onRestart += UI.CallbackRestart;
+		onComplete += UI.CallbackComplete;
 
 		onRefreshDuration += UI.CallbackRefreshDuration;
 		onRefreshDuration.Invoke(duration);
@@ -143,5 +161,17 @@ public class Chronometer : MonoBehaviour
 
 	#endregion
 
+	#region App Focus
 
+	private void LoseFocus()
+	{
+
+	}
+	
+	private void GainFocus()
+	{
+		
+	}
+
+	#endregion
 }

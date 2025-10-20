@@ -70,6 +70,13 @@ public class ChronometerUI : MonoBehaviour
 		m_restartButton.gameObject.SetActive(false);
 	}
 
+	public void CallbackComplete()
+	{
+		m_playButton.gameObject.SetActive(false);
+		m_pauseButton.gameObject.SetActive(false);
+		m_restartButton.gameObject.SetActive(true);
+	}
+
 	public void CallbackRefreshProgress(double progress)
 	{
 		m_background.fillAmount = (float)progress;
@@ -100,6 +107,8 @@ public class ChronometerUI : MonoBehaviour
 	{
 		Initialize();
 	}
+
+
 
 	#endregion
 

@@ -619,7 +619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_chronometerUI: {fileID: 1175879556}
-  m_customDuration: {x: 0, y: 30, z: 0}
+  m_customDuration: {x: 0, y: 0, z: 5}
 --- !u!4 &942420535
 Transform:
   m_ObjectHideFlags: 0
