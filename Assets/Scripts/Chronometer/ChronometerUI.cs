@@ -24,11 +24,11 @@ public class ChronometerUI : MonoBehaviour
 	{
 		if (timeSpan.Hours > 0)
 		{
-			return $"{timeSpan.Hours}:{CorrectSingleZero(timeSpan.Minutes)}:{CorrectSingleZero(timeSpan.Seconds)}";
+			return $"{timeSpan.Hours}:{CorrectMinutes(timeSpan.Minutes)}:{CorrectSeconds(timeSpan.Seconds)}";
 		}
 		else if (timeSpan.Minutes > 0)
 		{
-			return $"{timeSpan.Minutes}:{CorrectSingleZero(timeSpan.Seconds)}";
+			return $"{timeSpan.Minutes}:{CorrectSeconds(timeSpan.Seconds)}";
 		}
 		else if (timeSpan.Seconds > 0)
 		{
@@ -40,13 +40,22 @@ public class ChronometerUI : MonoBehaviour
 		}
 	}
 
-	private string CorrectSingleZero(int value)
+	private string CorrectMinutes(int value)
 	{
 		if (value == 0)
 		{
 			return "00";
 		}
 		else return value.ToString();
+	}
+
+	private string CorrectSeconds(int value)
+	{
+		if (value == 0)
+		{
+			return "00";
+		}
+		else return UtilsClass.TwoDigit(value.ToString());
 	}
 
 	public void CallbackPlay()

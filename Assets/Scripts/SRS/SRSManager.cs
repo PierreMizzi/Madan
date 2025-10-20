@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using PierreMizzi.Extensions.SRS;
-using UnityEditor.Overlays;
 using UnityEngine;
 
 [ExecuteInEditMode]
