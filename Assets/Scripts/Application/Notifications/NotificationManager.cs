@@ -131,7 +131,7 @@ public class NotificationManager : MonoBehaviour
 			return true;
 		}
 
-		var status = AndroidNotificationCenter.CheckScheduledNotificationStatus(notificationIDSaveData);
+		NotificationStatus status = AndroidNotificationCenter.CheckScheduledNotificationStatus(notificationIDSaveData);
 
 		switch (status)
 		{

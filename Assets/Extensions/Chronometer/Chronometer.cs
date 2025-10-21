@@ -8,37 +8,54 @@ public class Chronometer : MonoBehaviour
 {
 	[SerializeField] private ChronometerUI m_chronometerUI;
 
-	[SerializeField] private Vector3Int m_customDuration;
+	[SerializeField] private Vector3Int m_totalDurationSettings;
 
-	private bool hasStarted = false;
+	private PlayPauseStates m_state;
 	private IEnumerator behaviourCoroutine;
-
-	private TimeSpan duration = new TimeSpan(0, 30, 0);
-	private TimeSpan totalDuration;
-	public TimeSpan Duration => duration;
-	public TimespanDelegate onRefreshDuration;
+	
 	private TimeSpan oneSecond = new TimeSpan(0, 0, 1);
 
+	private TimeSpan elapsedTime;
+	private TimeSpan totalTime;
 	private DateTime endTime;
 
-	public double NormalizedProgress => 1.0f - (duration.TotalMilliseconds / totalDuration.TotalMilliseconds);
+	private TimeSpan RemainingTime => totalTime - elapsedTime;
+	public double NormalizedProgress => elapsedTime.TotalMilliseconds / totalTime.TotalMilliseconds;
+	public TimespanDelegate onRefreshRemainingTime;
 	public Action<double> onRefreshProgress;
 
 	#region MonoBehaviour
 
 	private void Awake()
 	{
-		onRefreshDuration = (TimeSpan timeSpan) => { };
-		SetDuration(m_customDuration.x, m_customDuration.y, m_customDuration.z);
+		onRefreshRemainingTime = (TimeSpan timeSpan) => { };
+		elapsedTime = new TimeSpan(0);
+		SetDuration(m_totalDurationSettings.x, m_totalDurationSettings.y, m_totalDurationSettings.z);
 
 		AssignView(m_chronometerUI);
 	}
 
 	protected void Update()
 	{
-		if (hasStarted)
+		if (m_state == PlayPauseStates.Playing)
 		{
 			onRefreshProgress.Invoke(NormalizedProgress);
+		}
+	}
+
+	private void OnApplicationPause(bool pauseStatus)
+	{
+		if (pauseStatus == false && m_state == PlayPauseStates.Playing)
+		{
+			// We regain focus on the app while chronometer is running
+			elapsedTime = totalTime - (endTime - DateTime.Now);
+			onRefreshRemainingTime.Invoke(RemainingTime);
+			onRefreshProgress.Invoke(NormalizedProgress);
+
+			if (RemainingTime.TotalSeconds <= 0)
+			{
+				Complete();
+			}
 		}
 	}
 
@@ -68,7 +85,7 @@ public class Chronometer : MonoBehaviour
 	{
 		while (true)
 		{
-			if (duration.TotalSeconds <= 0)
+			if (RemainingTime.TotalSeconds <= 0)
 			{
 				Complete();
 				yield break;
@@ -76,8 +93,8 @@ public class Chronometer : MonoBehaviour
 
 			yield return new WaitForSeconds(1);
 
-			duration = duration.Subtract(oneSecond);
-			onRefreshDuration.Invoke(duration);
+			elapsedTime = elapsedTime.Add(oneSecond);
+			onRefreshRemainingTime.Invoke(RemainingTime);
 		}
 	}
 
@@ -86,7 +103,7 @@ public class Chronometer : MonoBehaviour
 		StopBehaviour();
 		onComplete.Invoke();
 		onRefreshProgress.Invoke(1.0f);
-		hasStarted = false;
+		m_state = PlayPauseStates.Completed;
 	}
 
 	#endregion
@@ -100,36 +117,40 @@ public class Chronometer : MonoBehaviour
 
 	public void Play()
 	{
-		if (hasStarted == false)
+		if (m_state == PlayPauseStates.None)
 		{
-			totalDuration = new TimeSpan(duration.Hours, duration.Minutes, duration.Seconds);
-			hasStarted = true;
+			endTime = DateTime.Now + totalTime;
+			elapsedTime = new TimeSpan(0, 0, 0);
 		}
 
+		m_state = PlayPauseStates.Playing;
 		StartBehaviour();
 		onPlay.Invoke();
 	}
 
 	public void Pause()
 	{
+		m_state = PlayPauseStates.Paused;
 		StopBehaviour();
 		onPause.Invoke();
 	}
 
 	public void Restart()
 	{
-		hasStarted = false;
+		// hasStarted = false;
+		m_state = PlayPauseStates.None;
 
 		StopBehaviour();
-		SetDuration(m_customDuration.x, m_customDuration.y, m_customDuration.z);
-		onRefreshDuration.Invoke(duration);
+		SetDuration(m_totalDurationSettings.x, m_totalDurationSettings.y, m_totalDurationSettings.z);
+		elapsedTime = new TimeSpan(0);
+		onRefreshRemainingTime.Invoke(RemainingTime);
 		onRefreshProgress.Invoke(0);
 		onRestart.Invoke();
 	}
 
 	public void SetDuration(int hours, int minutes, int seconds)
 	{
-		duration = new TimeSpan(hours, minutes, seconds);
+		totalTime = new TimeSpan(hours, minutes, seconds);
 	}
 
 	#endregion
@@ -152,8 +173,8 @@ public class Chronometer : MonoBehaviour
 		onRestart += UI.CallbackRestart;
 		onComplete += UI.CallbackComplete;
 
-		onRefreshDuration += UI.CallbackRefreshDuration;
-		onRefreshDuration.Invoke(duration);
+		onRefreshRemainingTime += UI.CallbackRefreshDuration;
+		onRefreshRemainingTime.Invoke(totalTime);
 
 		onRefreshProgress += UI.CallbackRefreshProgress;
 		onRefreshProgress.Invoke(0);
