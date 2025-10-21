@@ -2,11 +2,19 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+// 🟥 : Done ! Reward screen
+// 🟥 : Study quality stats
+// 🟥 : Pomodoro save system
+// 🟥 : Notifications
+// 🟥 : Revamped UI
+// 🟥 : Set the timer
+// 🟥 : Study session
+
 public delegate void TimespanDelegate(TimeSpan timeSpan);
 
-public class Chronometer : MonoBehaviour
+public class Timer : MonoBehaviour
 {
-	[SerializeField] private ChronometerUI m_chronometerUI;
+	[SerializeField] private TimerUI m_UI;
 
 	[SerializeField] private Vector3Int m_totalDurationSettings;
 
@@ -32,7 +40,7 @@ public class Chronometer : MonoBehaviour
 		elapsedTime = new TimeSpan(0);
 		SetDuration(m_totalDurationSettings.x, m_totalDurationSettings.y, m_totalDurationSettings.z);
 
-		AssignView(m_chronometerUI);
+		AssignView(m_UI);
 	}
 
 	protected void Update()
@@ -157,7 +165,7 @@ public class Chronometer : MonoBehaviour
 
 	#region View
 
-	private void AssignView(ChronometerUI UI)
+	private void AssignView(TimerUI UI)
 	{
 		if (UI == null)
 		{

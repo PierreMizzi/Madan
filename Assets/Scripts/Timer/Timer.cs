@@ -4,7 +4,7 @@ using TMPro;
 using System;
 using PierreMizzi.Useful;
 
-public class ChronometerUI : MonoBehaviour
+public class TimerUI : MonoBehaviour
 {
 	#region Behaviour
 
@@ -101,12 +101,14 @@ public class ChronometerUI : MonoBehaviour
 	[SerializeField] private Button m_playButton;
 	[SerializeField] private Button m_pauseButton;
 	[SerializeField] private Button m_restartButton;
+	[SerializeField] private Button m_completePopUpRestartButton;
 
 	[SerializeField] private Image m_background;
 
 	public Button PlayButton => m_playButton;
 	public Button PauseButton => m_pauseButton;
 	public Button RestartButton => m_restartButton;
+	public Button CompletePopUpRestartButton => m_completePopUpRestartButton;
 
 	#endregion
 
@@ -116,8 +118,6 @@ public class ChronometerUI : MonoBehaviour
 	{
 		Initialize();
 	}
-
-
 
 	#endregion
 
