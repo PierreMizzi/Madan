@@ -526,7 +526,7 @@ GameObject:
   m_Component:
   - component: {fileID: 191581869}
   m_Layer: 5
-  m_Name: Empty (1)
+  m_Name: Empty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -802,7 +802,7 @@ GameObject:
   - component: {fileID: 255478647}
   - component: {fileID: 255478646}
   m_Layer: 5
-  m_Name: Title (1)
+  m_Name: Subtitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1182,7 +1182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UI: {fileID: 1175879556}
-  m_totalDurationSettings: {x: 0, y: 30, z: 0}
+  m_totalDurationSettings: {x: 0, y: 0, z: 5}
 --- !u!4 &942420535
 Transform:
   m_ObjectHideFlags: 0
@@ -1302,7 +1302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8714232577273303540, guid: 37ebb57751443bd4d96295419c01155a, type: 3}
       propertyPath: m_Name
-      value: RestartButton (1)
+      value: RestartButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1457,7 +1457,7 @@ Animator:
   m_GameObject: {fileID: 1175879554}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0e171f00e5ec20345b08974d6618a981, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2355,6 +2355,7 @@ GameObject:
   - component: {fileID: 1960304660}
   - component: {fileID: 1960304662}
   - component: {fileID: 1960304661}
+  - component: {fileID: 1960304663}
   m_Layer: 5
   m_Name: ControlsContainer
   m_TagString: Untagged
@@ -2449,6 +2450,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960304658}
   m_CullTransparentMesh: 1
+--- !u!225 &1960304663
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960304658}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2002534042
 GameObject:
   m_ObjectHideFlags: 0
@@ -2572,10 +2585,10 @@ RectTransform:
   - {fileID: 883353276}
   m_Father: {fileID: 1175879555}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1136.3, y: 2101}
+  m_SizeDelta: {x: -286.5356, y: -774.9487}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &2084462395
 CanvasGroup:
