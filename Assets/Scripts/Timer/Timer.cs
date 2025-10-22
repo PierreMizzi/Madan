@@ -2,9 +2,20 @@ using System;
 using UnityEngine;
 
 
+public delegate void TimerCompleteDelegate(Pomodoro pomodoro);
 
 public class Timer : PierreMizzi.Extensions.Timer.Timer
 {
+
+	#region MonoBehaviour
+
+	protected override void Awake()
+	{
+		base.Awake();
+		onSavePomodoro = (Pomodoro pomodoro) => { };
+	}
+		
+	#endregion
 
 	#region View
 
@@ -26,6 +37,40 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 
 	public Action onRestartFromComplete;
 
+	public TimerCompleteDelegate onSavePomodoro;
+
+	public override void Play()
+	{
+		if (m_state == PlayPauseStates.None)
+		{
+			m_pomodoro = new Pomodoro()
+			{
+				startTime = DateTime.Now
+			};
+		}
+
+		base.Play();
+	}
+
+	protected override void Complete()
+	{
+		base.Complete();
+
+		if (m_pomodoro != null)
+		{
+			m_pomodoro.endTime = DateTime.Now;
+			m_pomodoro.focus = UI.FocusValue;
+			onSavePomodoro.Invoke(m_pomodoro);
+		}
+	}
+
+	public override void Restart()
+	{
+		base.Restart();
+
+		m_pomodoro = null;
+	}
+
 	private void RestartFromComplete()
 	{
 		onRestartFromComplete.Invoke();
@@ -34,4 +79,12 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 
 	#endregion
 
+	#region Save
+
+	protected Pomodoro m_pomodoro;
+
+
+	#endregion
+
 }
+
