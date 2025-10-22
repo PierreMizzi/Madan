@@ -108,7 +108,7 @@ namespace PierreMizzi.Extensions.Timer
 			}
 		}
 
-		private void Complete()
+		protected virtual void Complete()
 		{
 			StopBehaviour();
 			onComplete.Invoke();
@@ -125,7 +125,7 @@ namespace PierreMizzi.Extensions.Timer
 		public Action onRestart;
 		public Action onComplete;
 
-		public void Play()
+		public virtual void Play()
 		{
 			if (m_state == PlayPauseStates.None)
 			{
@@ -138,14 +138,14 @@ namespace PierreMizzi.Extensions.Timer
 			onPlay.Invoke();
 		}
 
-		public void Pause()
+		public virtual void Pause()
 		{
 			m_state = PlayPauseStates.Paused;
 			StopBehaviour();
 			onPause.Invoke();
 		}
 
-		public void Restart()
+		public virtual void Restart()
 		{
 			// hasStarted = false;
 			m_state = PlayPauseStates.None;
@@ -158,7 +158,7 @@ namespace PierreMizzi.Extensions.Timer
 			onRestart.Invoke();
 		}
 
-		public void SetDuration(int hours, int minutes, int seconds)
+		public virtual void SetDuration(int hours, int minutes, int seconds)
 		{
 			totalTime = new TimeSpan(hours, minutes, seconds);
 		}

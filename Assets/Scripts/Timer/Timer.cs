@@ -17,19 +17,21 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 		// UI
 		UI.CompletePopUpRestartButton.onClick.AddListener(RestartFromComplete);
 
-		
+		onRestartFromComplete += UI.CallbackRestartFromComplete;
 	}
-
-
 
 	#endregion
 
-	#region Restart From Complete
+	#region Behaviour
+
+	public Action onRestartFromComplete;
 
 	private void RestartFromComplete()
 	{
-		// UI.Callback
+		onRestartFromComplete.Invoke();
+		Restart();
 	}
 
 	#endregion
+
 }

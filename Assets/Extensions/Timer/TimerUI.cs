@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using PierreMizzi.Useful;
-using UnityEditor.Animations;
 
 namespace PierreMizzi.Extensions.Timer
 {
