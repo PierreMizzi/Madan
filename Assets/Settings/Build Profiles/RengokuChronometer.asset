@@ -165,7 +165,7 @@ MonoBehaviour:
     - line: '|   loadStoreDebugModeEnabled: 0'
     - line: '|   visionOSBundleVersion: 1.0'
     - line: '|   tvOSBundleVersion: 1.0'
-    - line: '|   bundleVersion: 0.0.2'
+    - line: '|   bundleVersion: 0.0.3'
     - line: '|   preloadedAssets:'
     - line: '|   - {fileID: -944628639613478452, guid: bb23683828fccf24281e049731528280,
         type: 3}'
@@ -321,7 +321,7 @@ MonoBehaviour:
     - line: '|   - m_BuildTarget: '
     - line: '|     m_Icons:'
     - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {fileID: 2800000, guid: 538a2cbee79775d4da1a34ef69961971,
+    - line: '|       m_Icon: {fileID: 2800000, guid: 713d29e81019b1b408784cc9134d9349,
         type: 3}'
     - line: '|       m_Width: 128'
     - line: '|       m_Height: 128'

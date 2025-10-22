@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-// 🟥 : Done ! Reward screen
-// 🟥 : Study quality stats
+// 🟩 : Done ! Reward screen
 // 🟥 : Pomodoro save system
+// 🟥 : Study quality stats
 // 🟥 : Notifications
 // 🟥 : Revamped UI
 // 🟥 : Set the timer
