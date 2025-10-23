@@ -1,7 +1,13 @@
 using System;
 using UnityEngine;
 
-
+// 🟩 : Done ! Reward screen
+// 🟩 : Pomodoro save system
+// 🟩 : Study quality stats
+// 🟧 : Set the timer
+// 🟥 : Notifications
+// 🟥 : Revamped UI
+// 🟥 : Study session
 
 public class Timer : PierreMizzi.Extensions.Timer.Timer
 {

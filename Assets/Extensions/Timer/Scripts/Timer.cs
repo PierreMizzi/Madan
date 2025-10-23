@@ -2,13 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-// 🟩 : Done ! Reward screen
-// 🟥 : Pomodoro save system
-// 🟥 : Study quality stats
-// 🟥 : Notifications
-// 🟥 : Revamped UI
-// 🟥 : Set the timer
-// 🟥 : Study session
+
 namespace PierreMizzi.Extensions.Timer
 {
 	

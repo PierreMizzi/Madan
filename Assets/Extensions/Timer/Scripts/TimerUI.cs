@@ -103,12 +103,15 @@ namespace PierreMizzi.Extensions.Timer
 		[SerializeField] private Button m_playButton;
 		[SerializeField] private Button m_pauseButton;
 		[SerializeField] private Button m_restartButton;
+		[SerializeField] private Button m_timePickerButton;
 
 		[SerializeField] private Image m_background;
 
 		public Button PlayButton => m_playButton;
 		public Button PauseButton => m_pauseButton;
 		public Button RestartButton => m_restartButton;
+
+		public Button TimePickerButton => m_timePickerButton;
 
 		#endregion
 
