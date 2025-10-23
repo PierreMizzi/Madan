@@ -26,6 +26,9 @@ public class ApplicationData : BaseApplicationData
 	// SRS
 	public SRSSaveData srsSaveData;
 
+	// Timer
+	public TimerData timerData;
+
 	public override string ToString()
 	{
 		string data = "List<WordData> dailyWorlds : \n";

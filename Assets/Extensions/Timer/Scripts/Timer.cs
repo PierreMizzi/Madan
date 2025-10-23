@@ -12,25 +12,25 @@ namespace PierreMizzi.Extensions.Timer
 	{
 		[SerializeField] protected TimerUI m_UI;
 
-		[SerializeField] private Vector3Int m_totalDurationSettings;
+		[SerializeField] protected Vector3Int m_totalDurationSettings;
 
-		private PlayPauseStates m_state;
-		private IEnumerator behaviourCoroutine;
+		protected PlayPauseStates m_state;
+		protected IEnumerator behaviourCoroutine;
 
-		private TimeSpan oneSecond = new TimeSpan(0, 0, 1);
+		protected TimeSpan oneSecond = new TimeSpan(0, 0, 1);
 
-		private TimeSpan elapsedTime;
-		private TimeSpan totalTime;
-		private DateTime endTime;
+		protected TimeSpan elapsedTime;
+		protected TimeSpan totalTime;
+		protected DateTime endTime;
 
-		private TimeSpan RemainingTime => totalTime - elapsedTime;
+		protected TimeSpan RemainingTime => totalTime - elapsedTime;
 		public double NormalizedProgress => elapsedTime.TotalMilliseconds / totalTime.TotalMilliseconds;
 		public TimespanDelegate onRefreshRemainingTime;
 		public Action<double> onRefreshProgress;
 
 		#region MonoBehaviour
 
-		private void Awake()
+		protected virtual void Awake()
 		{
 			onRefreshRemainingTime = (TimeSpan timeSpan) => { };
 			elapsedTime = new TimeSpan(0);

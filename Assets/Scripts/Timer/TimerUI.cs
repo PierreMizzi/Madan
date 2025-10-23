@@ -9,8 +9,11 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 
 	[Header("Complete PopUp")]
 	[SerializeField] private Button m_completePopUpRestartButton;
+	[SerializeField] private Slider m_focusSlider;
 
 	public Button CompletePopUpRestartButton => m_completePopUpRestartButton;
+
+	public float FocusValue => m_focusSlider.value;
 
 	private bool m_isComplete;
 
