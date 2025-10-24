@@ -27,12 +27,14 @@ namespace PierreMizzi.Extensions.Timer
 		public double NormalizedProgress => elapsedTime.TotalMilliseconds / totalTime.TotalMilliseconds;
 		public TimespanDelegate onRefreshRemainingTime;
 		public Action<double> onRefreshProgress;
+		public TimespanDelegate onSetTotalTime;
 
 		#region MonoBehaviour
 
 		protected virtual void Awake()
 		{
 			onRefreshRemainingTime = (TimeSpan timeSpan) => { };
+			onSetTotalTime = (TimeSpan timeSpan) => { };
 			elapsedTime = new TimeSpan(0);
 			SetDuration(m_totalDurationSettings.x, m_totalDurationSettings.y, m_totalDurationSettings.z);
 
@@ -177,11 +179,13 @@ namespace PierreMizzi.Extensions.Timer
 			onRestart += UI.CallbackRestart;
 			onComplete += UI.CallbackComplete;
 
-			onRefreshRemainingTime += UI.CallbackRefreshDuration;
-			onRefreshRemainingTime.Invoke(totalTime);
+			onRefreshRemainingTime += UI.CallbackRefreshRemaining;
 
 			onRefreshProgress += UI.CallbackRefreshProgress;
 			onRefreshProgress.Invoke(0);
+
+			onSetTotalTime += UI.CallbackSetTotalTime;
+			onSetTotalTime.Invoke(totalTime);
 		}
 
 		#endregion

@@ -17,9 +17,15 @@ namespace PierreMizzi.Extensions.Timer
 			m_restartButton.gameObject.SetActive(false);
 		}
 
-		public void CallbackRefreshDuration(TimeSpan timeSpan)
+		public void CallbackRefreshRemaining(TimeSpan timeSpan)
 		{
 			m_durationText.text = RefreshDurationText(timeSpan);
+		}
+
+		public void CallbackSetTotalTime(TimeSpan timeSpan)
+		{
+			m_durationText.text = RefreshDurationText(timeSpan);
+			m_timePicker.SetTime(timeSpan);
 		}
 
 		private string RefreshDurationText(TimeSpan timeSpan)
@@ -103,15 +109,18 @@ namespace PierreMizzi.Extensions.Timer
 		[SerializeField] private Button m_playButton;
 		[SerializeField] private Button m_pauseButton;
 		[SerializeField] private Button m_restartButton;
-		[SerializeField] private Button m_timePickerButton;
 
 		[SerializeField] private Image m_background;
+
+		[SerializeField] private Button m_timePickerButton;
+		[SerializeField] private TimePicker m_timePicker;
 
 		public Button PlayButton => m_playButton;
 		public Button PauseButton => m_pauseButton;
 		public Button RestartButton => m_restartButton;
 
 		public Button TimePickerButton => m_timePickerButton;
+
 
 		#endregion
 
