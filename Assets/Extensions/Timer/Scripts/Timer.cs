@@ -37,7 +37,10 @@ namespace PierreMizzi.Extensions.Timer
 			onSetTotalTime = (TimeSpan timeSpan) => { };
 			elapsedTime = new TimeSpan(0);
 			SetDuration(m_totalDurationSettings.x, m_totalDurationSettings.y, m_totalDurationSettings.z);
+		}
 
+		protected virtual void Start()
+		{
 			AssignView(m_UI);
 		}
 
@@ -170,9 +173,12 @@ namespace PierreMizzi.Extensions.Timer
 				return;
 			}
 
+			UI.Initialize();
+
 			UI.PlayButton.onClick.AddListener(Play);
 			UI.PauseButton.onClick.AddListener(Pause);
 			UI.RestartButton.onClick.AddListener(Restart);
+			UI.TimePicker.onTimePicked += CallbackTimePicked;
 
 			onPlay += UI.CallbackPlay;
 			onPause += UI.CallbackPause;
@@ -185,6 +191,13 @@ namespace PierreMizzi.Extensions.Timer
 			onRefreshProgress.Invoke(0);
 
 			onSetTotalTime += UI.CallbackSetTotalTime;
+			onSetTotalTime.Invoke(totalTime);
+		}
+
+		private void CallbackTimePicked(TimeSpan timeSpan)
+		{
+			m_totalDurationSettings = new Vector3Int(timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
+			SetDuration(timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
 			onSetTotalTime.Invoke(totalTime);
 		}
 

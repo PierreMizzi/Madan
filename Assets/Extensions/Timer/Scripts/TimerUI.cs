@@ -10,11 +10,13 @@ namespace PierreMizzi.Extensions.Timer
 	{
 		#region Behaviour
 
-		private void Initialize()
+		public void Initialize()
 		{
 			m_playButton.gameObject.SetActive(true);
 			m_pauseButton.gameObject.SetActive(false);
 			m_restartButton.gameObject.SetActive(false);
+
+			m_timePicker.Initialize();
 		}
 
 		public void CallbackRefreshRemaining(TimeSpan timeSpan)
@@ -104,34 +106,24 @@ namespace PierreMizzi.Extensions.Timer
 		#region UI
 
 		[Header("UI")]
-		[SerializeField] private TextMeshProUGUI m_durationText;
+		[SerializeField] protected TextMeshProUGUI m_durationText;
 
-		[SerializeField] private Button m_playButton;
-		[SerializeField] private Button m_pauseButton;
-		[SerializeField] private Button m_restartButton;
+		[SerializeField] protected Button m_playButton;
+		[SerializeField] protected Button m_pauseButton;
+		[SerializeField] protected Button m_restartButton;
 
-		[SerializeField] private Image m_background;
+		[SerializeField] protected Image m_background;
 
-		[SerializeField] private Button m_timePickerButton;
-		[SerializeField] private TimePicker m_timePicker;
+		[SerializeField] protected TimePicker m_timePicker;
 
 		public Button PlayButton => m_playButton;
 		public Button PauseButton => m_pauseButton;
 		public Button RestartButton => m_restartButton;
 
-		public Button TimePickerButton => m_timePickerButton;
-
-
-		#endregion
-
-		#region MonoBehaviour
-
-		protected virtual void Start()
-		{
-			Initialize();
-		}
+		public TimePicker TimePicker => m_timePicker;
 
 		#endregion
+
 
 	}
 

@@ -1,11 +1,11 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace PierreMizzi.Extensions.Timer
 {
-
 
 	public class TimePicker : MonoBehaviour
 	{
@@ -24,8 +24,7 @@ namespace PierreMizzi.Extensions.Timer
 
 		protected virtual void Awake()
 		{
-			onTimeChanged = (TimeSpan timeSpan) => { };
-			m_button.onClick += CallbackTimer
+			onTimePicked = (TimeSpan timeSpan) => { };
 		}
 
 		protected virtual void Start()
@@ -62,24 +61,32 @@ namespace PierreMizzi.Extensions.Timer
 
 		public TimeSpan TimeSpan => new TimeSpan(m_hours, m_minutes, m_seconds);
 
-		public TimespanDelegate onTimeChanged;
+		public TimespanDelegate onTimePicked;
+
+		public void Initialize()
+		{
+			LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+			m_hoursNumberPicker.Populate();
+			m_minutesNumberPicker.Populate();
+			m_secondsNumberPicker.Populate();
+		}
 
 		private void CallbackHourNumberPicked(int hoursNumber)
 		{
 			m_hours = hoursNumber;
-			onTimeChanged.Invoke(TimeSpan);
+			onTimePicked.Invoke(TimeSpan);
 		}
 
 		private void CallbackMinuteNumberPicked(int minutesNumber)
 		{
 			m_minutes = minutesNumber;
-			onTimeChanged.Invoke(TimeSpan);
+			onTimePicked.Invoke(TimeSpan);
 		}
 
 		private void CallbackSecondsNumberPicked(int secondsNumber)
 		{
 			m_seconds = secondsNumber;
-			onTimeChanged.Invoke(TimeSpan);
+			onTimePicked.Invoke(TimeSpan);
 		}
 
 		public void SetTime(TimeSpan timeSpan)

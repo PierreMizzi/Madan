@@ -35,8 +35,13 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 
 		// UI
 		UI.CompletePopUpRestartButton.onClick.AddListener(RestartFromComplete);
-
 		onRestartFromComplete += UI.CallbackRestartFromComplete;
+
+		UI.StartTimePickingButton.onClick.AddListener(CallbackStartTimePicking);
+		onStartTimePicking += UI.CallbackStartTimePicking;
+
+		UI.StopTimePickingButton.onClick.AddListener(CallbackStopTimePicking);
+		onStopTimePicking += UI.CallbackStopTimePicking;
 	}
 
 	#endregion
@@ -46,6 +51,9 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 	public Action onRestartFromComplete;
 
 	public TimerCompleteDelegate onSavePomodoro;
+
+	public Action onStartTimePicking;
+	private Action onStopTimePicking;
 
 	public override void Play()
 	{
@@ -83,6 +91,16 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 	{
 		onRestartFromComplete.Invoke();
 		Restart();
+	}
+
+	private void CallbackStartTimePicking()
+	{
+		onStartTimePicking.Invoke();
+	}
+
+	private void CallbackStopTimePicking()
+	{
+		onStopTimePicking.Invoke();
 	}
 
 	#endregion

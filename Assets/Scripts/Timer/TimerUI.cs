@@ -15,10 +15,6 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 
 	public float FocusValue => m_focusSlider.value;
 
-	private bool m_isComplete;
-
-	public bool IsComplete => m_isComplete;
-
 	private Action onCompleteToBaseAnimEnd;
 
 	public void CallbackRestartFromComplete()
@@ -26,9 +22,17 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 		m_animator.SetBool(k_is_complete_param, false);
 	}
 
+	[Obsolete]
 	public void CompleteToBaseAnimEnd()
 	{
-		m_isComplete = false;
+		// m_isComplete = false;
+	}
+
+	public override void CallbackComplete()
+	{
+		base.CallbackComplete();
+
+		m_animator.SetBool(k_is_complete_param, true);
 	}
 
 	#endregion
@@ -42,14 +46,24 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 
 	#endregion
 
+
+
 	#region Behaviour
 
-	public override void CallbackComplete()
-	{
-		base.CallbackComplete();
+	[SerializeField] private Button m_startTimePickingButton;
+	[SerializeField] private Button m_stopTimePickingButton;
 
-		m_animator.SetBool(k_is_complete_param, true);
-		m_isComplete = true;
+	public Button StartTimePickingButton => m_startTimePickingButton;
+	public Button StopTimePickingButton => m_stopTimePickingButton;
+
+	public void CallbackStartTimePicking()
+	{
+		m_animator.SetBool(k_is_time_picking, true);
+	}
+
+	public void CallbackStopTimePicking()
+	{
+		m_animator.SetBool(k_is_time_picking, false);
 	}
 
 	#endregion
@@ -59,6 +73,7 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 	private Animator m_animator;
 
 	private const string k_is_complete_param = "IsComplete";
+	private const string k_is_time_picking = "IsTimePicking";
 
 
 	#endregion

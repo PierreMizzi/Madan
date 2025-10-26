@@ -19,7 +19,7 @@ public class NumberPicker : MonoBehaviour, IEndDragHandler
 
 	#region Behaviour
 
-	private void Populate()
+	public void Populate()
 	{
 		// Compute size of button
 		Rect viewportSize = m_scrollRect.viewport.rect;
@@ -70,11 +70,6 @@ public class NumberPicker : MonoBehaviour, IEndDragHandler
 
 	#region MonoBehaviour
 
-	protected virtual void Start()
-	{
-		Populate();
-	}
-
 	public void OnEndDrag(PointerEventData eventData)
 	{
 		Debug.Log($"OnEndDrag");
@@ -104,9 +99,6 @@ public class NumberPicker : MonoBehaviour, IEndDragHandler
 
 		m_scrollRect.normalizedPosition = new Vector2(0, 1 - value);
 	}
-	
-
-
 
 	#endregion
 
