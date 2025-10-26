@@ -1676,7 +1676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UI: {fileID: 1175879558}
-  m_totalDurationSettings: {x: 0, y: 0, z: 2}
+  m_totalDurationSettings: {x: 0, y: 25, z: 0}
 --- !u!1 &1033164336
 GameObject:
   m_ObjectHideFlags: 0
