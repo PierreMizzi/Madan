@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BonsaiIcon_0: 2568988961392440816
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
