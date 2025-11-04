@@ -26,8 +26,7 @@ public class ApplicationData : BaseApplicationData
 	// SRS
 	public SRSSaveData srsSaveData;
 
-	// Timer
-	public TimerData timerData;
+	public ProgressBonsaiData progressBonsaiData;
 
 	public override string ToString()
 	{
