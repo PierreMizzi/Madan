@@ -1,16 +1,18 @@
 using System;
+using PierreMizzi.Extensions.Timer;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 // 🟩 : Done ! Reward screen
 // 🟩 : Pomodoro save system
 // 🟩 : Study quality stats
-// 🟧 : Set the timer
+// 🟩 : Set the timer
 // 🟥 : Notifications
 // 🟥 : Revamped UI
 // 🟥 : Study session
+// 🟥 : Add pre-set durations
 
-public delegate void TimerCompleteDelegate(Pomodoro pomodoro);
+public delegate void TimerCompleteDelegate(StudyTime pomodoro);
 
 public class Timer : PierreMizzi.Extensions.Timer.Timer
 {
@@ -20,7 +22,7 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 	protected override void Awake()
 	{
 		base.Awake();
-		onSavePomodoro = (Pomodoro pomodoro) => { };
+		onStudyTimeCompleted = (StudyTime studyTime) => { };
 	}
 		
 	#endregion
@@ -50,7 +52,7 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 
 	public Action onRestartFromComplete;
 
-	public TimerCompleteDelegate onSavePomodoro;
+	public TimerCompleteDelegate onStudyTimeCompleted;
 
 	public Action onStartTimePicking;
 	private Action onStopTimePicking;
@@ -59,9 +61,11 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 	{
 		if (m_state == PlayPauseStates.None)
 		{
-			m_pomodoro = new Pomodoro()
+			m_currentStudyTime = new StudyTime()
 			{
-				startTime = DateTime.Now
+				category = "Study",
+				totalTime = totalTime,
+				startTime = DateTime.Now,
 			};
 		}
 
@@ -72,11 +76,11 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 	{
 		base.Complete();
 
-		if (m_pomodoro != null)
+		if (m_currentStudyTime != null)
 		{
-			m_pomodoro.endTime = DateTime.Now;
-			m_pomodoro.focus = UI.FocusValue;
-			onSavePomodoro.Invoke(m_pomodoro);
+			m_currentStudyTime.endTime = DateTime.Now;
+			m_currentStudyTime.focus = UI.FocusValue;
+			onStudyTimeCompleted.Invoke(m_currentStudyTime);
 		}
 	}
 
@@ -84,7 +88,7 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 	{
 		base.Restart();
 
-		m_pomodoro = null;
+		m_currentStudyTime = null;
 	}
 
 	private void RestartFromComplete()
@@ -107,7 +111,7 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 
 	#region Save
 
-	protected Pomodoro m_pomodoro;
+	protected StudyTime m_currentStudyTime;
 
 
 	#endregion

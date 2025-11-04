@@ -8,6 +8,15 @@ namespace PierreMizzi.Extensions.Timer
 	
 	public delegate void TimespanDelegate(TimeSpan timeSpan);
 
+	public class StudyTime
+	{
+		public string category;
+		public DateTime startTime;
+		public DateTime endTime;
+		public TimeSpan totalTime;
+		public float focus;
+	}
+
 	public class Timer : MonoBehaviour
 	{
 		[SerializeField] protected TimerUI m_UI;
