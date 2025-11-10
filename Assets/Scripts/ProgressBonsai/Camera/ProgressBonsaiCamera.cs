@@ -6,14 +6,26 @@ public class ProgressBonsaiCamera : SphericalCameraController
 	#region Behaviour
 
 	[SerializeField] private float m_rotatingSpeed = 0.3f;
+
+	[SerializeField] private bool m_isIdleRotation;
+
 	
 	#endregion
 
 	#region MonoBehaviour
 
+	protected void Start()
+	{
+		m_isIdleRotation = true;
+	}
+
 	protected override void Update()
 	{
-		phi = Time.time % 360 * m_rotatingSpeed;
+		if (m_isIdleRotation)
+		{
+			phi = Mathf.Sin(Time.time * m_rotatingSpeed) * 0.5f + 0.5f;
+			phi = Mathf.Lerp(-60f, -120f, phi);
+		}
 
 		base.Update();
 	}

@@ -99,6 +99,11 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 
 	private void CallbackStartTimePicking()
 	{
+		if (m_state != PlayPauseStates.None)
+		{
+			return;
+		}
+
 		onStartTimePicking.Invoke();
 	}
 

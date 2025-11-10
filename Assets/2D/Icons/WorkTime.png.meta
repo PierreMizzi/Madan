@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2aec3249cad2ebf459715da62a4ccd86
+guid: 544add2372a3bfd4e9fce648309d269b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4798124749296024363
-    second: TimerIcon_0
+      213: 1484995360154760906
+    second: WorkTime_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:

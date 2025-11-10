@@ -5,6 +5,22 @@ using UnityEngine.UI;
 public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 {
 
+	#region Behaviour
+
+	public override void CallbackPlay()
+	{
+		base.CallbackPlay();
+		m_startTimePickingButton.gameObject.SetActive(false);
+	}
+
+	public override void CallbackRestart()
+	{
+		base.CallbackRestart();
+		m_startTimePickingButton.gameObject.SetActive(true);
+	}
+
+	#endregion
+
 	#region Complete PopUp
 
 	[Header("Complete PopUp")]
@@ -46,15 +62,17 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 
 	#endregion
 
+	#region Time Picker
 
-
-	#region Behaviour
-
+	[Header("Time Picker")]
 	[SerializeField] private Button m_startTimePickingButton;
 	[SerializeField] private Button m_stopTimePickingButton;
 
 	public Button StartTimePickingButton => m_startTimePickingButton;
 	public Button StopTimePickingButton => m_stopTimePickingButton;
+
+	public Action OnClickStartTimePicking;
+	public Action OnClickStopTimePicking;
 
 	public void CallbackStartTimePicking()
 	{
@@ -64,6 +82,7 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 	public void CallbackStopTimePicking()
 	{
 		m_animator.SetBool(k_is_time_picking, false);
+		m_startTimePickingButton.gameObject.SetActive(true);
 	}
 
 	#endregion
