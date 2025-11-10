@@ -16,6 +16,7 @@ public class ReworkedApplication : MonoBehaviour
 	protected virtual void Start()
 	{
 		LoadAppData();
+		UnityEngine.Application.targetFrameRate = 60;
 	}
 
 	protected virtual void OnDestroy()
