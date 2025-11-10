@@ -43,7 +43,7 @@ namespace PierreMizzi.Extensions.Timer
 		protected virtual void Awake()
 		{
 #if !UNITY_EDITOR
-			m_totalDurationSettings = new Vector3(0, 25, 0);
+			m_totalDurationSettings = new Vector3Int(0, 25, 0);
 #endif
 
 			onRefreshRemainingTime = (TimeSpan timeSpan) => { };

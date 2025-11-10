@@ -25,7 +25,7 @@ namespace PierreMizzi.Useful
 			rho = Mathf.Clamp(rho, -89.5f, 89.5f);
 			Quaternion rhoQuaternion = Quaternion.AngleAxis(rho, Vector3.Cross(phiVector, Vector3.up));
 			phiVector = rhoQuaternion * phiVector;
-			transform.position = phiVector * radius;
+			transform.position = m_origin.position + phiVector * radius;
 		}
 
 		protected virtual void UpdateRotation()

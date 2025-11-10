@@ -7,7 +7,7 @@ using UnityEngine;
 // 🟥 : Touch flower for info
 // 🟥 : Create foliage
 // 🟥 : Find blooming spots inside the foliage
-// 🟥 : Flower blooms are the same original blooming spots
+// 🟥 : Flower blooms around the same original blooming spots
 
 // 🟩 : Orbital Camera Controller
 // 🟩 : 	- Slow perpetual rotation
