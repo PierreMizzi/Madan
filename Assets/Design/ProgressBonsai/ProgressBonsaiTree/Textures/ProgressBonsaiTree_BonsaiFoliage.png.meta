@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ProgressBonsaiTree_BonsaiFoliage_0: -5711509283927935183
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

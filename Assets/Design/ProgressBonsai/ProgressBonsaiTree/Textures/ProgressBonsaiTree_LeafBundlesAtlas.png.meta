@@ -322,7 +322,15 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ProgressBonsaiTree_LeafBundlesAtlas_0: -6155167814368003107
+      ProgressBonsaiTree_LeafBundlesAtlas_1: 7121785607528902557
+      ProgressBonsaiTree_LeafBundlesAtlas_2: 3069887357459336338
+      ProgressBonsaiTree_LeafBundlesAtlas_3: -2621990011101618342
+      ProgressBonsaiTree_LeafBundlesAtlas_4: -5723344178311223446
+      ProgressBonsaiTree_LeafBundlesAtlas_5: 8764163053322938539
+      ProgressBonsaiTree_LeafBundlesAtlas_6: 2498471634386705430
+      ProgressBonsaiTree_LeafBundlesAtlas_7: -4341827513853970101
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
