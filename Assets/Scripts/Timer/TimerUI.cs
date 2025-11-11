@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +8,29 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 
 	#region Behaviour
 
+	public override void CallbackRefreshRemaining(TimeSpan timeSpan)
+	{
+		base.CallbackRefreshRemaining(timeSpan);
+
+		m_notepadDurationText.text = RefreshDurationText(timeSpan);
+	}
+
+	public override void CallbackSetTotalTime(TimeSpan timeSpan)
+	{
+		base.CallbackSetTotalTime(timeSpan);
+
+		m_notepadDurationText.text = RefreshDurationText(timeSpan);
+	}
+
 	public override void CallbackPlay()
 	{
 		base.CallbackPlay();
 		m_startTimePickingButton.gameObject.SetActive(false);
+	}
+
+	public override void CallbackPause()
+	{
+		base.CallbackPause();
 	}
 
 	public override void CallbackRestart()
@@ -85,6 +105,32 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 		m_startTimePickingButton.gameObject.SetActive(true);
 	}
 
+
+
+	#endregion
+
+	#region Notepad
+
+	[Header("Notepad")]
+
+	[SerializeField] private Button m_notepadOpenButton;
+	[SerializeField] private Button m_notepadCloseButton;
+	[SerializeField] private TMP_InputField m_notepadInputField;
+	[SerializeField] private TMP_Text m_notepadDurationText;
+
+	public Button NotepadOpenButton => m_notepadOpenButton;
+	public Button NotepadCloseButton => m_notepadCloseButton;
+
+	public void CallbackOpenNotepad()
+	{
+		m_animator.SetBool(k_is_notepad, true);
+	}
+
+	public void CallbackCloseNotepad()
+	{
+		m_animator.SetBool(k_is_notepad, false);
+	}
+
 	#endregion
 
 	#region Animation
@@ -93,6 +139,7 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 
 	private const string k_is_complete_param = "IsComplete";
 	private const string k_is_time_picking = "IsTimePicking";
+	private const string k_is_notepad = "IsNotepad";
 
 
 	#endregion

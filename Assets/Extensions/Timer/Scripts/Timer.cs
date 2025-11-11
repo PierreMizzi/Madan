@@ -216,19 +216,6 @@ namespace PierreMizzi.Extensions.Timer
 
 		#endregion
 
-		#region App Focus
-
-		private void LoseFocus()
-		{
-
-		}
-
-		private void GainFocus()
-		{
-
-		}
-
-		#endregion
 	}
 
 }

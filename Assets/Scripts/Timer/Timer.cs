@@ -1,7 +1,6 @@
 using System;
 using PierreMizzi.Extensions.Timer;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 // 🟩 : Done ! Reward screen
 // 🟩 : Pomodoro save system
@@ -24,7 +23,7 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 		base.Awake();
 		onStudyTimeCompleted = (StudyTime studyTime) => { };
 	}
-		
+
 	#endregion
 
 	#region View
@@ -44,6 +43,13 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 
 		UI.StopTimePickingButton.onClick.AddListener(CallbackStopTimePicking);
 		onStopTimePicking += UI.CallbackStopTimePicking;
+
+		// Notepad
+		UI.NotepadOpenButton.onClick.AddListener(CallbackOpenNotepad);
+		onOpenNotepad += UI.CallbackOpenNotepad;
+
+		UI.NotepadCloseButton.onClick.AddListener(CallbackCloseNotepad);
+		onCloseNotepad += UI.CallbackCloseNotepad;
 	}
 
 	#endregion
@@ -118,6 +124,23 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 
 	protected StudyTime m_currentStudyTime;
 
+
+	#endregion
+
+	#region Notepad
+
+	public Action onOpenNotepad;
+	public Action onCloseNotepad;
+
+	private void CallbackOpenNotepad()
+	{
+		onOpenNotepad.Invoke();
+	}
+
+	private void CallbackCloseNotepad()
+	{
+		onCloseNotepad.Invoke();
+	}
 
 	#endregion
 

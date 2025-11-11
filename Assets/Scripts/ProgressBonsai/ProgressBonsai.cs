@@ -5,14 +5,15 @@ using UnityEngine;
 // 🟥 : After completing a Pomodoro, go to Progress Bonsai and give a bloom animation
 
 // 🟥 : Touch flower for info
-// 🟥 : Create foliage
-// 🟥 : Find blooming spots inside the foliage
+// 🟩 : Create foliage
+// 🟩 : Find blooming spots inside the foliage
 // 🟥 : Flower blooms around the same original blooming spots
 
 // 🟩 : Orbital Camera Controller
 // 🟩 : 	- Slow perpetual rotation
-// 🟥 : 	- Rotation on touch
 // 🟥 : 	- Zoom in and out (clamped)
+
+
 
 public class ProgressBonsai : MonoBehaviour
 {

@@ -19,18 +19,18 @@ namespace PierreMizzi.Extensions.Timer
 			m_timePicker.Initialize();
 		}
 
-		public void CallbackRefreshRemaining(TimeSpan timeSpan)
+		public virtual void CallbackRefreshRemaining(TimeSpan timeSpan)
 		{
 			m_durationText.text = RefreshDurationText(timeSpan);
 		}
 
-		public void CallbackSetTotalTime(TimeSpan timeSpan)
+		public virtual  void CallbackSetTotalTime(TimeSpan timeSpan)
 		{
 			m_durationText.text = RefreshDurationText(timeSpan);
 			m_timePicker.SetTime(timeSpan);
 		}
 
-		private string RefreshDurationText(TimeSpan timeSpan)
+		protected string RefreshDurationText(TimeSpan timeSpan)
 		{
 			if (timeSpan.Hours > 0)
 			{
