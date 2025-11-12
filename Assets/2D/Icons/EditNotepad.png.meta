@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 2aec3249cad2ebf459715da62a4ccd86
+guid: f12f3fade6f9d4d4e83aa38a6fa6ba04
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4798124749296024363
-    second: TimerIcon_0
+      213: 4876234236615113727
+    second: EditNotepad_0
+  - first:
+      213: -5870760980162923739
+    second: EditNotepad_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1

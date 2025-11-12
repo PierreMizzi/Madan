@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +11,6 @@ namespace PierreMizzi.Extensions.Timer
 		#region UI
 
 		[Header("UI")]
-		[SerializeField] private Button m_button;
 		[SerializeField] private NumberPicker m_hoursNumberPicker;
 		[SerializeField] private NumberPicker m_minutesNumberPicker;
 		[SerializeField] private NumberPicker m_secondsNumberPicker;

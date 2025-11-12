@@ -15,6 +15,7 @@ namespace PierreMizzi.Extensions.Timer
 		public DateTime endTime;
 		public TimeSpan totalTime;
 		public float focus;
+		public string notepadContent;
 	}
 
 	public class Timer : MonoBehaviour

@@ -13,7 +13,14 @@ using UnityEngine;
 // 🟩 : 	- Slow perpetual rotation
 // 🟥 : 	- Zoom in and out (clamped)
 
+// 🟥 : TimerUI : Rework animator and make it a proper state machine
 
+// 💡 : Notepad
+// 🟥 : Hook it to TimerUI
+// 🟥 : Save the inputfield value
+// 🟥 : Display a little hint zhen the notepad is empty
+// 🟥 : Display a little hint when the notepad is empty at the end
+// 🟥 : Display a PopUp "Are you sure you wanna leave this study session notes empty" when notepad is empty
 
 public class ProgressBonsai : MonoBehaviour
 {

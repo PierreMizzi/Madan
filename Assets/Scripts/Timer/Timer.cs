@@ -45,11 +45,14 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 		onStopTimePicking += UI.CallbackStopTimePicking;
 
 		// Notepad
-		UI.NotepadOpenButton.onClick.AddListener(CallbackOpenNotepad);
+		UI.Notepad.OpenButton.onClick.AddListener(CallbackOpenNotepad);
 		onOpenNotepad += UI.CallbackOpenNotepad;
-
-		UI.NotepadCloseButton.onClick.AddListener(CallbackCloseNotepad);
+		UI.Notepad.CloseButton.onClick.AddListener(CallbackCloseNotepad);
 		onCloseNotepad += UI.CallbackCloseNotepad;
+
+		UI.Notepad.InputField.onValueChanged.AddListener(CallbackNotepadContentChanged);
+		UI.Notepad.InputField.onEndEdit.AddListener(CallbackNotepadContentChanged);
+		UI.Notepad.InputField.onSubmit.AddListener(CallbackNotepadContentChanged);
 	}
 
 	#endregion
@@ -124,7 +127,6 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 
 	protected StudyTime m_currentStudyTime;
 
-
 	#endregion
 
 	#region Notepad
@@ -140,6 +142,16 @@ public class Timer : PierreMizzi.Extensions.Timer.Timer
 	private void CallbackCloseNotepad()
 	{
 		onCloseNotepad.Invoke();
+	}
+
+	private void CallbackNotepadContentChanged(string content)
+	{
+		if (m_currentStudyTime == null)
+		{
+			return;
+		}
+
+		m_currentStudyTime.notepadContent = content;
 	}
 
 	#endregion

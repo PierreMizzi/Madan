@@ -12,14 +12,14 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 	{
 		base.CallbackRefreshRemaining(timeSpan);
 
-		m_notepadDurationText.text = RefreshDurationText(timeSpan);
+		m_notepad.RefreshDurationTime(RefreshDurationText(timeSpan));
 	}
 
 	public override void CallbackSetTotalTime(TimeSpan timeSpan)
 	{
 		base.CallbackSetTotalTime(timeSpan);
 
-		m_notepadDurationText.text = RefreshDurationText(timeSpan);
+		m_notepad.RefreshDurationTime(RefreshDurationText(timeSpan));
 	}
 
 	public override void CallbackPlay()
@@ -113,13 +113,9 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 
 	[Header("Notepad")]
 
-	[SerializeField] private Button m_notepadOpenButton;
-	[SerializeField] private Button m_notepadCloseButton;
-	[SerializeField] private TMP_InputField m_notepadInputField;
-	[SerializeField] private TMP_Text m_notepadDurationText;
+	[SerializeField] private Notepad m_notepad;
 
-	public Button NotepadOpenButton => m_notepadOpenButton;
-	public Button NotepadCloseButton => m_notepadCloseButton;
+	public Notepad Notepad => m_notepad;
 
 	public void CallbackOpenNotepad()
 	{
@@ -136,7 +132,6 @@ public class TimerUI : PierreMizzi.Extensions.Timer.TimerUI
 	#region Animation
 
 	private Animator m_animator;
-
 	private const string k_is_complete_param = "IsComplete";
 	private const string k_is_time_picking = "IsTimePicking";
 	private const string k_is_notepad = "IsNotepad";
